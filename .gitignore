@@ -128,3 +128,24 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# --- Python/Flask-Specific Additions ---
+# Python Bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual Environments
+venv/
+env/
+
+# Flask Cache and Debug Files
+instance/
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Environment Variables
+.env
