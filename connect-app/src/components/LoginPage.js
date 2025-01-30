@@ -1,7 +1,10 @@
 import React from "react";
 import './LoginPage.css';
+import { useNavigate } from "react-router-dom"; 
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="container">
       <div className="top-right-title"> Connect The Memories </div>  
@@ -9,7 +12,7 @@ function LoginPage() {
         <h1>Welcome!</h1>
         <button className="btn">Log In</button>
         <button className="btn">Create an Account</button>
-        <div className="helpbtn"> ? </div> 
+        <button className="helpbtn" onClick={() => navigate("/help")}>?</button> 
       </div>
     </div>
   );
