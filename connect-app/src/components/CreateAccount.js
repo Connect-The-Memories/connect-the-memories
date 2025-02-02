@@ -8,6 +8,7 @@ function CreateAccount() {
 
   return (
     <div className="create-account-container">
+      <div className="top-right-title"> CogniSphere </div>
       <div className="create-account-box">
         <button className="exit-button" onClick={() => navigate("/")}>X</button>
         <h2>Create an Account</h2>
