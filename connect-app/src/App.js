@@ -1,6 +1,7 @@
 import React from "react";
 import LoginPage from "./components/LoginPage"; 
 import HelpPage from "./components/HelpPage";
+import CreateAccount from "./components/CreateAccount"; 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/help" element={<HelpPage />} /> 
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/createAccount" element={<CreateAccount />} /> 
       </Routes>
     </Router>
   );
