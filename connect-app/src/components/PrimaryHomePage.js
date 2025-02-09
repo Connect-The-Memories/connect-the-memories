@@ -11,7 +11,7 @@ function PrimaryHomePage() {
     <div className="container">
       <div className="top-bar">
         <div className="top-right-title">CogniSphere</div>
-        <button className="logout-button">LOGOUT</button>
+        <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
       </div>
       <div className="inner-box">
         <button className="progress-button">View Progress</button>
