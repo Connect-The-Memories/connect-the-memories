@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateAccount.css";
+import mockUsers from "../mockUsers";
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -16,17 +17,19 @@ function CreateAccount() {
       return;
     }
 
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const storedUsers = JSON.parse(sessionStorage.getItem("users")) || [];
 
-    if (existingUsers.some(user => user.email === email)) {
+    const allUsers = [...mockUsers, ...storedUsers]; 
+
+    if (allUsers.some(user => user.email === email)) {
       setError("Email already in use!");
       return;
     }
 
     const newUser = { email, password, type: accountType };
-    const updatedUsers = [...existingUsers, newUser];
+    const updatedUsers = [...storedUsers, newUser];
 
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    sessionStorage.setItem("users", JSON.stringify(updatedUsers));
 
     alert("Account created successfully!");
     navigate("/");
