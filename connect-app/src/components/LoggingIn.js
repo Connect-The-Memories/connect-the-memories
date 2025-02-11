@@ -18,6 +18,9 @@ function LoggingIn() {
         const foundUser = allUsers.find(user => user.email === userName && user.password === password);
     
         if (foundUser) {
+
+        sessionStorage.setItem("loggedInUser", JSON.stringify(foundUser)); // stores user in session storage 
+
             if (foundUser.type === "main") {
                 setIsLoading(true);
                 setTimeout(() => {

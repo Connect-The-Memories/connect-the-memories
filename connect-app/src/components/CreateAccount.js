@@ -29,7 +29,7 @@ function CreateAccount() {
     const newUser = { email, password, type: accountType };
     const updatedUsers = [...storedUsers, newUser];
 
-    sessionStorage.setItem("users", JSON.stringify(updatedUsers));
+    sessionStorage.setItem("users", JSON.stringify(updatedUsers)); // stores users in session storage
 
     alert("Account created successfully!");
     navigate("/");
