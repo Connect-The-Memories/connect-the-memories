@@ -62,6 +62,7 @@ function GalleryPage() {
                 <div key={index} className="message-item">
                   <p>{message.text}</p>
                   <p className="uploaded-by">Uploaded by: {message.uploadedBy}</p>
+                  <p className="date">Date: {message.date}</p>
                 </div>
               ))}
             </div>
