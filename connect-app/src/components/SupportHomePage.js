@@ -1,0 +1,15 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./SupportHomePage.css"; 
+
+function SupportHomePage() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="help-container">
+      <button className="exit-button" onClick={() => navigate("/")}>X</button>
+    </div>
+  );
+}
+
+export default SupportHomePage;

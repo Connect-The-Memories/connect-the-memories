@@ -5,41 +5,58 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
-.container {
+.hp-container {
     display: flex; 
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     height: 100vh;
     width: 100vw;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 95vw;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .inner-box {
     background: white; 
     padding: 20px; 
     border-radius: 10px; 
-    height: 600px; 
-    width: 1000px; 
+    height: 70%; 
+    width: 80%; 
     text-align: center; 
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
+    justify-content: center;
     position: relative;
+    align-self: center;
 }
 
 .logout-button {
     width: 150px;
     height: 50px;
-    position: absolute;
-    top: 20px;
-    left: 1250px;
+
     font-size: 25px;
     font-weight: bold;
     font-family: "DM Sans", sans-serif; 
     color: black;
+
+    background-color: #ffdc7c;
     border-radius: 10px;
     border: none;
-    background-color: #ffdc7c;
     box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.4); 
 }
 
@@ -47,50 +64,58 @@ body {
     background-color: #ffb300;
 }
 
+.inner-box-top-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 90%;
+    min-height: 15%;
+}
+
 .progress-button {
-    background: #e52d74;
+    height: 90%;
+    width: 28%;
+    font-weight: 500;
+
+    font-size: 25px;
+    font-family: 'DM Sans', sans-serif;
     color: white;
+    background: #e52d74;
     border: none;
     border-radius: 20px;
-    height: 70px;
-    width: 300px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 30px;
-    font-weight: 500;
+}
+
+.action-button {
+    height: 20vw;
+    width: 20vw;
+    border: none;
+    border-radius: 20px;
 }
 
 .gallery-button {
     background-color: #ffba57;
-    height: 300px;
-    width: 300px;
-    border: none;
-    border-radius: 20px;
 }
 
 .exercises-button {
     background-color: #8772ff;
-    height: 300px;
-    width: 300px;
-    border: none;
-    border-radius: 20px;
 }
 
 .add-button {
     background-color: #ff8fce;
-    height: 300px;
-    width: 300px;
-    border: none;
-    border-radius: 20px;
 }
 
-.button-container {
-    margin-left: 20px;
-    margin-right: 20px;
+.action-button-icon {
+    width: 16vw;
+    height: 16vw;
+    border-radius: 10px;
 }
 
 .action-buttons-container {
+    width: 100%;
     display: flex;
-    padding: 30px;
+    padding-top: 20px;
+    height: 70%;
+    justify-content: space-evenly;
 }
 
 .action-buttons-text {
@@ -101,6 +126,7 @@ body {
 .welcome-message {
     font-size: 50px;
     font-weight: bolder;
+    height: 15%;
 }
 
 button:hover {
