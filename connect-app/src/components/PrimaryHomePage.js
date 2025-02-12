@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "./PrimaryHomePage.css"; 
+import "./HomePage.css"; 
 import galleryIcon from '../assets/gallery-icon.jpg';
 import exerciseIcon from '../assets/exercise-icon.jpg';
 import friendIcon from '../assets/friend-icon.jpg';
@@ -12,7 +12,7 @@ function PrimaryHomePage() {
   return (
     <div className="hp-container">
       <nav className="top-bar">
-        <div className="title">CogniSphere</div>
+      <a href="/"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
       </nav>
       <div className="inner-box">
