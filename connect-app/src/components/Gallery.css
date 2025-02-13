@@ -107,7 +107,7 @@
     margin: 10px 0;
     text-align: center;
     border: 2px solid black;
-    
+    color: black; 
     word-wrap: break-word; 
     max-width: 95%; 
 }

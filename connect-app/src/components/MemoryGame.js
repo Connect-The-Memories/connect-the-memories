@@ -1,36 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MemoryGame.css";
-
-const wordPairs = [
-  { thai: "สวัสดี", english: "Hello" },
-  { thai: "ขอบคุณ", english: "Thank you" },
-  { thai: "ใช่", english: "Yes" },
-  { thai: "ไม่ใช่", english: "No" },
-  { thai: "หนังสือ", english: "Book" },
-  { thai: "แมว", english: "Cat" }
-];
+import { easyMediumWords, hardWords } from "../thaiWords";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
+function getRandomWords(wordsArray, count) {
+  const shuffled = shuffleArray(wordsArray);
+  return shuffled.slice(0, count);
+}
+
 function MemoryGame() {
   const navigate = useNavigate();
-  const [showLearningPhase, setShowLearningPhase] = useState(true);
+  const [difficulty, setDifficulty] = useState(null);
+  const [showLearningPhase, setShowLearningPhase] = useState(false);
+  const [selectedWords, setSelectedWords] = useState([]); 
   const [cards, setCards] = useState([]);
   const [selected, setSelected] = useState([]);
   const [matched, setMatched] = useState([]);
+  const [timer, setTimer] = useState(30);
+  const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
-    // Prepare shuffled cards for matching phase
+    if (!gameStarted) return;
+
+    if (timer === 0) {
+      setGameOver(true);
+      return;
+    }
+
+    const countdown = setInterval(() => {
+      setTimer((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [timer, gameStarted]);
+
+  const handleDifficultySelect = (level) => {
+    setDifficulty(level);
+    setShowLearningPhase(true);
+
+    let selectedWords;
+    if (level === "easy") {
+      selectedWords = getRandomWords(easyMediumWords, 3);
+    } else if (level === "medium") {
+      selectedWords = getRandomWords(easyMediumWords, 6);
+    } else {
+      selectedWords = getRandomWords(hardWords, 6);
+    }
+
+    setSelectedWords(selectedWords); // Store selected words
+
     const shuffledCards = shuffleArray([
-      ...wordPairs.map((word) => ({ text: word.thai, match: word.english, type: "thai" })),
-      ...wordPairs.map((word) => ({ text: word.english, match: word.thai, type: "english" }))
+      ...selectedWords.map((word) => ({ text: word.thai, match: word.english, type: "thai" })),
+      ...selectedWords.map((word) => ({ text: word.english, match: word.thai, type: "english" }))
     ]);
+
     setCards(shuffledCards);
-  }, []);
+  };
 
   const handleStartGame = () => {
+    setTimer(30);
+    setGameOver(false);
     setShowLearningPhase(false);
+    setGameStarted(true);
   };
 
   const handleSelect = (index) => {
@@ -64,32 +98,42 @@ function MemoryGame() {
 
       <h1 className="game-title">Match the Thai Words with English Meaning</h1>
 
-      {showLearningPhase ? (
+      {!difficulty ? (
+        <div className="difficulty-selection">
+          <h3>Select Difficulty</h3>
+          <button className="difficulty-button easy" onClick={() => handleDifficultySelect("easy")}>Easy</button>
+          <button className="difficulty-button medium" onClick={() => handleDifficultySelect("medium")}>Medium</button>
+          <button className="difficulty-button hard" onClick={() => handleDifficultySelect("hard")}>Hard</button>
+        </div>
+      ) : showLearningPhase ? (
         <div className="learning-phase">
           <h3>Memorize these words!</h3>
           <div className="learning-grid">
-            {wordPairs.map((pair, index) => (
+            {selectedWords.map((pair, index) => ( 
               <div key={index} className="learning-item">
                 <p className="thai-word">{pair.thai}</p>
                 <p className="english-word">{pair.english}</p>
               </div>
             ))}
           </div>
-          <button className="start-button" onClick={handleStartGame}>
-            I'm Ready!
-          </button>
+          <button className="start-button" onClick={handleStartGame}>I'm Ready!</button>
         </div>
       ) : (
-        <div className="grid">
-          {cards.map((card, index) => (
-            <button
-              key={index}
-              className={`card ${selected.includes(index) || matched.includes(index) ? "selected" : ""}`}
-              onClick={() => handleSelect(index)}
-            >
-              {card.text}
-            </button>
-          ))}
+        <div>
+          <h3 className="timer-text">Time Left: {timer}s</h3>
+          <div className="grid">
+            {cards.map((card, index) => (
+              <button
+                key={index}
+                className={`card ${selected.includes(index) || matched.includes(index) ? "selected" : ""}`}
+                onClick={() => handleSelect(index)}
+                disabled={gameOver}
+              >
+                {card.text}
+              </button>
+            ))}
+          </div>
+          {gameOver && <h3 className="game-over">Time's up! Try again.</h3>}
         </div>
       )}
     </div>
