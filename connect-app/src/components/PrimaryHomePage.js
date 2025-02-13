@@ -27,7 +27,7 @@ function PrimaryHomePage() {
             <p className="action-buttons-text">Media Gallery</p>
           </div>
           <div className="button-container">
-            <button className="action-button exercises-button" onClick={() => navigate("/exercises")}>
+            <button className="action-button exercises-button" onClick={() => navigate("/exerciseselection")}>
               <img src={exerciseIcon} alt="exercise-icon" className="action-button-icon"/></button>
             <p className="action-buttons-text">Exercises</p>
           </div>
