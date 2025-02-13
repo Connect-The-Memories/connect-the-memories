@@ -1,46 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 body {
-    background-color: #ffdc7c;
+    background: linear-gradient(to right, #1a1a2e, #16213e); /* Dark blue gradient */
     font-family: 'DM Sans', sans-serif;
-}
-
-h2 {
-    font-size: 50px;
-    margin-bottom: 20px; 
-}
-
-.create-account-container {
-    background-color: #ffdc7c;
+    color: white;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    margin: 0;
+}
+
+.create-account-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 }
 
 .create-account-box {
     background: white;
-    padding: 30px;
+    padding: 40px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
+    width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .exit-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     background-color: red;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 12px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 5px;
 }
 
@@ -48,28 +49,49 @@ h2 {
     background-color: darkred;
 }
 
+h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #16213e;
+    margin-bottom: 15px;
+}
+
 .input-field {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 12px;
+    margin: 8px 0;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
 }
 
+select.input-field {
+    background: white;
+    cursor: pointer;
+}
+
+.error-text {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
 .create-button {
-    background-color: #ffd154;
+    background-color: #0f3460;  
+    color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 20px;
     margin-top: 15px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
     transition: 0.3s;
+    width: 100%;
 }
 
 .create-button:hover {
-    background-color: #ffb300;
+    background-color: #1a508b;  
 }
+

@@ -11,9 +11,9 @@ function LoginPage() {
       <div className="login-box">
         <h1>Welcome!</h1>
         <button className="btn" onClick={() => navigate("/loggingIn")}>Log In</button>
-        <button className="btn" onClick={() => navigate("/createAccount")}>Create an Account</button>
-        <button className="helpbtn" onClick={() => navigate("/help")}>?</button> 
+        <button className="btn" onClick={() => navigate("/createAccount")}>Create an Account</button> 
       </div>
+      <button className="helpbtn" onClick={() => navigate("/help")}>?</button>
     </div>
   );
 }

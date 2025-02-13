@@ -66,7 +66,7 @@ function MemoryGame() {
 
       {showLearningPhase ? (
         <div className="learning-phase">
-          <h2>Memorize these words!</h2>
+          <h3>Memorize these words!</h3>
           <div className="learning-grid">
             {wordPairs.map((pair, index) => (
               <div key={index} className="learning-item">

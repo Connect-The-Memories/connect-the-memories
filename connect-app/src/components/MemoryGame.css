@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    background-color: #ffdc7c;
 }
 
 .top-bar {
@@ -33,8 +32,9 @@
 
 .game-title {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
+    color: white; 
 }
 
 /* Learning Phase */
@@ -58,6 +58,7 @@
     font-size: 18px;
     font-weight: bold;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    color: black;
 }
 
 .start-button {
@@ -69,6 +70,7 @@
     cursor: pointer;
     font-weight: bold;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .start-button:hover {
@@ -98,4 +100,11 @@
 
 .card.selected {
     background-color: #ffba57;
+}
+
+h3 {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 15px;
 }
