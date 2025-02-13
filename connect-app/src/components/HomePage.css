@@ -30,6 +30,7 @@ a {
 }
 
 .title {
+    font-family: Subjectivity;
     font-size: 30px;
     font-weight: bold;
 }
@@ -124,6 +125,7 @@ a {
 }
 
 .action-buttons-text {
+    color: black;
     font-size: 24px;
     font-weight: bold;
 }
