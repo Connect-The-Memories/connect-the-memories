@@ -1,0 +1,188 @@
+.memory-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95vw;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .back-button {
+    background-color: #ffdc7c;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .instructions-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;     
+    text-align: center;
+    height: calc(100vh - 100px); 
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .instructions-screen h2 {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .instructions-screen p,
+  .instructions-screen li {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #fff;
+  }
+  
+  .instructions-screen ul {
+    list-style-type: none;  
+    margin: 0;
+    padding: 0;
+  }  
+
+  .start-button {
+    background-color: #ffba57;
+    font-size: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    transition: background-color 0.3s;
+    margin-top: 30px;
+  }
+  
+  .start-button:hover {
+    background-color: #ff8f00;
+  }
+  
+  .advanced-color-match {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: sans-serif;
+    color: #fff;
+  }
+  
+  .advanced-color-match h2,
+  .advanced-color-match h3 {
+    margin: 10px 0;
+  }
+  
+  .stimuli {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 20px;
+  }
+  
+  .left-stimulus {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    background-color: #fff;
+    color: black; 
+  }
+  
+  .right-stimulus {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    background-color: #fff;
+    color: black;
+  }
+  
+  .response-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .match-button,
+  .no-match-button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s;
+  }
+  
+  .match-button {
+    background-color: #2ecc71; 
+  }
+  
+  .no-match-button {
+    background-color: #e74c3c;
+  }
+  
+  .match-button:hover,
+  .no-match-button:hover {
+    transform: scale(1.05);
+  }
+  
+  .message {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    min-height: 24px; 
+  }
+  
+  .game-over-screen {
+    text-align: center;
+  }
+  
+  .restart-button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .restart-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .timer-text {
+    color: #fff;  
+  }
+  

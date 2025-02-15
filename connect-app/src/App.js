@@ -9,6 +9,7 @@ import Gallery from "./components/Gallery";
 import ExerciseSelection from "./components/ExerciseSelection";
 import SpeedProcessing from "./components/SpeedProcessing";
 import MemoryGame from "./components/MemoryGame"; 
+import ColorMatch from "./components/ColorMatch";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/exerciseselection" element={<ExerciseSelection />} /> 
             <Route path="/speed-processing" element={<SpeedProcessing />} />
             <Route path="/memorygame" element={<MemoryGame />} /> 
+            <Route path="/colormatch" element={<ColorMatch />} />
         <Route path="/supporthomepage" element={<SupportHomePage />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/createAccount" element={<CreateAccount />} /> 
