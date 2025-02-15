@@ -99,24 +99,20 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Highlight for currently selected cards */
 .card.selected {
     background-color: #ffba57;
 }
 
-/* Highlight for cards that have been guessed (but not yet checked) */
 .card.guessed {
     background-color: #f1c40f;
     color: white;
 }
 
-/* Styles after checking answers */
-/* Correct (matched) cards */
 .card.matched {
     background-color: #4CAF50;
     color: white;
 }
-/* Incorrect guesses */
+
 .card.incorrect {
     background-color: #e74c3c;
     color: white;
@@ -168,7 +164,6 @@ h3 {
     margin-top: 15px;
 }
 
-/* Check Answers Button */
 .check-answers-button {
     background-color: #3498db;
     font-size: 20px;
