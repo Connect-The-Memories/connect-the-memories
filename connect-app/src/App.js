@@ -1,5 +1,5 @@
 import React from "react";
-import LoginPage from "./components/LoginPage"; 
+import LandingPage from "./components/LandingPage";
 import PrimaryHomePage from "./components/PrimaryHomePage";
 import SupportHomePage from "./components/SupportHomePage";
 import HelpPage from "./components/HelpPage";
@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/primaryhomepage" element={<PrimaryHomePage />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/exerciseselection" element={<ExerciseSelection />} /> 

@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css"; 
-import galleryIcon from '../assets/gallery-icon.jpg';
-import friendIcon from '../assets/friend-icon.jpg';
+import galleryIcon from '../assets/gallery-icon.png';
+import friendIcon from '../assets/friend-icon.png';
 
 function SupportHomePage() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function SupportHomePage() {
 
   return (
     <div className="hp-container">
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <a href="/"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
       </nav>

@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
+@font-face {
+    font-family: "Hammersmith One";
+    src: url("../assets/HammersmithOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: Fustat Regular;
+    src: url("../assets/Fustat-Regular.ttf");
+}
+
+@font-face {
+    font-family: Fustat Bold;
+    src: url("../assets/Fustat-Bold.ttf");
+}
+
 body {
     font-family: 'DM Sans', sans-serif;
 }
@@ -18,7 +33,7 @@ a {
     width: 100vw;
 }
 
-.top-bar {
+.nav-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -29,7 +44,7 @@ a {
 }
 
 .title {
-    font-family: "DM Sans", sans-serif;
+    font-family: Hammersmith One;
     font-size: 30px;
     font-weight: bold;
 }

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 body {
-    background: linear-gradient(to right, #16213e, #0f3460); /* Dark blue gradient */
+    background: linear-gradient(150deg, rgba(0,20,71,1) 0%, rgba(87,65,186,1) 100%);
     font-family: 'DM Sans', sans-serif;
     color: white;
     height: 100vh;
