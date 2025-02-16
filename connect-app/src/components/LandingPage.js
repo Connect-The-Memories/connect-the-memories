@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './LandingPage.css';
 
 import mockUsers from "../mockUsers";
-import CogniSphereIcon from '../assets/cognisphere-icon.png';
+import CogniSphereIcon from '../assets/cognisphere-icon-white.png';
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -47,19 +47,13 @@ function LandingPage() {
 
   return (
     <div className="container">
-      {/* <div className="login-box">
-        <h1>Welcome!</h1>
-        <button className="btn" onClick={() => navigate("/loggingIn")}>Log In</button>
-        <button className="btn" onClick={() => navigate("/createAccount")}>Create an Account</button> 
-      </div>
-      <button className="helpbtn" onClick={() => navigate("/help")}>?</button> */}
       <div className="left-side">
         <img src={CogniSphereIcon} alt="CogniSphere Icon" className="landing-page-icon" />
         <h1 className="landing-page-title">CogniSphere</h1>
       </div>
       <div className="right-side">
         <div className="login-box">
-          <div className="welcome-back">Welcome back!</div>
+          <div className="welcome-back">Welcome!</div>
 
           {isLoading ? (
             <p className="loading-text">Logging in...</p>
