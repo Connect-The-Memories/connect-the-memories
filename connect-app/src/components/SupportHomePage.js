@@ -17,20 +17,21 @@ function SupportHomePage() {
         <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
       </nav>
       <div className="inner-box">
-        <div className="action-buttons-container">
+        <div className="welcome-message">Welcome, {userName}</div>
+        <div className="action-buttons-container support-container">
           <div className="button-container">
-            <button className=" action-button gallery-button" onClick={() => navigate("/upload")}>
+            <button className=" action-button" onClick={() => navigate("/upload")}>
               <img src={galleryIcon} alt="gallery icon" className="action-button-icon" />
+              <p className="action-buttons-text">Upload Media</p>
             </button>
-            <p className="action-buttons-text">Upload Media</p>
           </div>
           <div className="button-container">
-            <button className="action-button add-button" onClick={() => navigate("/addprimary")}>
-              <img src={friendIcon} alt="friends icon" className="action-button-icon" /></button>
-            <p className="action-buttons-text">Connect with User</p>
+            <button className="action-button" onClick={() => navigate("/addprimary")}>
+              <img src={friendIcon} alt="friends icon" className="action-button-icon" />
+              <p className="action-buttons-text">Add a Primary User</p>
+            </button>
           </div>
         </div>
-        <div className="welcome-message">Welcome, {userName}</div>
       </div>
     </div>
   );
