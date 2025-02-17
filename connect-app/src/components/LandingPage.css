@@ -230,3 +230,10 @@ hr {
     background-color: #f0f0f0;
     transform: scale(1.1);
 }
+
+.or-text {
+    font-family: Fustat Bold;
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateAccount.css";
 import mockUsers from "../mockUsers";
+import CogniSphereIcon from '../assets/cognisphere-icon-white.png';
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function CreateAccount() {
 
     const storedUsers = JSON.parse(sessionStorage.getItem("users")) || [];
 
-    const allUsers = [...mockUsers, ...storedUsers]; 
+    const allUsers = [...mockUsers, ...storedUsers];
 
     if (allUsers.some(user => user.email === email)) {
       setError("Email already in use!");
@@ -36,48 +37,55 @@ function CreateAccount() {
   };
 
   return (
-    <div className="create-account-container">
-      <div className="top-right-title"> CogniSphere </div>
-      <div className="create-account-box">
-        <button className="exit-button" onClick={() => navigate("/")}>X</button>
-        <h2>Create an Account</h2>
-
-        <input 
-          type="email" 
-          placeholder="Email" 
-          className="input-field"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          className="input-field"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input 
-          type="date" 
-          className="input-field"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-        />
-
-        <select 
-          className="input-field" 
-          value={accountType} 
-          onChange={(e) => setAccountType(e.target.value)}
-        >
-          <option value="main">Main User</option>
-          <option value="support">Support User</option>
-          <option value="both"> Both </option>
-        </select>
-
-        {error && <p className="error-text">{error}</p>}
-
-        <button className="create-button" onClick={handleCreateAccount}>Create Account</button>
+    <div className="container">
+      <div className="left-side">
+        <img src={CogniSphereIcon} alt="CogniSphere Icon" className="landing-page-icon" />
+        <h1 className="landing-page-title">CogniSphere</h1>
       </div>
-    </div>
+      <div className="right-side">
+        <div className="login-box">
+          <div className="welcome-back">Create an Account</div>
+
+          <input
+            type="email"
+            placeholder="Email"
+            className="login-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="login-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="date"
+            className="login-input"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+          <select
+            className="login-input"
+            value={accountType}
+            onChange={(e) => setAccountType(e.target.value)}
+          >
+            <option value="main">Main User</option>
+            <option value="support">Support User</option>
+            <option value="both"> Both </option>
+          </select>
+
+          {error && <p className="error-text">{error}</p>}
+
+          <button className="create-account-btn" onClick={handleCreateAccount}>
+            Create an Account
+          </button>
+
+          <a href="/" className="back-to-login">BACK TO LOGIN</a>
+        </div>
+      </div>
+    </div >
   );
 }
 

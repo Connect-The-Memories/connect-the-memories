@@ -82,7 +82,7 @@ function LandingPage() {
           )}
 
           <hr />
-          <p>OR</p>
+          <p className="or-text">OR</p>
           <button className="create-account-btn" onClick={() => navigate("/createAccount")}>
             Create an Account
           </button>
