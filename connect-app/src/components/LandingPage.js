@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './LandingPage.css';
 
-import mockUsers from "../mockUsers";
+import { login } from '../api/auth';
 import CogniSphereIcon from '../assets/cognisphere-icon-white.png';
 
 function LandingPage() {
@@ -14,22 +14,23 @@ function LandingPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = () => {
-    const storedUsers = JSON.parse(sessionStorage.getItem("users")) || [];
-    const allUsers = [...mockUsers, ...storedUsers];
+  const handleLogin = async () => {
+    if (!userName || !password) {
+      setError("All fields are required!");
+      return;
+    }
+    setError("");
 
-    const foundUser = allUsers.find(user => user.email === userName && user.password === password);
+    try {
+      const response = await login(userName, password);
+      const account_type = response.data.account_type;
 
-    if (foundUser) {
-
-      sessionStorage.setItem("loggedInUser", JSON.stringify(foundUser)); // stores user in session storage 
-
-      if (foundUser.type === "main") {
+      if (account_type === "main") {
         setIsLoading(true);
         setTimeout(() => {
-          navigate("/primaryhomepage")
+          navigate("/primaryhomepage");
         }, 2000);
-      } else if (foundUser.type === "support") {
+      } else if (account_type === "support") {
         setIsLoading(true);
         setTimeout(() => {
           navigate("/supporthomepage");
@@ -40,8 +41,15 @@ function LandingPage() {
           navigate("/primaryhomepage");
         }, 2000);
       }
-    } else {
-      setError("Invalid username or password.");
+
+    } catch (error) {
+      setError(error.response.data.message);
+      
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An error occurred while logging in. Please try again.");
+      }
     }
   };
 

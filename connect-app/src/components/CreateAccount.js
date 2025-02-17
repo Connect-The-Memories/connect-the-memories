@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateAccount.css";
-import mockUsers from "../mockUsers";
+import { createAccount } from "../api/auth";
 import CogniSphereIcon from '../assets/cognisphere-icon-white.png';
 
 function CreateAccount() {
@@ -12,28 +12,26 @@ function CreateAccount() {
   const [accountType, setAccountType] = useState("main");
   const [error, setError] = useState("");
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     if (!email || !password || !birthday) {
       setError("All fields are required!");
       return;
     }
+    setError("");
 
-    const storedUsers = JSON.parse(sessionStorage.getItem("users")) || [];
+    try {
+      const respone = await createAccount(email, password, birthday, accountType);
+      // alert("Account created successfully!"); // This alert is not necessary and might want to be removed.
+      navigate("/");
+    } catch (error) {
+      setError(error.response.data.message);
 
-    const allUsers = [...mockUsers, ...storedUsers];
-
-    if (allUsers.some(user => user.email === email)) {
-      setError("Email already in use!");
-      return;
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An error occurred while creating your account. Please try again.");
+      }
     }
-
-    const newUser = { email, password, type: accountType };
-    const updatedUsers = [...storedUsers, newUser];
-
-    sessionStorage.setItem("users", JSON.stringify(updatedUsers)); // stores users in session storage
-
-    alert("Account created successfully!");
-    navigate("/");
   };
 
   return (
