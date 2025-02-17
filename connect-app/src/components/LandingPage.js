@@ -44,12 +44,18 @@ function LandingPage() {
 
     } catch (error) {
       setError(error.response.data.message);
-      
+
       if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message);
       } else {
         setError("An error occurred while logging in. Please try again.");
       }
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
     }
   };
 
@@ -73,6 +79,7 @@ function LandingPage() {
                 className="login-input"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
 
               <input
@@ -81,6 +88,7 @@ function LandingPage() {
                 className="login-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
 
               {error && <p className="error-text">{error}</p>}

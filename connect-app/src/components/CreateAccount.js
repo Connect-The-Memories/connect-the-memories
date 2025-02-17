@@ -34,6 +34,12 @@ function CreateAccount() {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleCreateAccount();
+    }
+  };
+
   return (
     <div className="container">
       <div className="left-side">
@@ -50,6 +56,7 @@ function CreateAccount() {
             className="login-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <input
             type="password"
@@ -57,17 +64,20 @@ function CreateAccount() {
             className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <input
             type="date"
             className="login-input"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <select
             className="login-input"
             value={accountType}
             onChange={(e) => setAccountType(e.target.value)}
+            onKeyDown={handleKeyDown}
           >
             <option value="main">Main User</option>
             <option value="support">Support User</option>
