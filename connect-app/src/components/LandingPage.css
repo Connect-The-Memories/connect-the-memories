@@ -237,3 +237,9 @@ hr {
     margin-top: 5px;
     margin-bottom: 20px;
 }
+
+.error-text {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
