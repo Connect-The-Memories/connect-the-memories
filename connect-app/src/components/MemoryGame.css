@@ -3,6 +3,9 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
 }
 
 .top-bar {
@@ -20,7 +23,7 @@
 }
 
 .back-button {
-    background-color: #ffdc7c;
+    background-color: #ffba57; 
     border: none;
     padding: 10px 20px;
     font-size: 18px;
@@ -141,9 +144,21 @@ h3 {
     transition: 0.3s;
 }
 
-.easy { background-color: #76c7c0; }
-.medium { background-color: #ffba57; }
-.hard { background-color: #e74c3c; }
+.easy { 
+    background-color: #76c7c0;
+    width: 150px;
+    height: 50px;
+}
+.medium { 
+        background-color: #ffba57;
+        width: 150px;
+        height: 50px; 
+}
+.hard { 
+    background-color: #e74c3c; 
+    width: 150px;
+    height: 50px;
+}
 
 .easy:hover { background-color: #5ba09b; }
 .medium:hover { background-color: #e89e38; }

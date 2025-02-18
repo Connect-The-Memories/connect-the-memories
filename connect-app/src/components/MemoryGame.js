@@ -140,10 +140,10 @@ function MemoryGame() {
       <nav className="top-bar">
         <div className="title">CogniSphere</div>
         <button
-          className="back-button"
+          className="logout-button"
           onClick={() => navigate("/exerciseselection")}
         >
-          ← Back
+          ← Back 
         </button>
       </nav>
 

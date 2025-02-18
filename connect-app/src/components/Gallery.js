@@ -23,7 +23,7 @@ function GalleryPage() {
     <div className="gallery-container">
       <nav className="top-bar">
         <div className="title">CogniSphere</div>
-        <button className="back-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
+        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
       </nav>
 
       <div className="toggle-bar">

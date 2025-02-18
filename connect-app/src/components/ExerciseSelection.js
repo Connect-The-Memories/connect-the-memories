@@ -10,7 +10,7 @@ function ExerciseSelection() {
       {/* Top Bar */}
       <nav className="top-bar">
         <div className="title">CogniSphere</div>
-        <button className="back-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
+        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
       </nav>
 
       {/* Exercise Title */}
@@ -22,10 +22,6 @@ function ExerciseSelection() {
           <div className="exercise-icon">⚡</div>
           <p className="exercise-name">Speed Processing</p>
         </div>
-        <div className="exercise-card inactive">
-          <div className="exercise-icon">🔤</div>
-          <p className="exercise-name">Word Search</p>
-        </div>
         <div className="exercise-card" onClick={() => navigate("/memorygame")}>
           <div className="exercise-icon">🧩</div>
           <p className="exercise-name">Thai Game</p>
@@ -34,8 +30,12 @@ function ExerciseSelection() {
           <div className="exercise-icon">🎨</div>
           <p className="exercise-name">Color Match</p>
         </div>   
+        <div className="exercise-card" onClick={() => navigate("/writingexercise")}>
+          <div className="exercise-icon">✍️</div>
+          <p className="exercise-name">Writing Exercise</p>
       </div>
     </div>
+  </div>
   );
 }
 

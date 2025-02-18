@@ -1,0 +1,62 @@
+.writing-exercise-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+  }
+  
+  .media-placeholder {
+    width: 300px;
+    height: 200px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  
+  textarea {
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .char-count {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover:not(:disabled) {
+    background-color: #2980b9;
+  }
+  
+  .submit-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .success-message {
+    color: green;
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: center;
+  }
+   

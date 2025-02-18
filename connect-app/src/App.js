@@ -11,6 +11,7 @@ import AddSupport from "./components/AddSupport";
 import SpeedProcessing from "./components/SpeedProcessing";
 import MemoryGame from "./components/MemoryGame";
 import ColorMatch from "./components/ColorMatch";
+import WritingExercise from "./components/WritingExercise";  
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/speed-processing" element={<SpeedProcessing />} />
         <Route path="/memorygame" element={<MemoryGame />} />
         <Route path="/colormatch" element={<ColorMatch />} />
+        <Route path="/writingexercise" element={<WritingExercise />} /> 
         <Route path="/supporthomepage" element={<SupportHomePage />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/createAccount" element={<CreateAccount />} />
