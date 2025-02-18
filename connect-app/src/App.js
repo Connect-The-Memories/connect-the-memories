@@ -6,6 +6,8 @@ import HelpPage from "./components/HelpPage";
 import CreateAccount from "./components/CreateAccount";
 import Gallery from "./components/Gallery";
 import ExerciseSelection from "./components/ExerciseSelection";
+import AddPrimary from "./components/AddPrimary";
+import AddSupport from "./components/AddSupport";
 import SpeedProcessing from "./components/SpeedProcessing";
 import MemoryGame from "./components/MemoryGame";
 import ColorMatch from "./components/ColorMatch";
@@ -19,6 +21,8 @@ function App() {
         <Route path="/primaryhomepage" element={<PrimaryHomePage />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/exerciseselection" element={<ExerciseSelection />} />
+        <Route path="/addprimary" element={<AddPrimary />} />
+        <Route path="/addsupport" element={<AddSupport />} />
         <Route path="/speed-processing" element={<SpeedProcessing />} />
         <Route path="/memorygame" element={<MemoryGame />} />
         <Route path="/colormatch" element={<ColorMatch />} />

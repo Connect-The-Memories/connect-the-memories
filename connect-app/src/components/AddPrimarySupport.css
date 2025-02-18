@@ -1,0 +1,89 @@
+.addpage-container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.addpage-inner-box {
+    background: rgba(255, 255, 255, 0.7); 
+    padding: 20px; 
+    padding-bottom: 40px;
+    border-radius: 10px; 
+    height: 73%; 
+    width: 90%; 
+    text-align: center; 
+    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.5); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-start;
+    position: relative;
+    align-self: center;
+}
+
+.addpage-title-text {
+    color: black;
+    font-family: Fustat Bold;
+    font-size: 50px;
+    text-decoration: underline;
+
+    margin-bottom: 30px;
+    align-self: flex-start;
+}
+
+.addpage-text {
+    color: black;
+    font-size: 32px;
+    margin: 10px;
+}
+
+.generate-button {
+    color: white;
+    font-family: Fustat Semibold;
+    font-size: 28px;
+    background-color: #5741BA;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px 10px 20px;
+}
+
+.random-code-text {
+    color: black;
+    font-family: Fustat Bold;
+    font-size: 60px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 15px;
+}
+
+.random-code-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-family: Fustat Bold;
+    font-size: 60px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 15px;
+}
+
+.add-code-input {
+    background: white;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.5);
+
+    width: 400px;
+    height: 90px;
+    margin: 20px;
+    font-family: Fustat Semibold;
+    font-size: 40px;
+    border: 1px solid #0F3460;
+    border-radius: 10px;
+    text-align: start;
+    text-indent: 18px;
+    outline: none;
+    transition: border 0.3s ease;
+}
