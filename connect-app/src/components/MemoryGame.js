@@ -193,14 +193,12 @@ function MemoryGame() {
             {cards.map((card, index) => {
               let cardClass = "card";
               if (checked) {
-                // After checking, highlight correct guesses in green and incorrect ones in red.
                 if (matched.includes(index)) {
                   cardClass += " matched";
                 } else if (guessedIndices.includes(index)) {
                   cardClass += " incorrect";
                 }
               } else {
-                // Before checking, all guessed cards get a special highlight.
                 if (guessedIndices.includes(index)) {
                   cardClass += " guessed";
                 }
@@ -213,7 +211,6 @@ function MemoryGame() {
                   key={index}
                   className={cardClass}
                   onClick={() => handleSelect(index)}
-                  // Disable a card if it has already been guessed.
                   disabled={gameOver || guessedIndices.includes(index)}
                 >
                   {card.text}
@@ -226,7 +223,6 @@ function MemoryGame() {
               <button
                 className="check-answers-button"
                 onClick={handleCheckAnswers}
-                // Only enable "Check Answers" if at least one guess has been made.
                 disabled={guesses.length === 0}
               >
                 Check Answers

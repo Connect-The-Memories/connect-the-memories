@@ -20,10 +20,12 @@ function ColorMatch() {
   const [message, setMessage] = useState("");
   const [gameOver, setGameOver] = useState(false);
 
+  const respondedRef = useRef(false);
   const guessStartTimeRef = useRef(null);
 
   const setupNewStimuli = () => {
     setMessage("");
+    respondedRef.current = false;
   
     let colorPool = [...initialColors];
     if (guessCount >= 5) {
@@ -74,8 +76,27 @@ function ColorMatch() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, gameOver]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (!ready || gameOver) return;
+
+      const key = event.key.toLowerCase();
+      if (key === "m") {
+        handleUserResponse(true);
+      } else if (key === "n") {
+        handleUserResponse(false);
+      } 
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [ready, gameOver, leftColor, rightWord, guessStartTimeRef.current]); 
+      // handleUserResponse is not in the dependency array
+      // because its an internal function that gets redefined on each render
+
   const handleUserResponse = (isUserSayingMatch) => {
-    if (gameOver) return;
+    if (gameOver || respondedRef.current) return;
+    respondedRef.current = true;  
 
     const reactionTime = Date.now() - guessStartTimeRef.current; 
     const isMatch = (leftColor === rightWord);
@@ -143,6 +164,10 @@ function ColorMatch() {
             If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.” 
             Otherwise, click “No Match.” 
             Answer quickly for a reaction-time bonus!
+          </p>
+          <p> 
+          You can use your keyboard (press "M" for Match and "N" for No Match) 
+          or click the buttons with your mouse/pad.
           </p>
           <button className="start-button" onClick={() => setReady(true)}>
             I'm Ready!
