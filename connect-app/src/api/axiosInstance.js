@@ -2,9 +2,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "https://flask-backend-qgnd4kcnka-uc.a.run.app/api" || "http://127.0.0.1:5000/api",
+  baseURL: process.env.REACT_APP_API_BASE_URL || "http://127.0.0.1:5000/api",
+  withCredentials: true,
 });
-
-axiosInstance.defaults.withCredentials = true;
 
 export default axiosInstance;
