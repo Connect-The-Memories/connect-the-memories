@@ -60,3 +60,13 @@
     text-align: center;
   }
    
+  .instructions-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;     
+    text-align: center;
+    height: 70vh; 
+    margin: 0;
+    padding: 20px;
+  }
