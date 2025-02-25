@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; 
-import "./ColorMatch.css";
+import { useNavigate } from "react-router-dom";
+import "./ColorMatch.css"; 
+import "./Shapes.css";
 
-const initialColors = ["red", "blue", "green", "yellow"];
-const extraColors = ["purple", "orange"];
-const totalTime = 45; 
+const initialShapes = ["circle", "square", "triangle", "star"];
+const extraShapes = ["diamond", "heart", "pentagon", "hexagon", "oval"];
+const totalTime = 45;
 
-function ColorMatch() {
+function ShapeMatch() {
   const navigate = useNavigate();
 
   const [ready, setReady] = useState(false);
-  const [countdown, setCountdown] = useState(null); // Countdown state
+  const [countdown, setCountdown] = useState(null);
 
   const [score, setScore] = useState(0);
-  const [guessCount, setGuessCount] = useState(0); 
-  const [leftWord, setLeftWord] = useState("");  
-  const [leftColor, setLeftColor] = useState(""); 
-  const [rightWord, setRightWord] = useState(""); 
+  const [guessCount, setGuessCount] = useState(0);
+  const [leftShape, setLeftShape] = useState("");
+  const [displayedShape, setDisplayedShape] = useState("");
+  const [rightShapeName, setRightShapeName] = useState("");
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [message, setMessage] = useState("");
   const [gameOver, setGameOver] = useState(false);
@@ -27,33 +28,57 @@ function ColorMatch() {
   const setupNewStimuli = () => {
     setMessage("");
     respondedRef.current = false;
-  
-    let colorPool = [...initialColors];
+
+    let shapePool = [...initialShapes];
     if (guessCount >= 5) {
-      colorPool = [...initialColors, ...extraColors];
+      shapePool = [...initialShapes, ...extraShapes];
     }
-  
-    const randomLeftWord = colorPool[Math.floor(Math.random() * colorPool.length)];
-    const randomLeftColor = colorPool[Math.floor(Math.random() * colorPool.length)];
-  
-    setLeftWord(randomLeftWord);
-    setLeftColor(randomLeftColor);
-  
-    const isMatchTrial = Math.random() < 0.4; // 40% chance
-  
-    let newRightWord;
+
+    const randomLeftShape = shapePool[Math.floor(Math.random() * shapePool.length)];
+    setLeftShape(randomLeftShape);
+
+    const shapeMap = {
+      circle: <div className="shape circle"></div>,
+      square: <div className="shape square"></div>,
+      triangle: <div className="shape triangle"></div>,
+      star: (
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="black">
+          <polygon points="12,2 15,10 24,10 17,15 20,23 12,18 4,23 7,15 0,10 9,10"/>
+        </svg>
+      ),
+      diamond: <div className="shape diamond"></div>,
+      pentagon: <div className="shape pentagon"></div>,
+      hexagon: <div className="shape hexagon"></div>,
+      heart: (
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="black">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      ),
+      oval: (
+        <svg width="80" height="50" viewBox="0 0 100 50" fill="black">
+          <ellipse cx="50" cy="25" rx="45" ry="22"/>
+        </svg>
+      ) 
+    };
+    
+    
+
+    setDisplayedShape(shapeMap[randomLeftShape]);
+
+    const isMatchTrial = Math.random() < 0.4; // 40% chance for a match
+
+    let newRightShapeName;
     if (isMatchTrial) {
-      newRightWord = randomLeftColor;
+      newRightShapeName = randomLeftShape;
     } else {
-      const nonMatchPool = colorPool.filter((color) => color !== randomLeftColor);
-      newRightWord = nonMatchPool[Math.floor(Math.random() * nonMatchPool.length)];
+      const nonMatchPool = shapePool.filter((shape) => shape !== randomLeftShape);
+      newRightShapeName = nonMatchPool[Math.floor(Math.random() * nonMatchPool.length)];
     }
-  
-    setRightWord(newRightWord);
+
+    setRightShapeName(newRightShapeName);
     guessStartTimeRef.current = Date.now();
   };
 
-  // Countdown Effect
   useEffect(() => {
     if (countdown === null) return;
 
@@ -62,7 +87,7 @@ function ColorMatch() {
       return () => clearTimeout(timer);
     } else {
       setCountdown(null);
-      setReady(true); // Start the game when countdown reaches 0
+      setReady(true);
     }
   }, [countdown]);
 
@@ -98,19 +123,19 @@ function ColorMatch() {
         handleUserResponse(true);
       } else if (key === "n") {
         handleUserResponse(false);
-      } 
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [ready, gameOver, leftColor, rightWord, guessStartTimeRef.current]); 
+  }, [ready, gameOver, leftShape, rightShapeName, guessStartTimeRef.current]);
 
   const handleUserResponse = (isUserSayingMatch) => {
     if (gameOver || respondedRef.current) return;
-    respondedRef.current = true;  
+    respondedRef.current = true;
 
-    const reactionTime = Date.now() - guessStartTimeRef.current; 
-    const isMatch = (leftColor === rightWord);
+    const reactionTime = Date.now() - guessStartTimeRef.current;
+    const isMatch = leftShape === rightShapeName;
 
     let isCorrect = false;
     if (isUserSayingMatch && isMatch) {
@@ -143,7 +168,7 @@ function ColorMatch() {
     setTimeLeft(totalTime);
     setGameOver(false);
     setCountdown(null);
-    setReady(false); 
+    setReady(false);
   };
 
   return (
@@ -151,10 +176,7 @@ function ColorMatch() {
       {/* Navigation Bar */}
       <nav className="top-bar">
         <div className="title">CogniSphere</div>
-        <button
-          className="logout-button"
-          onClick={() => navigate("/exerciseselection")}
-        >
+        <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>
       </nav>
@@ -168,28 +190,26 @@ function ColorMatch() {
         <div className="instructions-screen">
           <h2>Instructions</h2>
           <p>
-            Welcome to Color Match! You have 45 seconds total to see how many matches you can get. 
+            Welcome to Shape Match! You have 45 seconds total to see how many matches you can get.
             Each time, you'll see:
           </p>
           <ul>
-            <li><strong>Left:</strong> A color word displayed in a random color (e.g., "BLUE" in red text).</li>
-            <li><strong>Right:</strong> A color word in neutral text (e.g., "red").</li>
+            <li><strong>Left:</strong> A shape displayed visually (e.g., ⬛).</li>
+            <li><strong>Right:</strong> A shape name in text (e.g., "square").</li>
           </ul>
           <p>
-            If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.” 
-            Otherwise, click “No Match.” 
+            If the **shape on the left matches the shape name on the right**, click “Match.” Otherwise, click “No Match.” 
             Answer quickly for a reaction-time bonus!
           </p>
-          <p> 
-            You can use your keyboard (press "M" for Match and "N" for No Match) 
-            or click the buttons with your mouse/pad.
+          <p>
+            You can use your keyboard (press "M" for Match and "N" for No Match) or click the buttons with your mouse/pad.
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
             I'm Ready!
           </button>
         </div>
       ) : (
-        <div className="advanced-color-match">
+        <div className="advanced-shape-match">
           {!gameOver ? (
             <div>
               <h2 className="timer-text">Time Left: {timeLeft}s</h2>
@@ -197,10 +217,12 @@ function ColorMatch() {
 
               {/* Display the two stimuli */}
               <div className="stimuli">
-                <div className="left-stimulus" style={{ color: leftColor }}>
-                  {leftWord}
+                {/* Left Stimulus: Shape Icon */}
+                <div className="left-stimulus">
+                  {displayedShape}
                 </div>
-                <div className="right-stimulus">{rightWord}</div>
+                {/* Right Stimulus: Shape Name */}
+                <div className="right-stimulus">{rightShapeName}</div>
               </div>
 
               {/* Buttons for user response */}
@@ -227,4 +249,4 @@ function ColorMatch() {
   );
 }
 
-export default ColorMatch;
+export default ShapeMatch;

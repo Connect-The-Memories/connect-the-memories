@@ -1,0 +1,44 @@
+.shape {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    display: inline-block;
+  }
+  
+  .circle {
+    border-radius: 50%;
+  }
+  
+  .square {
+    /* Default shape is a square */
+  }
+  
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid black;
+    background: none;
+  }
+
+  .star {
+
+  }
+  
+  .diamond {
+    transform: rotate(45deg);
+  }
+  
+  .pentagon {
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  }
+  
+  .hexagon {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+
+  .heart {
+    
+  }
+  

@@ -193,4 +193,21 @@
   .timer-text {
     color: #fff;  
   }
+
+  .countdown-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay effect */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    transition: opacity 0.5s ease-in-out;
+}
   

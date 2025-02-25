@@ -12,6 +12,8 @@ import SpeedProcessing from "./components/SpeedProcessing";
 import MemoryGame from "./components/MemoryGame";
 import ColorMatch from "./components/ColorMatch";
 import WritingExercise from "./components/WritingExercise";  
+import OptionsForMatching from "./components/OptionsForMatching";
+import ShapeMatch from "./components/ShapeMatch";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -26,7 +28,9 @@ function App() {
         <Route path="/addsupport" element={<AddSupport />} />
         <Route path="/speed-processing" element={<SpeedProcessing />} />
         <Route path="/memorygame" element={<MemoryGame />} />
+        <Route path="/optionsformatching" element={<OptionsForMatching />} /> 
         <Route path="/colormatch" element={<ColorMatch />} />
+        <Route path="/shapematch" element={<ShapeMatch />} /> 
         <Route path="/writingexercise" element={<WritingExercise />} /> 
         <Route path="/supporthomepage" element={<SupportHomePage />} />
         <Route path="/help" element={<HelpPage />} />
