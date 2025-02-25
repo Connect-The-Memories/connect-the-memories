@@ -10,3 +10,35 @@
 .back-to-login:hover {
     transform: scale(1.05);
 }
+
+.name-input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 7px 0;
+}
+
+.name-input {
+    background: white;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.5);
+
+    width: 47%;
+    height: 55px;
+    font-family: Fustat Semibold;
+    font-size: 16px;
+    border: 1px solid #0F3460;
+    border-radius: 10px;
+    text-align: start;
+    text-indent: 18px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.name-input:focus {
+    border: 2px solid #0f3460;
+}
+
+.name-input::placeholder {
+    color: black;
+}

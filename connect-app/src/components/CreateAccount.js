@@ -6,6 +6,8 @@ import CogniSphereIcon from '../assets/cognisphere-icon-white.png';
 
 function CreateAccount() {
   const navigate = useNavigate();
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [birthday, setBirthday] = useState("");
@@ -49,6 +51,25 @@ function CreateAccount() {
       <div className="right-side">
         <div className="login-box">
           <div className="welcome-back">Create an Account</div>
+
+          <div className="name-input-container">
+            <input
+              type="text"
+              placeholder="First Name"
+              className="name-input"
+              value={fname}
+              onChange={(e) => setFname(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className="name-input"
+              value={lname}
+              onChange={(e) => setLname(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
 
           <input
             type="email"
