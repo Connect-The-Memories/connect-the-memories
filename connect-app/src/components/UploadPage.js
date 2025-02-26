@@ -7,7 +7,6 @@ import UploadIcon from '../assets/upload-icon-white.png';
 function UploadPage() {
     const navigate = useNavigate();
 
-    //     const [randomCode, setRandomCode] = useState('');
     const [message, setMessage] = useState("");
     const [files, setFiles] = useState([]);
 
