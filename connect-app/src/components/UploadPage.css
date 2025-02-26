@@ -1,0 +1,107 @@
+.upload-container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.upload-inner-box {
+    background: rgba(255, 255, 255, 0.7); 
+    padding: 20px; 
+    border-radius: 10px; 
+    height: 78%; 
+    width: 90%; 
+    text-align: center; 
+    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.5); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-start;
+    position: relative;
+    align-self: center;
+}
+
+.upload-title-text {
+    font-family: Fustat Bold;
+    font-size: 38px;
+    color: black;
+    margin: 15px;
+}
+
+.upload-message-input {
+    width: 80%;
+}
+
+.upload-message-input::placeholder {
+color: black;
+}
+
+.drag-drop-area {
+    background-color: #3d289a;
+    width: 80%;
+    max-height: 30%;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.drag-drop-text {
+    font-family: Fustat Semibold;
+    font-size: 24px;
+    color: white;
+    margin: 10px;
+}
+
+.upload-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.file-input {
+    font-family: Fustat Semibold;
+    font-size: 16px;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.file-preview-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    background-color: rgba(255, 255, 255, 0.631);
+
+    max-height: 100px;
+    max-width: 95%;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}
+
+.file-preview-text {
+    font-size: 14px;
+    margin: 5px;
+    color: black;
+}
+
+.upload-button {
+    color: white;
+    font-family: Fustat Semibold;
+    font-size: 28px;
+    background-color: #5741BA;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px 10px 20px;
+}
+
+.upload-button:hover {
+    background-color: #3d289a;
+}
