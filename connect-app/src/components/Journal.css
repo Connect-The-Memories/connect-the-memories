@@ -1,0 +1,78 @@
+/* Journal Page Styles */
+.journal-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  
+  }
+  
+  .journal-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1000px; 
+    width: 100%; 
+    min-height: 400px; 
+    background: #FFFFFFB3;
+    padding: 30px; 
+    border-radius: 10px;
+    flex-wrap: wrap; 
+    align-items: flex-start; 
+  }
+  
+  .journal-entry {
+    flex: 2;
+    padding: 20px;
+  }
+  
+  .date-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .nav-button {
+    background-color: #4a4a9e;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .date-text {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .entry-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .empty-entry {
+    font-size: 16px;
+    color: gray;
+    text-align: center;
+  }
+  
+  .calendar-section {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+  
+  .journal-calendar {
+    width: 250px; 
+    max-width: 100%; 
+    font-size: 14px; 
+    padding: 5px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  }

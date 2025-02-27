@@ -15,6 +15,7 @@ import ColorMatch from "./components/ColorMatch";
 import WritingExercise from "./components/WritingExercise";
 import OptionsForMatching from "./components/OptionsForMatching";
 import ShapeMatch from "./components/ShapeMatch";
+import Journal from "./components/Journal";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/exerciseselection" element={<ExerciseSelection />} />
         <Route path="/addprimary" element={<AddPrimary />} />
         <Route path="/addsupport" element={<AddSupport />} />
+        <Route path="/journal" element={<Journal />} />
         <Route path="/upload" element={<UploadPage />} />
         <Route path="/speed-processing" element={<SpeedProcessing />} />
         <Route path="/memorygame" element={<MemoryGame />} />
