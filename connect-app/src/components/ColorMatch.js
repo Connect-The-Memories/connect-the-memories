@@ -205,8 +205,8 @@ function ColorMatch() {
 
               {/* Buttons for user response */}
               <div className="response-buttons">
-                <button className="match-button" onClick={() => handleUserResponse(true)}>Match</button>
                 <button className="no-match-button" onClick={() => handleUserResponse(false)}>No Match</button>
+                <button className="match-button" onClick={() => handleUserResponse(true)}>Match</button>
               </div>
 
               <p className="message">{message}</p>

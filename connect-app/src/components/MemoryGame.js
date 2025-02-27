@@ -11,6 +11,9 @@ function getRandomWords(wordsArray, count) {
 }
 
 function MemoryGame() {
+  const [currentRound, setCurrentRound] = useState(1);
+  const totalRounds = 3; 
+
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState(null);
   const [showLearningPhase, setShowLearningPhase] = useState(false);
@@ -131,7 +134,48 @@ function MemoryGame() {
     });
     setMatched(newMatched);
     setChecked(true);
+    setGameOver(false);  
   };
+
+  const handleNextRound = () => {
+    if (currentRound < totalRounds) {
+      setCurrentRound((prevRound) => prevRound + 1);
+      setChecked(false);
+      setSelected([]);
+      setGuesses([]);
+      setMatched([]);
+      setGameOver(false);
+      setShowLearningPhase(true); 
+  
+      let selectedWordsData =
+        difficulty === "easy"
+          ? getRandomWords(easyMediumWords, 3)
+          : getRandomWords(hardWords, 6);
+  
+      setSelectedWords(selectedWordsData);
+  
+      const shuffledCards = shuffleArray([
+        ...selectedWordsData.map((word) => ({
+          text: word.thai,
+          match: word.english,
+          type: "thai",
+        })),
+        ...selectedWordsData.map((word) => ({
+          text: word.english,
+          match: word.thai,
+          type: "english",
+        })),
+      ]);
+      setCards(shuffledCards);
+  
+      let initialTime = 30;
+      if (difficulty === "medium") initialTime = 45;
+      if (difficulty === "hard") initialTime = 60;
+      
+      setTimer(initialTime);
+    }
+  };
+  
 
   const guessedIndices = guesses.flat();
 
@@ -188,6 +232,7 @@ function MemoryGame() {
         </div>
       ) : (
         <div>
+          <h2 className="round-text">Round {currentRound} of {totalRounds}</h2>
           <h3 className="timer-text">Time Left: {timer}s</h3>
           <div className="grid">
             {cards.map((card, index) => {
@@ -244,6 +289,14 @@ function MemoryGame() {
                 }{" "}
                 out of {(cards.length / 2)} correct!
               </p>
+            )}
+            {checked && currentRound < totalRounds && (
+              <button
+                className="check-answers-button"
+                onClick={() => handleNextRound()}
+              >
+                Next Round
+              </button>
             )}
           </div>
           {gameOver && <h3 className="game-over">Time's up!</h3>}
