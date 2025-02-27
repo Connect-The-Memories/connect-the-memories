@@ -1,8 +1,10 @@
 import axiosInstance from "./axiosInstance";
 
 // Create an Account
-export async function createAccount(email, password, birthday, accountType) {
+export async function createAccount(fname, lname, email, password, birthday, accountType) {
   return axiosInstance.post('/auth/account', {
+    first_name: fname,
+    last_name: lname,
     email,
     password,
     dob: birthday,

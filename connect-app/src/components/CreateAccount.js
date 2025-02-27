@@ -22,7 +22,7 @@ function CreateAccount() {
     setError("");
 
     try {
-      const respone = await createAccount(email, password, birthday, accountType);
+      const response = await createAccount(fname, lname, email, password, birthday, accountType);
       // alert("Account created successfully!"); // This alert is not necessary and might want to be removed.
       navigate("/");
     } catch (error) {
