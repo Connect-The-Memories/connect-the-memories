@@ -16,6 +16,7 @@ import WritingExercise from "./components/WritingExercise";
 import OptionsForMatching from "./components/OptionsForMatching";
 import ShapeMatch from "./components/ShapeMatch";
 import Journal from "./components/Journal";
+import SurveyPage from "./components/SurveyPage"; 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/supporthomepage" element={<SupportHomePage />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/survey" element={<SurveyPage />} /> {/* Temporary Survey Route */} 
       </Routes>
     </Router>
   );
