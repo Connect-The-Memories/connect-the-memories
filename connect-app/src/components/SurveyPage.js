@@ -79,7 +79,7 @@ function SurveyPage() {
             </a>
             <button
               className="logout-button"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/presurvey")}
             >
               ← Back
             </button>
@@ -126,7 +126,7 @@ function SurveyPage() {
                 <button
                   onClick={handleNext}
                   disabled={!isStepComplete()}
-                  className={`check-answers-button ${!isStepComplete() ? "disabled" : ""}`}
+                  className={`next-button ${!isStepComplete() ? "disabled" : ""}`}
                 >
                   Next
                 </button>
@@ -153,7 +153,7 @@ function SurveyPage() {
                 <button
                   onClick={handleNext}
                   disabled={!isStepComplete()}
-                  className={`check-answers-button ${!isStepComplete() ? "disabled" : ""}`}
+                  className={`next-button ${!isStepComplete() ? "disabled" : ""}`}
                 >
                   Next
                 </button>
@@ -182,7 +182,7 @@ function SurveyPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={!isStepComplete()}
-                  className={`check-answers-button ${!isStepComplete() ? "disabled" : ""}`}
+                  className={`next-button ${!isStepComplete() ? "disabled" : ""}`}
                 >
                   Finish
                 </button>

@@ -50,4 +50,27 @@
     font-size: 16px;
     cursor: pointer;
   }
+
+  .next-button{
+    background-color: #3498db;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+    margin-left: -1px;
+  }
+
+  .next-button:hover {
+    background-color: #2980b9;
+}
+
+.next-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
   

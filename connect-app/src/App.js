@@ -17,6 +17,7 @@ import OptionsForMatching from "./components/OptionsForMatching";
 import ShapeMatch from "./components/ShapeMatch";
 import Journal from "./components/Journal";
 import SurveyPage from "./components/SurveyPage"; 
+import PreSurvey from "./components/PreSurvey";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -40,7 +41,8 @@ function App() {
         <Route path="/supporthomepage" element={<SupportHomePage />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/createAccount" element={<CreateAccount />} />
-        <Route path="/survey" element={<SurveyPage />} /> {/* Temporary Survey Route */} 
+        <Route path="/survey" element={<SurveyPage />} /> 
+        <Route path="/presurvey" element={<PreSurvey />} /> 
       </Routes>
     </Router>
   );
