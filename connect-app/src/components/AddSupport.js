@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddPrimarySupport.css";
+import { generateOTP } from "../api/database";
 
 function AddSupport() {
     const navigate = useNavigate();
@@ -8,11 +9,13 @@ function AddSupport() {
     const [randomCode, setRandomCode] = useState('');
 
     const handleGenerateCode = async () => {
-        // Generate a 6-digit random number
-        const code = Math.floor(100000 + Math.random() * 900000).toString();
-        setRandomCode(code);
-
-        // Send code to backend
+        try{
+            const response = await generateOTP();
+            const code = response.data.otp;
+            setRandomCode(code);
+        } catch (error) {
+            // Empty for now
+        }
     };
 
 

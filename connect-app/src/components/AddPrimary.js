@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddPrimarySupport.css";
+import { validateOTP } from "../api/database";
 
 function AddPrimary() {
     const navigate = useNavigate();
@@ -8,9 +9,19 @@ function AddPrimary() {
     const [code, setCode] = useState("");
 
     const handleConnectUser = async () => {
-        // Handle connection with backend
+        try{
+            const response = await validateOTP(code);
+            const msg = response.data.msg;
+        } catch (error) {
+            // Empty for now
+        }
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleConnectUser();
+        }
+      };
 
     return (
         <div className="addpage-container">
@@ -27,7 +38,7 @@ function AddPrimary() {
                     className="add-code-input"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    onKeyDown={handleConnectUser}
+                    onKeyDown={handleKeyDown}
                 />
                 <button onClick={handleConnectUser} className="generate-button">Connect!</button>
             </div>
