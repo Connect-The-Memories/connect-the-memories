@@ -33,8 +33,8 @@ a {
     justify-content: space-between;
     align-items: center;
     min-width: 95vw;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .title {
@@ -48,7 +48,7 @@ a {
     padding: 20px; 
     padding-bottom: 40px;
     border-radius: 10px; 
-    height: 73%; 
+    height: 75%; 
     width: 90%; 
     text-align: center; 
     box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.5); 
@@ -84,42 +84,70 @@ a {
     justify-content: space-between;
     align-items: center;
     min-width: 100%;
-    min-height: 15%;
+    min-height: 14%;
 }
 
 .top-row-button {
     height: 90%;
-    width: 27vw;
+    width: 25vw;
+    min-height: 50px;
+    min-width: 150px;
 
-    font-family: Fustat Regular;
+    font-family: Fustat Semibold;
     font-size: 25px;
-    color: white;
+    color: black;
 
-    background: #5741BA;
+    background: #f0c5ff;
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3); 
     border: none;
     border-radius: 20px;
 }
 
 .top-row-button:hover {
-    background-color: #3d289a;
+    background-color: #e29efa;
 }
 
 .action-button {
-    height: 27vw;
-    width: 27vw;
+    height: 25vw;
+    width: 25vw;
+    min-width: 150px;
+    min-height: 150px;
     max-height: 600px;
     max-width: 600px;
     
-    background-color: #00206F;
-    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3); 
-    border: none;
-    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
     padding: 15px;
 }
 
-.action-button:hover {
-    background-color: #001855;
+.gallery-button {
+    border: 20px #FFAED0;
+    border-style: solid;
+    border-radius: 20px;
+}
+
+.gallery-button:hover {
+    border-color: #ec6ca1;
+}
+
+.exercise-button {
+    border: 20px #FFBB5A;
+    border-style: solid;
+    border-radius: 20px;
+}
+
+.exercise-button:hover {
+    border-color: #f7960d;
+}
+
+.add-button {
+    border: 20px #99D9B1;
+    border-style: solid;
+    border-radius: 20px;
+}
+
+.add-button:hover {
+    border-color: #4abd76;
 }
 
 .action-button-icon {
@@ -133,7 +161,7 @@ a {
     justify-content: space-between;
     width: 100%;
     height: 70%;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .support-container {
@@ -144,7 +172,7 @@ a {
     font-family: Fustat Regular;
     font-size: 30px;
     font-weight: bold;
-    color: white;
+    color: black;
 }
 
 .welcome-message {
