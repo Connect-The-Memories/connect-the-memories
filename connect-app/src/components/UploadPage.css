@@ -11,14 +11,14 @@
     background: rgba(255, 255, 255, 0.7); 
     padding: 20px; 
     border-radius: 10px; 
-    height: 78%; 
-    width: 90%; 
+    height: 82%; 
+    width: 92%; 
     text-align: center; 
     box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.5); 
     display: flex; 
-    flex-direction: column; 
+    flex-direction: row; 
     align-items: center; 
-    justify-content: flex-start;
+    justify-content: space-between;
     position: relative;
     align-self: center;
 }
@@ -27,24 +27,121 @@
     font-family: Fustat Bold;
     font-size: 38px;
     color: black;
-    margin: 15px;
+    margin: 10px;
+    text-decoration: underline;
+}
+
+.upload-left-side {
+    width: 25%;
+    height: 97%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+.upload-right-side {
+    width: 75%;
+    height: 97%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.upload-left-text {
+    color: black;
+    font-family: Fustat Semibold;
+    font-size: 24px;
+}
+
+.primary-dropdown {
+    font-family: Fustat Semibold;
+    font-size: 16px;
+    border-color: #5741BA;
+    border-width: 2px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+}
+
+.upload-type-button {
+    height: 45px;
+    font-size: 20px;
+    font-family: Fustat Regular;
+    color: white;
+    background-color: #5741BA;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+    margin: 5px;
+}
+
+.upload-type-button:hover {
+    background-color: #9985F0;
+}
+
+.upload-preview {
+    width: 100%;
+    height: 90%;
+}
+
+.media-preview-box {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 60%;
+}
+
+.msg-preview-text {
+    color: black;
+    font-size: 18px;
+    border-color: black;
+    border-width: 1px;
+    word-break: break-all;
+    text-align: left;
+    margin: 6px;
 }
 
 .upload-message-input {
-    width: 80%;
+    width: 97%;
+    height: 100px;
+    font-family: Fustat Regular;
 }
 
 .upload-message-input::placeholder {
-color: black;
+    font-family: Fustat Regular;
+    color: black;
+}
+
+.add-another-button {
+    width: 100px;
+    font-family: Fustat Semibold;
+    background-color: #ffba57;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+    margin: 5px;
+    padding: 8px;
+}
+
+.add-another-button:hover {
+    background-color: #ff9c11;
 }
 
 .drag-drop-area {
     background-color: #3d289a;
-    width: 80%;
-    max-height: 30%;
+    width: 100%;
+    height: 130px;
     border-radius: 15px;
-    padding: 10px;
-    margin: 10px;
 
     display: flex;
     flex-direction: column;
@@ -85,21 +182,81 @@ color: black;
     overflow-y: auto;
 }
 
-.file-preview-text {
-    font-size: 14px;
-    margin: 5px;
-    color: black;
+.file-preview-item {
+    height: 250px;
+    display: flex;
+    flex-direction: row;
 }
 
+.file-preview-left {
+    width: 30%;
+    margin: 5px;
+}
+
+.image-preview {
+    width: 200px;
+    height: 200px;
+}
+
+.video-preview {
+    width: 200px;
+    height: 200px;
+}
+
+.filename-text {
+    font-size: 14px;
+    margin: 0px;
+    color: black;
+    word-break: break-all;
+}
+
+.media-date-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.media-date-text {
+    color: black;
+    font-size: 18px;
+    margin: 5px;
+}
+
+.media-date-input {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Fustat Semibold;
+    font-size: 18px;
+    border-radius: 8px;
+    border-color: #5741BA;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+}
+
+.file-preview-right {
+    width: 70%;
+    height: 250px;
+}
+
+.file-description-input {
+    width: 95%;
+    height: 64%;
+    font-family: Fustat Regular;
+}
+
+.file-decription-input::placeholder {
+    font-family: Fustat Regular;
+    color: black;
+}
 .upload-button {
+    width: 200px;
+    height: 50px;
     color: white;
     font-family: Fustat Semibold;
-    font-size: 28px;
+    font-size: 24px;
     background-color: #5741BA;
     border: none;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
-    padding: 10px 20px 10px 20px;
 }
 
 .upload-button:hover {
