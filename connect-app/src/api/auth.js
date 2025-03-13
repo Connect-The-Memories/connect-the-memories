@@ -24,3 +24,8 @@ export async function login(email, password) {
 export async function logout() {
     return axiosInstance.post('/auth/account/logout');
 }
+
+// Get User Info
+export async function getUserInfo() {
+    return axiosInstance.get('/auth/account');
+}
