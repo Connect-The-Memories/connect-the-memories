@@ -18,6 +18,7 @@ import ShapeMatch from "./components/ShapeMatch";
 import Journal from "./components/Journal";
 import SurveyPage from "./components/SurveyPage"; 
 import PreSurvey from "./components/PreSurvey";
+import EventsExercise from "./components/EventsExercise"; 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/createAccount" element={<CreateAccount />} />
         <Route path="/survey" element={<SurveyPage />} /> 
         <Route path="/presurvey" element={<PreSurvey />} /> 
+        <Route path="/eventsexercise" element={<EventsExercise />} />
       </Routes>
     </Router>
   );
