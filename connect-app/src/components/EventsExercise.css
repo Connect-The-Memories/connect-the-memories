@@ -10,7 +10,6 @@
   padding: 10px;
 }
 
-/* Drop zones arranged horizontally */
 .dropzones-container {
   margin-bottom: 30px;
 }
@@ -20,14 +19,12 @@
   gap: 20px;
 }
 
-/* Draggable image styling */
 .draggable-image {
   width: 300px;
   height: 200px;
   cursor: grab;
 }
 
-/* The images will fill the container and be cropped via object-fit */
 .draggable-image .image {
   width: 100%;
   height: 100%;
@@ -46,29 +43,56 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 5rem; /* Adjust as needed */
-  color: rgba(0, 0, 0, 0.1); /* Faded color */
-  pointer-events: none; /* So the user can still drag over it */
-  user-select: none;    /* Prevent text selection */
-  z-index: 0;           /* Ensure it's behind any dropped image */
+  font-size: 5rem;
+  color: rgba(0, 0, 0, 0.1); 
+  pointer-events: none; 
+  user-select: none;    
+  z-index: 0;          
 }
 
-/* Ensure dropped images (or other children) appear above the label */
 .droppable-container > *:not(.zone-label) {
   position: relative;
   z-index: 1;
 }
 
 .droppable-container {
-  border: 2px solid rgba(255, 255, 255, 0.3); /* or a lighter gray */
+  border: 5px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  gap: 2px;
 }
+
+.image-date {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.zone-and-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1rem; 
+}
+
 .zone-label {
-  font-size: 4rem; /* slightly smaller than 5rem */
+  font-size: 4rem; 
   color: rgba(0, 0, 0, 0.1); 
 }
 
 .droppable-container:hover {
-  border-color: #fff; /* or your highlight color */
+  border-color: #fff; 
+}
+
+.redo-button {
+  background-color: #3498db;
+  font-size: 22px; /* slightly bigger than 20px */
+  padding: 12px 24px; 
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
 }

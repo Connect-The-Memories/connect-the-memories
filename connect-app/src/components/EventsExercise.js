@@ -3,9 +3,9 @@ import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import "./EventsExercise.css";
 import { useNavigate } from "react-router-dom"; 
 
-import babyleah from '../assets/babyleah.jpg';
-import boatride from '../assets/boatride.jpg';
-import familychurch from '../assets/familychurch.jpg'; 
+import babyleah from "../assets/babyleah.jpg";
+import boatride from "../assets/boatride.jpg";
+import familychurch from "../assets/familychurch.jpg";
 
 // DraggableImage component using @dnd-kit's useDraggable
 const DraggableImage = ({ id, image }) => {
@@ -22,18 +22,25 @@ const DraggableImage = ({ id, image }) => {
   );
 };
 
+function shuffleArray(array) {
+  const newArr = [...array];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+}
+
 // DroppableContainer component with a faded label and optional result border color
 const DroppableContainer = ({ id, children, label, result }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
   
-  // If results exist, override border color; otherwise, use default
   let borderStyle;
   if (result === "correct") {
-    borderStyle = "2px solid green";
+    borderStyle = "6px solid #00ff00";
   } else if (result === "incorrect") {
-    borderStyle = "2px solid red";
+    borderStyle = "6px solid red";
   } else {
-    // Use dashed border that changes when hovered over (isOver)
     borderStyle = "2px dashed " + (isOver ? "blue" : "gray");
   }
   
@@ -44,7 +51,7 @@ const DroppableContainer = ({ id, children, label, result }) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    position: "relative", // For the faded label overlay
+    position: "relative",
   };
 
   return (
@@ -68,22 +75,35 @@ function EventsExercise() {
   // Compute the correct order by sorting by date (ascending)
   const correctOrder = [...initialPalette]
     .sort((a, b) => new Date(a.metadata.date) - new Date(b.metadata.date))
-    .map(item => item.id);  // e.g., if sorted by date: ["2", "3", "1"]
+    .map(item => item.id);  // e.g., ["2", "3", "1"]
 
-  const [palette, setPalette] = useState(initialPalette);
+  // Pre-shuffle the palette once on mount
+  const [palette, setPalette] = useState(() => shuffleArray(initialPalette));
   const [dropZones, setDropZones] = useState({
     "drop-0": null,
     "drop-1": null,
     "drop-2": null,
   });
   const [activeFrom, setActiveFrom] = useState(null);
-  
-  // Start the timer when the component mounts
+
+  // New state for pre-instructions and countdown
+  const [ready, setReady] = useState(false);
+  const [countdown, setCountdown] = useState(null);
+
+  // Start the timer once the instructions countdown finishes
   const [startTime, setStartTime] = useState(null);
   useEffect(() => {
-    setStartTime(Date.now());
-  }, []);
-  
+    if (countdown === null) return;
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setCountdown(null);
+      setReady(true);
+      setStartTime(Date.now());
+    }
+  }, [countdown]);
+
   // State to store results (accuracy and time)
   const [results, setResults] = useState(null);
   
@@ -140,7 +160,7 @@ function EventsExercise() {
 
   // Reset the board while keeping the original startTime (timer continues)
   const handleResetBoard = () => {
-    setPalette(initialPalette);
+    setPalette(shuffleArray(initialPalette));
     setDropZones({
       "drop-0": null,
       "drop-1": null,
@@ -152,7 +172,7 @@ function EventsExercise() {
 
   // Redo the entire exercise (after checking answers) with a fresh timer
   const handleRedo = () => {
-    setPalette(initialPalette);
+    setPalette(shuffleArray(initialPalette));
     setDropZones({
       "drop-0": null,
       "drop-1": null,
@@ -165,16 +185,13 @@ function EventsExercise() {
   // Check Answers: calculate accuracy and time taken, then show results in the UI.
   const handleCheckAnswers = () => {
     const zoneKeys = ["drop-0", "drop-1", "drop-2"];
-    // Ensure all drop zones are filled
     if (zoneKeys.some(zone => !dropZones[zone])) {
       alert("Please fill all drop zones before checking your answers.");
       return;
     }
     
-    // Calculate time taken in seconds
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
     
-    // Calculate correct count based on correctOrder (by date)
     let correctCount = 0;
     zoneKeys.forEach((zone, index) => {
       const placedId = dropZones[zone]?.id;
@@ -200,56 +217,95 @@ function EventsExercise() {
         </button>
       </nav>
 
-      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <div className="dropzones-container">
-          <h3>Drop Zones</h3>
-          <div className="dropzones">
-            {["drop-0", "drop-1", "drop-2"].map((zoneId, index) => {
-              // Determine result for each zone if results exist
-              let result;
-              if (results && dropZones[zoneId]) {
-                result = (dropZones[zoneId].id === correctOrder[index]) ? "correct" : "incorrect";
-              }
-              return (
-                <DroppableContainer key={zoneId} id={zoneId} label={index + 1} result={result}>
-                  {dropZones[zoneId] && (
-                    <DraggableImage id={dropZones[zoneId].id} image={dropZones[zoneId]} />
-                  )}
-                </DroppableContainer>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="palette-container">
-          <div id="palette" className="palette">
-            {palette.map((item) => (
-              <DraggableImage key={item.id} id={item.id} image={item} />
-            ))}
-          </div>
-        </div>
-      </DndContext>
-
-      <div className="buttons-container">
-        <button className="check-answers-button" onClick={handleCheckAnswers}>
-          Check Answers
-        </button>
-        {results ? (
-          <button className="check-answers-button" onClick={handleRedo}>
-            Redo
+      {/* Pre-Instructions and Countdown */}
+      {!ready && countdown === null ? (
+        <div className="instructions-screen">
+          <h2>Instructions</h2>
+          <p>
+            In this fun and engaging game, you'll be arranging cherished photos in the order of their dates.
+          </p>
+          <p>
+            Simply drag and drop each picture into the drop zone that best fits its chronological order. Enjoy a stroll down memory lane while keeping your mind active!
+          </p>
+          <button className="start-button" onClick={() => setCountdown(3)}>
+            I'm Ready!
           </button>
-        ) : (
-          <button className="check-answers-button" onClick={handleResetBoard}>
-            Reset
-          </button>
-        )}
-      </div>
-
-      {results && (
-        <div className="results">
-          <p>You got {results.correctCount} out of {results.total} correct!</p>
-          <p>Time taken: {results.timeTaken} seconds</p>
         </div>
+      ) : !ready && countdown !== null ? (
+        <div className="countdown-screen">
+          <h1>{countdown}</h1>
+        </div>
+      ) : (
+        // Main game UI (when ready)
+        <>
+          <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+            <div className="dropzones-container">
+              <h3>Drop Zones</h3>
+              <div className="dropzones">
+                {["drop-0", "drop-1", "drop-2"].map((zoneId, index) => {
+                  let result;
+                  if (results && dropZones[zoneId]) {
+                    result = (dropZones[zoneId].id === correctOrder[index])
+                      ? "correct"
+                      : "incorrect";
+                  }
+                  return (
+                    <div key={zoneId} className="zone-and-date">
+                      <DroppableContainer
+                        id={zoneId}
+                        label={index + 1}
+                        result={result}
+                      >
+                        {dropZones[zoneId] && (
+                          <DraggableImage
+                            id={dropZones[zoneId].id}
+                            image={dropZones[zoneId]}
+                          />
+                        )}
+                      </DroppableContainer>
+                      {results && dropZones[zoneId] && (
+                        <p className="image-date">{dropZones[zoneId].metadata.date}</p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="palette-container">
+              <div id="palette" className="palette">
+                {palette.map((item) => (
+                  <DraggableImage key={item.id} id={item.id} image={item} />
+                ))}
+              </div>
+            </div>
+          </DndContext>
+
+          <div className="buttons-container">
+            {!results && (
+              <>
+                <button className="check-answers-button" onClick={handleCheckAnswers}>
+                  Check Answers
+                </button>
+                <button className="check-answers-button" onClick={handleResetBoard}>
+                  Reset
+                </button>
+              </>
+            )}
+            {results && (
+              <button className="redo-button" onClick={handleRedo}>
+                Redo
+              </button>
+            )}
+          </div>
+
+          {results && (
+            <div className="results">
+              <p>You got {results.correctCount} out of {results.total} correct!</p>
+              <p>Time taken: {results.timeTaken} seconds</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
