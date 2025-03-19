@@ -1,9 +1,11 @@
 import axiosInstance from "./axiosInstance";
 
+// Firestore API
 // Upload Message
-export async function uploadMessage(message) {
+export async function uploadMessages(messages, mainUserID) {
     return axiosInstance.put('/database/firestore/messages', {
-        message,
+        messages,
+        main_user_id: mainUserID,
     });
 }
 
@@ -28,3 +30,12 @@ export async function validateOTP(code) {
         otp: code,
     });
 }
+
+// Get Linked Accounts
+export async function getLinkedAccounts() {
+    return axiosInstance.get('/database/firestore/linked_accounts');
+}
+
+
+// Firebase Cloud Storage API
+// Upload IMG/VID/TXT

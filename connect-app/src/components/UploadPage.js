@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import mockUsers from "../mockUsers";
 import "./UploadPage.css";
+import { uploadMessages, getLinkedAccounts } from "../api/database";
 
 function UploadPage() {
     const navigate = useNavigate();
@@ -15,15 +15,18 @@ function UploadPage() {
 
     // Get list of linked users
     useEffect(() => {
-        const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-
-        if (loggedInUser) {
-            const foundUser = mockUsers.find(user => user.email === loggedInUser.email);
-            if (foundUser) {
-                setPrimaryUsers(foundUser.linkedUsers || []);
+        const fetchLinkedAccounts = async () => {
+            try {
+              const response = await getLinkedAccounts();
+              const mapData = response.data.linked_accounts;
+              const data = Object.entries(mapData).map(([name, id]) => ({ name, id }));
+              setPrimaryUsers(data);
+            } catch (error) {
+              console.error(error);
             }
-        }
-    }, []);
+          };
+          fetchLinkedAccounts();
+        }, []);
 
     // Handle primary user selection
     const handlePrimaryChange = (e) => {
@@ -96,6 +99,17 @@ function UploadPage() {
                 return;
             }
         });
+
+        try{
+            if (activeTab === "Messages") {
+                const response = uploadMessages(messages, selectedPrimary);
+                console.log(response);
+                alert("Messages uploaded successful!");
+            } // TODO: Add support for uploading photos/videos
+        } catch (error) {
+            console.error(error);
+            alert("Error occured while uploading.");
+        }
 
         // TODO: UPDATE WITH ACTUAL BACKEND CALL
         // const formData = new FormData();

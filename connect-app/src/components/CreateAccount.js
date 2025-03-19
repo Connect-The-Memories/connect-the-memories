@@ -23,8 +23,25 @@ function CreateAccount() {
 
     try {
       const response = await createAccount(fname, lname, email, password, birthday, accountType);
-      // alert("Account created successfully!"); // This alert is not necessary and might want to be removed.
-      navigate("/");
+      const account_type = response.data.account_type;
+
+      if (account_type === "main") {
+        // setIsLoading(true);
+        setTimeout(() => {
+          navigate("/primaryhomepage");
+        }, 2000);
+      } else if (account_type === "support") {
+        // setIsLoading(true);
+        setTimeout(() => {
+          navigate("/supporthomepage");
+        }, 2000);
+      } else {
+        // setIsLoading(true);
+        setTimeout(() => {
+          navigate("/primaryhomepage");
+        }, 2000);
+      }
+
     } catch (error) {
       setError(error.response.data.message);
 

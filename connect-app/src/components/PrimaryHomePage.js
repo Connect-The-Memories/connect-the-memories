@@ -1,15 +1,30 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
 import galleryIcon from '../assets/gallery-icon-black.png';
 import exerciseIcon from '../assets/exercise-icon-black.png';
 import friendIcon from '../assets/friend-icon-black.png';
-import { logout } from "../api/auth";
+import { logout, getUserInfo } from "../api/auth";
 
 function PrimaryHomePage() {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
 
-  const userName = "Bruce"
+  useEffect(() => {
+    async function fetchUserInfo(){
+      try {
+        const userInfo = await getUserInfo();
+        const first_name = userInfo.data.first_name;
+        setUserName(first_name);
+      } catch (error) {
+        console.error(error);
+        setUserName("Guest");
+      }
+    }
+
+    fetchUserInfo();
+  }, []);
 
   return (
     <div className="hp-container">
