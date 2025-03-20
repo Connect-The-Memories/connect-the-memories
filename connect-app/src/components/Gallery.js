@@ -6,7 +6,8 @@ import mockUsers from "../mockUsers";
 function GalleryPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("photos");
-  const [userMedia, setUserMedia] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
@@ -14,7 +15,8 @@ function GalleryPage() {
     if (loggedInUser) {
       const foundUser = mockUsers.find(user => user.email === loggedInUser.email);
       if (foundUser) {
-        setUserMedia(foundUser.media || []);
+        setPhotos(foundUser.photos || []);
+        setMessages(foundUser.messages || []);
       }
     }
   }, []);
@@ -23,7 +25,9 @@ function GalleryPage() {
     <div className="gallery-container">
       <nav className="top-bar">
         <div className="title">CogniSphere</div>
-        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
+        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>
+          ← Back
+        </button>
       </nav>
 
       <div className="toggle-bar">
@@ -43,9 +47,9 @@ function GalleryPage() {
 
       <div className="gallery-content">
         {activeTab === "photos" ? (
-          userMedia.filter(media => media.type === "photo").length > 0 ? (
+          photos.length > 0 ? (
             <div className="photo-grid">
-              {userMedia.filter(media => media.type === "photo").map((photo, index) => (
+              {photos.map((photo, index) => (
                 <div key={index} className="photo-item">
                   <img src={photo.url} alt="Uploaded media" className="photo-image" />
                   <p className="uploaded-by">Uploaded by: {photo.uploadedBy}</p>
@@ -53,12 +57,12 @@ function GalleryPage() {
               ))}
             </div>
           ) : (
-            <p className="empty-message">No media uploaded yet</p>
+            <p className="empty-message">No photos uploaded yet</p>
           )
         ) : (
-          userMedia.filter(media => media.type === "message").length > 0 ? (
+          messages.length > 0 ? (
             <div className="message-list">
-              {userMedia.filter(media => media.type === "message").map((message, index) => (
+              {messages.map((message, index) => (
                 <div key={index} className="message-item">
                   <p>{message.text}</p>
                   <p className="uploaded-by">Uploaded by: {message.uploadedBy}</p>

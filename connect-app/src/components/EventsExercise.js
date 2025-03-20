@@ -225,7 +225,12 @@ function EventsExercise() {
             In this fun and engaging game, you'll be arranging cherished photos in the order of their dates.
           </p>
           <p>
-            Simply drag and drop each picture into the drop zone that best fits its chronological order. Enjoy a stroll down memory lane while keeping your mind active!
+            Simply drag and drop each picture into the drop zone that best fits its chronological order. Enjoy a gentle stroll down memory lane while keeping your mind active!
+          </p>
+          <p>
+            Once you've arranged the photos, press <strong>"Check Answers"</strong> to see if your order is correct.
+            If you wish to try again before checking, use the <strong>"Reset"</strong> button to clear your selections.
+            There are three rounds per game. Have Fun!
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
             I'm Ready!
