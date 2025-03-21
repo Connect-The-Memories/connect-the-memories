@@ -19,6 +19,7 @@ import Journal from "./components/Journal";
 import SurveyPage from "./components/SurveyPage"; 
 import PreSurvey from "./components/PreSurvey";
 import EventsExercise from "./components/EventsExercise"; 
+import WordSearch from "./components/WordSearch"; 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/survey" element={<SurveyPage />} /> 
         <Route path="/presurvey" element={<PreSurvey />} /> 
         <Route path="/eventsexercise" element={<EventsExercise />} />
+        <Route path="/wordsearch" element={<WordSearch />} />
       </Routes>
     </Router>
   );

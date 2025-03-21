@@ -14,28 +14,29 @@ function WritingExercise() {
     setText(e.target.value);
   };
 
+  // spam function
   const isSpam = (text) => {
-    const words = text.split(/\s+/); // Split text into words
+    const words = text.split(/\s+/); 
     const uniqueWords = new Set(words);
     
-    // 1. Check if text contains too many repeated characters (e.g., "aaaaaa")
+    // 1. check if text contains too many repeated characters (e.g., "aaaaaa")
     const repeatedChars = /(.)\1{5,}/; 
     if (repeatedChars.test(text)) return true;
   
-    // 2. Check if a single word is repeated too often
+    // 2. check if a single word is repeated too often
     if (uniqueWords.size / words.length < 0.3) return true; 
   
-    // 3. Check for too many special characters
+    // 3. check for too many special characters
     const specialChars = text.replace(/[a-zA-Z0-9\s]/g, ""); 
     if (specialChars.length / text.length > 0.4) return true; 
   
-    // 4. Check for gibberish (keyboard mashing) — crude approach
+    // 4. check for gibberish (keyboard mashing) — crude approach
     const gibberishPatterns = ["asdf", "qwer", "zxcv", "1234", "7777", "0000"];
     for (let pattern of gibberishPatterns) {
       if (text.toLowerCase().includes(pattern)) return true;
     }
   
-    return false; // If it passes all checks, it's not spam
+    return false; 
   };
   
   const handleSubmit = () => {
@@ -65,7 +66,6 @@ function WritingExercise() {
 
   return (
     <div className="writing-exercise-page">
-      {/* Top Bar */}
       <nav className="top-bar">
         <div className="title">CogniSphere</div>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
@@ -73,7 +73,6 @@ function WritingExercise() {
         </button>
       </nav>
 
-      {/* Show countdown if active */}
       {countdown !== null ? (
         <div className="countdown-screen">
           <h1>{countdown}</h1>
@@ -101,14 +100,12 @@ function WritingExercise() {
         </div>
       ) : (
         <div className="writing-exercise-container">
-          {/* Left Side: Media */}
           <div className="media-container">
             <div className="media-placeholder">
               <p>[Media Placeholder]</p>
             </div>
           </div>
 
-          {/* Right Side: Writing Area */}
           <div className="writing-section">
 
             <textarea

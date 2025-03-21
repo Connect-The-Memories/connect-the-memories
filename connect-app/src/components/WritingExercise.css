@@ -8,7 +8,6 @@
   overflow: hidden; 
 }
 
-/* Container for side-by-side layout */
 .writing-exercise-container {
   display: flex;
   flex-direction: row;
@@ -21,7 +20,6 @@
   gap: 30px; 
 }
 
-/* Media section (left side) */
 .media-container {
   flex: 1;
   display: flex;
@@ -40,7 +38,6 @@
   border-radius: 10px;
 }
 
-/* Writing section (right side) */
 .writing-section {
   flex: 1;
   display: flex;

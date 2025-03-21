@@ -7,7 +7,6 @@ import babyleah from "../assets/babyleah.jpg";
 import boatride from "../assets/boatride.jpg";
 import familychurch from "../assets/familychurch.jpg";
 
-// DraggableImage component using @dnd-kit's useDraggable
 const DraggableImage = ({ id, image }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id });
   const style = {
@@ -31,7 +30,6 @@ function shuffleArray(array) {
   return newArr;
 }
 
-// DroppableContainer component with a faded label and optional result border color
 const DroppableContainer = ({ id, children, label, result }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
   
@@ -64,20 +62,17 @@ const DroppableContainer = ({ id, children, label, result }) => {
 
 function EventsExercise() {
   const navigate = useNavigate();
-    
-  // Our initial array of images with metadata
+    // initial array
   const initialPalette = [
     { id: "1", title: "Image 1", src: babyleah, metadata: { date: "2021-01-01" } },
     { id: "2", title: "Image 2", src: boatride, metadata: { date: "2013-01-01" } },
     { id: "3", title: "Image 3", src: familychurch, metadata: { date: "2019-01-01" } },
   ];
 
-  // Compute the correct order by sorting by date (ascending)
   const correctOrder = [...initialPalette]
     .sort((a, b) => new Date(a.metadata.date) - new Date(b.metadata.date))
-    .map(item => item.id);  // e.g., ["2", "3", "1"]
+    .map(item => item.id);
 
-  // Pre-shuffle the palette once on mount
   const [palette, setPalette] = useState(() => shuffleArray(initialPalette));
   const [dropZones, setDropZones] = useState({
     "drop-0": null,
@@ -86,11 +81,9 @@ function EventsExercise() {
   });
   const [activeFrom, setActiveFrom] = useState(null);
 
-  // New state for pre-instructions and countdown
   const [ready, setReady] = useState(false);
   const [countdown, setCountdown] = useState(null);
 
-  // Start the timer once the instructions countdown finishes
   const [startTime, setStartTime] = useState(null);
   useEffect(() => {
     if (countdown === null) return;
@@ -104,7 +97,6 @@ function EventsExercise() {
     }
   }, [countdown]);
 
-  // State to store results (accuracy and time)
   const [results, setResults] = useState(null);
   
   const handleDragStart = (event) => {
@@ -132,7 +124,6 @@ function EventsExercise() {
       return;
     }
 
-    // Moving into a Drop Zone
     if (destination.startsWith("drop")) {
       if (dropZones[destination] !== null) {
         setActiveFrom(null);
@@ -147,7 +138,6 @@ function EventsExercise() {
       }
     }
 
-    // Moving back to the Palette
     if (destination === "palette" && activeFrom !== "palette") {
       const item = dropZones[activeFrom];
       if (item) {
@@ -158,7 +148,6 @@ function EventsExercise() {
     setActiveFrom(null);
   };
 
-  // Reset the board while keeping the original startTime (timer continues)
   const handleResetBoard = () => {
     setPalette(shuffleArray(initialPalette));
     setDropZones({
@@ -167,10 +156,8 @@ function EventsExercise() {
       "drop-2": null,
     });
     setResults(null);
-    // startTime remains unchanged
   };
 
-  // Redo the entire exercise (after checking answers) with a fresh timer
   const handleRedo = () => {
     setPalette(shuffleArray(initialPalette));
     setDropZones({
@@ -182,7 +169,6 @@ function EventsExercise() {
     setStartTime(Date.now());
   };
 
-  // Check Answers: calculate accuracy and time taken, then show results in the UI.
   const handleCheckAnswers = () => {
     const zoneKeys = ["drop-0", "drop-1", "drop-2"];
     if (zoneKeys.some(zone => !dropZones[zone])) {
