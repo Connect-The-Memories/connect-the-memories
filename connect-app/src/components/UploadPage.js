@@ -17,15 +17,15 @@ function UploadPage() {
     useEffect(() => {
         const fetchLinkedAccounts = async () => {
             try {
-              const response = await getLinkedAccounts();
-              const user_names = response.data.linked_user_names;
-              setPrimaryUsers(user_names);
+                const response = await getLinkedAccounts();
+                const user_names = response.data.linked_user_names;
+                setPrimaryUsers(user_names);
             } catch (error) {
-              console.error(error);
+                console.error(error);
             }
-          };
-          fetchLinkedAccounts();
-        }, []);
+        };
+        fetchLinkedAccounts();
+    }, []);
 
     // Handle primary user selection
     const handlePrimaryChange = (e) => {
@@ -49,6 +49,7 @@ function UploadPage() {
             file,
             preview: URL.createObjectURL(file),
             description: "",
+            date: "",
         }));
         setSelectedFiles((prevFiles) => [...prevFiles, ...filesWithPreview]);
     };
@@ -59,6 +60,7 @@ function UploadPage() {
             file,
             preview: URL.createObjectURL(file), // Generate preview URL
             description: "",
+            date: "",
         }));
 
         setSelectedFiles((prevFiles) => [...prevFiles, ...filesWithPreview]);
@@ -68,6 +70,12 @@ function UploadPage() {
     const handleFileDescriptionChange = (index, value) => {
         const updatedFiles = [...selectedFiles];
         updatedFiles[index].description = value;
+        setSelectedFiles(updatedFiles);
+    };
+
+    const handleFileDateChange = (index, value) => {
+        const updatedFiles = [...selectedFiles];
+        updatedFiles[index].date = value;
         setSelectedFiles(updatedFiles);
     };
 
@@ -99,7 +107,7 @@ function UploadPage() {
             }
         });
 
-        try{
+        try {
             if (activeTab === "Messages") {
                 const response = uploadMessages(messages, selectedPrimary);
                 console.log(response);
@@ -229,6 +237,8 @@ function UploadPage() {
                                                     <input
                                                         type="date"
                                                         className="media-date-input"
+                                                        value={fileObj.date || ""}
+                                                        onChange={(e) => handleFileDateChange(originalIndex, e.target.value)}
                                                     />
                                                 </div>
                                             </div>
