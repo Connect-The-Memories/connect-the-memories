@@ -20,7 +20,7 @@ function GalleryPage() {
         if (resMedia.status === 200) {
           setPhotos(mediaData.media || []);
         } else {
-          console.error(data.error || "Failed to load media");
+          console.error(mediaData.error || "Failed to load media");
         }
 
         const resMessages = await getMessage();
@@ -29,7 +29,7 @@ function GalleryPage() {
         if (resMessages.status === 200) {
           setMessages(messagesData.messages || []);
         } else {
-          console.error(data.error || "Failed to load messages");
+          console.error(messagesData.error || "Failed to load messages");
         }
 
       } catch (err) {

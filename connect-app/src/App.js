@@ -21,9 +21,11 @@ import PreSurvey from "./components/PreSurvey";
 import EventsExercise from "./components/EventsExercise"; 
 import WordSearch from "./components/WordSearch"; 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { MediaProvider } from "./components/MediaContext"; 
 
 function App() {
   return (
+  <MediaProvider>
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -49,6 +51,7 @@ function App() {
         <Route path="/wordsearch" element={<WordSearch />} />
       </Routes>
     </Router>
+    </MediaProvider> 
   );
 }
 
