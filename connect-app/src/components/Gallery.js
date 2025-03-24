@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Gallery.css";
-import { getMedia } from "../api/database";
+import { getMessage, getMedia } from "../api/database";
 
 // TODO: Eventually implement pagination for messages and img/vid to avoid performance issues
 function GalleryPage() {
@@ -15,14 +15,23 @@ function GalleryPage() {
     const fetchMedia = async () => {
       // setLoading(true);
       try {
-        const res = await getMedia();
-        const data = res.data;
-        console.log(data);
-        if (res.status === 200) {
-          setPhotos(data.media || []);
+        const resMedia = await getMedia();
+        const mediaData = resMedia.data;
+        if (resMedia.status === 200) {
+          setPhotos(mediaData.media || []);
         } else {
           console.error(data.error || "Failed to load media");
         }
+
+        const resMessages = await getMessage();
+        const messagesData = resMessages.data;
+        console.log(messagesData);
+        if (resMessages.status === 200) {
+          setMessages(messagesData.messages || []);
+        } else {
+          console.error(data.error || "Failed to load messages");
+        }
+
       } catch (err) {
         console.error("Fetch error:", err);
       } finally {
@@ -76,9 +85,9 @@ function GalleryPage() {
             <div className="message-list">
               {messages.map((message, index) => (
                 <div key={index} className="message-item">
-                  <p>{message.text}</p>
-                  <p className="uploaded-by">Uploaded by: {message.uploadedBy}</p>
-                  <p className="date">Date: {message.date}</p>
+                  <p>{message.message}</p>
+                  <p className="uploaded-by">Uploaded by: {message.support_full_name}</p>
+                  <p className="date">Date: {message.timestamp}</p>
                 </div>
               ))}
             </div>

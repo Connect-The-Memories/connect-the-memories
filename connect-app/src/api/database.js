@@ -11,12 +11,7 @@ export async function uploadMessages(messages, mainUserName) {
 
 // Get Message
 export async function getMessage(last_message_id, limit) {
-    return axiosInstance.get('/database/firestore/messages', {
-        params: {
-            last_message_id,
-            limit,
-        },
-    });
+    return axiosInstance.get('/database/firestore/messages');
 }
 
 // Generate OTP
