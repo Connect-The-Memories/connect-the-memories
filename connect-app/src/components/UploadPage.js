@@ -109,18 +109,19 @@ function UploadPage() {
 
         try {
             if (activeTab === "Messages") {
-                const response = uploadMessages(messages, selectedPrimary);
+                const response = await uploadMessages(messages, selectedPrimary);
                 console.log(response);
                 alert("Messages uploaded successful!");
             } else {
                 const formData = new FormData();
                 formData.append("main_user_name", selectedPrimary);
-                selectedFiles.forEach(({ file, description }) => {
+                selectedFiles.forEach(({ file, description, date }) => {
                     formData.append(`files`, file);
                     formData.append(`descriptions`, description);
+                    formData.append(`dates`, date);
                 });
                 console.log(formData);
-                const response = uploadMedia(formData);
+                const response = await uploadMedia(formData);
             }
         } catch (error) {
             console.error(error);

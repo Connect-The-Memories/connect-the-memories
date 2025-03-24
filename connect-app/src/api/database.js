@@ -42,3 +42,8 @@ export async function getLinkedAccounts() {
 export async function uploadMedia(formData) {
     return axiosInstance.post('/database/firebase_storage/media', formData);
 }
+
+// Get IMG/VID/TXT
+export async function getMedia() {
+    return axiosInstance.get('/database/firebase_storage/media');
+}

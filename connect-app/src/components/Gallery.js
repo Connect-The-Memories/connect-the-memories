@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Gallery.css";
-import mockUsers from "../mockUsers"; 
+import { getMedia } from "../api/database";
 
+// TODO: Eventually implement pagination for messages and img/vid to avoid performance issues
 function GalleryPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("photos");
   const [photos, setPhotos] = useState([]);
+  // const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-
-    if (loggedInUser) {
-      const foundUser = mockUsers.find(user => user.email === loggedInUser.email);
-      if (foundUser) {
-        setPhotos(foundUser.photos || []);
-        setMessages(foundUser.messages || []);
+    const fetchMedia = async () => {
+      // setLoading(true);
+      try {
+        const res = await getMedia();
+        const data = res.data;
+        console.log(data);
+        if (res.status === 200) {
+          setPhotos(data.media || []);
+        } else {
+          console.error(data.error || "Failed to load media");
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+      } finally {
+        // setLoading(false);
       }
-    }
+    };
+
+    fetchMedia();
   }, []);
 
   return (
@@ -51,8 +63,8 @@ function GalleryPage() {
             <div className="photo-grid">
               {photos.map((photo, index) => (
                 <div key={index} className="photo-item">
-                  <img src={photo.url} alt="Uploaded media" className="photo-image" />
-                  <p className="uploaded-by">Uploaded by: {photo.uploadedBy}</p>
+                  <img src={photo.signed_url} alt={`Uploaded by ${photo.support_user_name}`}  className="photo-image" />
+                  <p className="uploaded-by">Uploaded by: {photo.support_user_name}</p>
                 </div>
               ))}
             </div>
