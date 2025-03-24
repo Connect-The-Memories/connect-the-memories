@@ -10,7 +10,7 @@ export async function uploadMessages(messages, mainUserName) {
 }
 
 // Get Message
-export async function getMessage(last_message_id, limit) {
+export async function getMessage() {
     return axiosInstance.get('/database/firestore/messages');
 }
 
