@@ -2,10 +2,10 @@ import axiosInstance from "./axiosInstance";
 
 // Firestore API
 // Upload Message
-export async function uploadMessages(messages, mainUserID) {
+export async function uploadMessages(messages, mainUserName) {
     return axiosInstance.put('/database/firestore/messages', {
         messages,
-        main_user_id: mainUserID,
+        main_user_name: mainUserName,
     });
 }
 
@@ -39,3 +39,6 @@ export async function getLinkedAccounts() {
 
 // Firebase Cloud Storage API
 // Upload IMG/VID/TXT
+export async function uploadMedia(formData) {
+    return axiosInstance.post('/database/firebase_storage/media', formData);
+}

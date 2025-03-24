@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UploadPage.css";
-import { uploadMessages, getLinkedAccounts } from "../api/database";
+import { uploadMessages, uploadMedia, getLinkedAccounts } from "../api/database";
 
 function UploadPage() {
     const navigate = useNavigate();
@@ -18,9 +18,8 @@ function UploadPage() {
         const fetchLinkedAccounts = async () => {
             try {
               const response = await getLinkedAccounts();
-              const mapData = response.data.linked_accounts;
-              const data = Object.entries(mapData).map(([name, id]) => ({ name, id }));
-              setPrimaryUsers(data);
+              const user_names = response.data.linked_user_names;
+              setPrimaryUsers(user_names);
             } catch (error) {
               console.error(error);
             }
@@ -105,42 +104,20 @@ function UploadPage() {
                 const response = uploadMessages(messages, selectedPrimary);
                 console.log(response);
                 alert("Messages uploaded successful!");
-            } // TODO: Add support for uploading photos/videos
+            } else {
+                const formData = new FormData();
+                formData.append("main_user_name", selectedPrimary);
+                selectedFiles.forEach(({ file, description }) => {
+                    formData.append(`files`, file);
+                    formData.append(`descriptions`, description);
+                });
+                console.log(formData);
+                const response = uploadMedia(formData);
+            }
         } catch (error) {
             console.error(error);
             alert("Error occured while uploading.");
         }
-
-        // TODO: UPDATE WITH ACTUAL BACKEND CALL
-        // const formData = new FormData();
-        // formData.append("primaryUser", selectedPrimary);
-
-        // if (activeTab === "Messages") {
-        //     messages.forEach((msg, index) => formData.append(`messages[${index}]`, msg));
-        // } else {
-        //     selectedFiles.forEach(({ file, description }, index) => {
-        //         formData.append(`files[${index}]`, file);
-        //         formData.append(`descriptions[${index}]`, description);
-        //     });
-        // }
-
-        // try {
-        //     const response = await fetch("/api/upload", {
-        //         method: "POST",
-        //         body: formData,
-        //     });
-
-        //     if (response.ok) {
-        //         alert("Upload successful!");
-        //         setMessages([""]);
-        //         setSelectedFiles([]);
-        //     } else {
-        //         alert("Upload failed. Please try again.");
-        //     }
-        // } catch (error) {
-        //     console.error("Error uploading:", error);
-        //     alert("Error uploading files.");
-        // }
     };
 
     return (
@@ -163,8 +140,8 @@ function UploadPage() {
                         onChange={handlePrimaryChange}
                     >
                         <option value="">Select a Primary User</option>
-                        {primaryUsers.map((user) => (
-                            <option key={user.id} value={user.id}>{user.name}</option>
+                        {primaryUsers.map((name) => (
+                            <option key={name} value={name}>{name}</option>
                         ))}
                     </select>
 
