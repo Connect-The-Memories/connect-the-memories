@@ -42,3 +42,7 @@ export async function uploadMedia(formData) {
 export async function getMedia() {
     return axiosInstance.get('/database/firebase_storage/media');
 }
+
+export async function getRandomizedMedia() {
+    return axiosInstance.get('/database/firebase_storage/media/random_indexed'); 
+}
