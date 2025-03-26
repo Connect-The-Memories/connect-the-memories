@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./WritingExercise.css";
 import { useNavigate } from "react-router-dom";
+import { getRandomizedMedia } from "../api/database";
 
 function WritingExercise() {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ function WritingExercise() {
   const [submitted, setSubmitted] = useState(false);
   const [ready, setReady] = useState(false);
   const [countdown, setCountdown] = useState(null);
+  const [media, setMedia] = useState(null);
+  const [loadingMedia, setLoadingMedia] = useState(false);
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -61,6 +64,25 @@ function WritingExercise() {
     } else {
       setCountdown(null);
       setReady(true);
+
+      const fetchMedia = async () => {
+        setLoadingMedia(true);
+        try {
+          const res = await getRandomizedMedia();
+          const mediaData = res.data;
+          console.log(mediaData);
+          if (res.status === 200) {
+            setMedia(mediaData.media || null);
+          } else {
+            console.error(mediaData.error || "Failed to load media");
+          }
+        } catch (err) {
+          console.error("Fetch error:", err);
+        } finally {
+          setLoadingMedia(false);
+        }
+      };
+      fetchMedia();
     }
   }, [countdown]);
 

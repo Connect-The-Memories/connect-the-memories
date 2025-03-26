@@ -31,6 +31,12 @@ export async function getLinkedAccounts() {
     return axiosInstance.get('/database/firestore/linked_accounts');
 }
 
+// Get n amount of Randomized IMG/VID/TXT
+export async function getRandomizedMedia(count=1) {
+    return axiosInstance.get('/database/firestore/media/random_indexed', {
+        count,
+    }); 
+}
 
 // Firebase Cloud Storage API
 // Upload IMG/VID/TXT
@@ -38,11 +44,7 @@ export async function uploadMedia(formData) {
     return axiosInstance.post('/database/firebase_storage/media', formData);
 }
 
-// Get IMG/VID/TXT
+// Get all IMG/VID/TXT
 export async function getMedia() {
     return axiosInstance.get('/database/firebase_storage/media');
-}
-
-export async function getRandomizedMedia() {
-    return axiosInstance.get('/database/firebase_storage/media/random_indexed'); 
 }
