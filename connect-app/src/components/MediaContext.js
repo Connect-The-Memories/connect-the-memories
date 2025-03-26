@@ -10,40 +10,38 @@ export const MediaProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchMediaData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        // Fetch photos/media
-        const resMedia = await getMedia();
-        if (resMedia.status === 200) {
-          setPhotos(resMedia.data.media || []);
-        } else {
-          setError("Failed to load media");
-        }
-
-        // Fetch messages
-        const resMessages = await getMessage();
-        if (resMessages.status === 200) {
-          setMessages(resMessages.data.messages || []);
-        } else {
-          setError("Failed to load messages");
-        }
-      } catch (err) {
-        console.error("Media fetch error:", err);
-        setError("An unexpected error occurred");
-      } finally {
-        setLoading(false);
+  const fetchMediaData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Fetch photos/media
+      const resMedia = await getMedia();
+      if (resMedia.status === 200) {
+        setPhotos(resMedia.data.media || []);
+      } else {
+        setError("Failed to load media");
       }
-    };
 
-    fetchMediaData();
-  }, []);
+      // Fetch messages
+      const resMessages = await getMessage();
+      if (resMessages.status === 200) {
+        setMessages(resMessages.data.messages || []);
+      } else {
+        setError("Failed to load messages");
+      }
+    } catch (err) {
+      console.error("Media fetch error:", err);
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <MediaContext.Provider value={{ photos, messages, loading, error }}>
+    <MediaContext.Provider value={{ photos, messages, fetchMediaData, loading, error }}>
       {children}
     </MediaContext.Provider>
   );
 };
+
+export const useMedia = () => React.useContext(MediaContext);
