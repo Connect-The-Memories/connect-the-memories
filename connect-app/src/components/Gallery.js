@@ -16,22 +16,22 @@ function GalleryPage() {
 
   return (
     <div className="gallery-container">
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
         <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>
           ← Back
         </button>
       </nav>
 
-      <div className="toggle-bar">
-        <button 
-          className={`toggle-button ${activeTab === "photos" ? "active" : ""}`} 
+      <div className="toggle-container">
+        <button
+          className={`toggle-button ${activeTab === "photos" ? "active" : ""}`}
           onClick={() => setActiveTab("photos")}
         >
           Photos/Videos
         </button>
-        <button 
-          className={`toggle-button ${activeTab === "messages" ? "active" : ""}`} 
+        <button
+          className={`toggle-button ${activeTab === "messages" ? "active" : ""}`}
           onClick={() => setActiveTab("messages")}
         >
           Messages
@@ -44,7 +44,7 @@ function GalleryPage() {
             <div className="photo-grid">
               {photos.map((photo, index) => (
                 <div key={index} className="photo-item">
-                  <img src={photo.signed_url} alt={`Uploaded by ${photo.support_user_name}`}  className="photo-image" />
+                  <img src={photo.signed_url} alt={`Uploaded by ${photo.support_user_name}`} className="photo-image" />
                   <p className="uploaded-by">Uploaded by: {photo.support_user_name}</p>
                 </div>
               ))}
