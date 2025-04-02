@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import "./EventsExercise.css";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
-import babyleah from "../assets/babyleah.jpg";
-import boatride from "../assets/boatride.jpg";
-import familychurch from "../assets/familychurch.jpg";
+import babyleah from "../../assets/babyleah.jpg";
+import boatride from "../../assets/boatride.jpg";
+import familychurch from "../../assets/familychurch.jpg";
 
 const DraggableImage = ({ id, image }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id });
@@ -32,7 +32,7 @@ function shuffleArray(array) {
 
 const DroppableContainer = ({ id, children, label, result }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
-  
+
   let borderStyle;
   if (result === "correct") {
     borderStyle = "6px solid #00ff00";
@@ -41,7 +41,7 @@ const DroppableContainer = ({ id, children, label, result }) => {
   } else {
     borderStyle = "2px dashed " + (isOver ? "blue" : "gray");
   }
-  
+
   const style = {
     border: borderStyle,
     width: "300px",
@@ -62,7 +62,7 @@ const DroppableContainer = ({ id, children, label, result }) => {
 
 function EventsExercise() {
   const navigate = useNavigate();
-    // initial array
+  // initial array
   const initialPalette = [
     { id: "1", title: "Image 1", src: babyleah, metadata: { date: "2021-01-01" } },
     { id: "2", title: "Image 2", src: boatride, metadata: { date: "2013-01-01" } },
@@ -98,7 +98,7 @@ function EventsExercise() {
   }, [countdown]);
 
   const [results, setResults] = useState(null);
-  
+
   const handleDragStart = (event) => {
     const { active } = event;
     if (palette.find((item) => item.id === active.id)) {
@@ -175,9 +175,9 @@ function EventsExercise() {
       alert("Please fill all drop zones before checking your answers.");
       return;
     }
-    
+
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
-    
+
     let correctCount = 0;
     zoneKeys.forEach((zone, index) => {
       const placedId = dropZones[zone]?.id;
@@ -186,7 +186,7 @@ function EventsExercise() {
         correctCount++;
       }
     });
-    
+
     setResults({
       correctCount,
       total: zoneKeys.length,

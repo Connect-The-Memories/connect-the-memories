@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "./ColorMatch.css";
 
 const initialColors = ["red", "blue", "green", "yellow"];
 const extraColors = ["purple", "orange"];
-const totalTime = 45; 
+const totalTime = 45;
 
 function ColorMatch() {
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ function ColorMatch() {
   const [countdown, setCountdown] = useState(null); // Countdown state
 
   const [score, setScore] = useState(0);
-  const [guessCount, setGuessCount] = useState(0); 
-  const [leftWord, setLeftWord] = useState("");  
-  const [leftColor, setLeftColor] = useState(""); 
-  const [rightWord, setRightWord] = useState(""); 
+  const [guessCount, setGuessCount] = useState(0);
+  const [leftWord, setLeftWord] = useState("");
+  const [leftColor, setLeftColor] = useState("");
+  const [rightWord, setRightWord] = useState("");
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [message, setMessage] = useState("");
   const [gameOver, setGameOver] = useState(false);
@@ -27,20 +27,20 @@ function ColorMatch() {
   const setupNewStimuli = () => {
     setMessage("");
     respondedRef.current = false;
-  
+
     let colorPool = [...initialColors];
     if (guessCount >= 5) {
       colorPool = [...initialColors, ...extraColors];
     }
-  
+
     const randomLeftWord = colorPool[Math.floor(Math.random() * colorPool.length)];
     const randomLeftColor = colorPool[Math.floor(Math.random() * colorPool.length)];
-  
+
     setLeftWord(randomLeftWord);
     setLeftColor(randomLeftColor);
-  
+
     const isMatchTrial = Math.random() < 0.4; // 40% chance
-  
+
     let newRightWord;
     if (isMatchTrial) {
       newRightWord = randomLeftColor;
@@ -48,7 +48,7 @@ function ColorMatch() {
       const nonMatchPool = colorPool.filter((color) => color !== randomLeftColor);
       newRightWord = nonMatchPool[Math.floor(Math.random() * nonMatchPool.length)];
     }
-  
+
     setRightWord(newRightWord);
     guessStartTimeRef.current = Date.now();
   };
@@ -98,18 +98,18 @@ function ColorMatch() {
         handleUserResponse(true);
       } else if (key === "n") {
         handleUserResponse(false);
-      } 
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [ready, gameOver, leftColor, rightWord, guessStartTimeRef.current]); 
+  }, [ready, gameOver, leftColor, rightWord, guessStartTimeRef.current]);
 
   const handleUserResponse = (isUserSayingMatch) => {
     if (gameOver || respondedRef.current) return;
-    respondedRef.current = true;  
+    respondedRef.current = true;
 
-    const reactionTime = Date.now() - guessStartTimeRef.current; 
+    const reactionTime = Date.now() - guessStartTimeRef.current;
     const isMatch = (leftColor === rightWord);
 
     let isCorrect = false;
@@ -143,17 +143,17 @@ function ColorMatch() {
     setTimeLeft(totalTime);
     setGameOver(false);
     setCountdown(null);
-    setReady(false); 
+    setReady(false);
   };
 
   return (
     <div className="memory-container">
       {/* Navigation Bar */}
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
         <button
           className="logout-button"
-          onClick={() => navigate("/exerciseselection")}
+          onClick={() => navigate("/optionsformatching")}
         >
           ← Back
         </button>
@@ -168,7 +168,7 @@ function ColorMatch() {
         <div className="instructions-screen">
           <h2>Instructions</h2>
           <p>
-            Welcome to Color Match! You have 45 seconds total to see how many matches you can get. 
+            Welcome to Color Match! You have 45 seconds total to see how many matches you can get.
             Each time, you'll see:
           </p>
           <ul>
@@ -176,12 +176,12 @@ function ColorMatch() {
             <li><strong>Right:</strong> A color word in neutral text (e.g., "red").</li>
           </ul>
           <p>
-            If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.” 
-            Otherwise, click “No Match.” 
+            If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.”
+            Otherwise, click “No Match.”
             Answer quickly for a reaction-time bonus!
           </p>
-          <p> 
-            You can use your keyboard (press "M" for Match and "N" for No Match) 
+          <p>
+            You can use your keyboard (press "M" for Match and "N" for No Match)
             or click the buttons with your mouse/pad.
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>

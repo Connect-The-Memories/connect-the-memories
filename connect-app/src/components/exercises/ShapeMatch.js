@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ColorMatch.css"; 
+import "./ColorMatch.css";
 import "./Shapes.css";
 
 const initialShapes = ["circle", "square", "triangle", "star"];
@@ -43,7 +43,7 @@ function ShapeMatch() {
       triangle: <div className="shape triangle"></div>,
       star: (
         <svg width="50" height="50" viewBox="0 0 24 24" fill="black">
-          <polygon points="12,2 15,10 24,10 17,15 20,23 12,18 4,23 7,15 0,10 9,10"/>
+          <polygon points="12,2 15,10 24,10 17,15 20,23 12,18 4,23 7,15 0,10 9,10" />
         </svg>
       ),
       diamond: <div className="shape diamond"></div>,
@@ -51,17 +51,17 @@ function ShapeMatch() {
       hexagon: <div className="shape hexagon"></div>,
       heart: (
         <svg width="50" height="50" viewBox="0 0 24 24" fill="black">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
       ),
       oval: (
         <svg width="80" height="50" viewBox="0 0 100 50" fill="black">
-          <ellipse cx="50" cy="25" rx="45" ry="22"/>
+          <ellipse cx="50" cy="25" rx="45" ry="22" />
         </svg>
-      ) 
+      )
     };
-    
-    
+
+
 
     setDisplayedShape(shapeMap[randomLeftShape]);
 
@@ -174,9 +174,9 @@ function ShapeMatch() {
   return (
     <div className="memory-container">
       {/* Navigation Bar */}
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
-        <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
+        <button className="logout-button" onClick={() => navigate("/optionsformatching")}>
           ← Back
         </button>
       </nav>
@@ -198,7 +198,7 @@ function ShapeMatch() {
             <li><strong>Right:</strong> A shape name in text (e.g., "square").</li>
           </ul>
           <p>
-            If the **shape on the left matches the shape name on the right**, click “Match.” Otherwise, click “No Match.” 
+            If the **shape on the left matches the shape name on the right**, click “Match.” Otherwise, click “No Match.”
             Answer quickly for a reaction-time bonus!
           </p>
           <p>
@@ -228,7 +228,7 @@ function ShapeMatch() {
               {/* Buttons for user response */}
               <div className="response-buttons">
                 <button className="no-match-button" onClick={() => handleUserResponse(false)}>No Match</button>
-                <button className="match-button" onClick={() => handleUserResponse(true)}>Match</button>  
+                <button className="match-button" onClick={() => handleUserResponse(true)}>Match</button>
               </div>
 
               <p className="message">{message}</p>

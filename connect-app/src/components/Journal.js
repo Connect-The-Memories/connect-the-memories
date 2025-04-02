@@ -17,10 +17,10 @@ function Journal() {
   return (
     <div className="journal-page">
       {/* Top Bar */}
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
-        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}> 
-          ← Back 
+        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>
+          ← Back
         </button>
       </nav>
 
@@ -35,12 +35,12 @@ function Journal() {
           </div>
           <p className="empty-entry">No entry for this day.</p>
         </div>
-        
+
         <div className="calendar-section">
           <Calendar onChange={setSelectedDate} value={selectedDate} className="journal-calendar" />
-          </div>
         </div>
       </div>
+    </div>
   );
 }
 

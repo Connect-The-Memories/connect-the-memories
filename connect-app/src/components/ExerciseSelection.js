@@ -28,7 +28,7 @@ function ExerciseSelection() {
         </div>
         <div className="exercise-card" onClick={() => navigate("/optionsformatching")}>
           <div className="exercise-icon">🎨</div>
-          <p className="exercise-name">Color Match</p>
+          <p className="exercise-name">Color/Shape Match</p>
         </div>
         <div className="exercise-card" onClick={() => navigate("/writingexercise")}>
           <div className="exercise-icon">✍️</div>

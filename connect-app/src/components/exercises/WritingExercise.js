@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./WritingExercise.css";
 import { useNavigate } from "react-router-dom";
-import { getRandomizedMedia } from "../api/database";
+import { getRandomizedMedia } from "../../api/database";
 
 function WritingExercise() {
   const navigate = useNavigate();
@@ -19,41 +19,41 @@ function WritingExercise() {
 
   // spam function
   const isSpam = (text) => {
-    const words = text.split(/\s+/); 
+    const words = text.split(/\s+/);
     const uniqueWords = new Set(words);
-    
+
     // 1. check if text contains too many repeated characters (e.g., "aaaaaa")
-    const repeatedChars = /(.)\1{5,}/; 
+    const repeatedChars = /(.)\1{5,}/;
     if (repeatedChars.test(text)) return true;
-  
+
     // 2. check if a single word is repeated too often
-    if (uniqueWords.size / words.length < 0.3) return true; 
-  
+    if (uniqueWords.size / words.length < 0.3) return true;
+
     // 3. check for too many special characters
-    const specialChars = text.replace(/[a-zA-Z0-9\s]/g, ""); 
-    if (specialChars.length / text.length > 0.4) return true; 
-  
+    const specialChars = text.replace(/[a-zA-Z0-9\s]/g, "");
+    if (specialChars.length / text.length > 0.4) return true;
+
     // 4. check for gibberish (keyboard mashing) — crude approach
     const gibberishPatterns = ["asdf", "qwer", "zxcv", "1234", "7777", "0000"];
     for (let pattern of gibberishPatterns) {
       if (text.toLowerCase().includes(pattern)) return true;
     }
-  
-    return false; 
+
+    return false;
   };
-  
+
   const handleSubmit = () => {
     if (text.trim().length < charLimit) return;
-  
+
     if (isSpam(text)) {
       alert("Your text appears to be spam. Please write a meaningful response.");
       return;
     }
-  
+
     setSubmitted(true);
     alert("Submission successful!");
   };
-  
+
 
   useEffect(() => {
     if (countdown === null) return;
@@ -88,7 +88,7 @@ function WritingExercise() {
 
   return (
     <div className="writing-exercise-page">
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back

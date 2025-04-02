@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MemoryGame.css";
-import { easyMediumWords, hardWords } from "../thaiWords";
+import { easyMediumWords, hardWords } from "../../thaiWords";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
@@ -12,20 +12,20 @@ function getRandomWords(wordsArray, count) {
 
 function MemoryGame() {
   const [currentRound, setCurrentRound] = useState(1);
-  const totalRounds = 3; 
+  const totalRounds = 3;
 
   const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState(null);
   const [showLearningPhase, setShowLearningPhase] = useState(false);
   const [selectedWords, setSelectedWords] = useState([]);
   const [cards, setCards] = useState([]);
-  const [selected, setSelected] = useState([]); 
-  const [guesses, setGuesses] = useState([]); 
-  const [matched, setMatched] = useState([]); 
+  const [selected, setSelected] = useState([]);
+  const [guesses, setGuesses] = useState([]);
+  const [matched, setMatched] = useState([]);
   const [timer, setTimer] = useState(30);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [checked, setChecked] = useState(false); 
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (!gameStarted) return;
@@ -75,14 +75,14 @@ function MemoryGame() {
   };
 
   const handleStartGame = () => {
-    let initialTime = 30; 
+    let initialTime = 30;
     if (difficulty === "medium") {
       initialTime = 45;
     } else if (difficulty === "hard") {
       initialTime = 60;
     }
     setTimer(initialTime);
-    
+
     setGameOver(false);
     setShowLearningPhase(false);
     setGameStarted(true);
@@ -95,29 +95,29 @@ function MemoryGame() {
   const handleSelect = (index) => {
     if (selected.length === 2 || checked) return;
     if (selected.includes(index)) return;
-    
+
     const newSelected = [...selected, index];
     setSelected(newSelected);
-  
+
     if (newSelected.length === 2) {
       const firstCard = cards[newSelected[0]];
       const secondCard = cards[newSelected[1]];
-      
+
       if (firstCard.type === secondCard.type) {
         alert("Please connect a Thai word with its English translation.");
         setTimeout(() => {
           setSelected([]);
         }, 500);
-        return; 
+        return;
       }
-  
+
       setGuesses((prevGuesses) => [...prevGuesses, newSelected]);
       setTimeout(() => {
         setSelected([]);
       }, 800);
     }
   };
-  
+
 
   const handleCheckAnswers = () => {
     let newMatched = [];
@@ -134,7 +134,7 @@ function MemoryGame() {
     });
     setMatched(newMatched);
     setChecked(true);
-    setGameOver(false);  
+    setGameOver(false);
   };
 
   const handleNextRound = () => {
@@ -145,15 +145,15 @@ function MemoryGame() {
       setGuesses([]);
       setMatched([]);
       setGameOver(false);
-      setShowLearningPhase(true); 
-  
+      setShowLearningPhase(true);
+
       let selectedWordsData =
         difficulty === "easy"
           ? getRandomWords(easyMediumWords, 3)
           : getRandomWords(hardWords, 6);
-  
+
       setSelectedWords(selectedWordsData);
-  
+
       const shuffledCards = shuffleArray([
         ...selectedWordsData.map((word) => ({
           text: word.thai,
@@ -167,27 +167,27 @@ function MemoryGame() {
         })),
       ]);
       setCards(shuffledCards);
-  
+
       let initialTime = 30;
       if (difficulty === "medium") initialTime = 45;
       if (difficulty === "hard") initialTime = 60;
-      
+
       setTimer(initialTime);
     }
   };
-  
+
 
   const guessedIndices = guesses.flat();
 
   return (
     <div className="memory-container">
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
         <button
           className="logout-button"
           onClick={() => navigate("/exerciseselection")}
         >
-          ← Back 
+          ← Back
         </button>
       </nav>
 

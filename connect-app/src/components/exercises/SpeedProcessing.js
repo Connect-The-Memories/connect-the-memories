@@ -80,7 +80,7 @@ function SpeedProcessing() {
   return (
     <div className="exercise-container">
       <nav className="nav-bar">
-        <div className="title">Speed of Processing</div>
+        <div className="title">CogniSphere</div>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
       </nav>
 
