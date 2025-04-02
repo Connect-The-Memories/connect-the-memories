@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import './WordSearch.css';
-import boatride from "../assets/boatride.jpg"; 
+import boatride from "../../assets/boatride.jpg";
 
 // Single puzzle data
 const puzzles = [
@@ -124,6 +125,7 @@ function getLineOfCells(startCell, endCell) {
 }
 
 const WordSearch = () => {
+  const navigate = useNavigate();
   // We'll just use the first puzzle for now
   const [currentPuzzle] = useState(puzzles[0]);
 
@@ -254,8 +256,9 @@ const WordSearch = () => {
   return (
     <div className="exercise-container">
       {/* Top Bar */}
-      <div className="top-bar">
+      <div className="nav-bar">
         <div className="title">CogniSphere</div>
+        <button className="logout-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
       </div>
 
       {/* 1) Pre-Instructions Screen */}
@@ -263,117 +266,117 @@ const WordSearch = () => {
         <div className="instructions-screen">
           <h2>Instructions</h2>
           <p>
-            In this fun activity, you'll search for words hidden in a grid. 
+            In this fun activity, you'll search for words hidden in a grid.
             They can appear horizontally, vertically, or diagonally.
           </p>
           <p>
-            <strong>How to Play:</strong> 
+            <strong>How to Play:</strong>
             <br />
-            Press and hold your mouse button on the first letter of the word. 
-            While holding down, drag your mouse to the last letter of the word, 
-            then release. 
+            Press and hold your mouse button on the first letter of the word.
+            While holding down, drag your mouse to the last letter of the word,
+            then release.
             If it's correct, the word will be marked as found!
           </p>
           <p>
-            Once you've found all the words, you'll see a "Congratulations!" screen. 
+            Once you've found all the words, you'll see a "Congratulations!" screen.
             Press "Reveal" to see the memory photo and caption.
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
             I'm Ready!
           </button>
         </div>
-      ) : 
-      /* 2) Countdown Screen */
-      (!ready && countdown !== null) ? (
-        <div className="countdown-screen">
-          <h1>{countdown}</h1>
-        </div>
-      ) : 
-      /* 3) Show the reveal (photo+caption) if user found all words and clicked "Reveal" */
-      (allFound && showReveal) ? (
-        <div className="reveal-phase">
-          <h3>Here's your memory!</h3>
-          <img src={currentPuzzle.src} alt="Revealed" className="reveal-image" />
-          <p className="caption">{currentPuzzle.caption}</p>
-        </div>
-      ) : 
-      /* 4) Main Puzzle UI */
-      (
-        <div className="game-ui">
-          <div className="target-words">
-            <h3>Find These Words:</h3>
-            <ul>
-              {targetWords.map((word, idx) => {
-                const foundIt = foundWordData.some((fw) => fw.word === word);
-                return (
-                  <li key={idx} className={foundIt ? 'found' : ''}>
-                    {word.toUpperCase()}
-                  </li>
-                );
-              })}
-            </ul>
+      ) :
+        /* 2) Countdown Screen */
+        (!ready && countdown !== null) ? (
+          <div className="countdown-screen">
+            <h1>{countdown}</h1>
           </div>
+        ) :
+          /* 3) Show the reveal (photo+caption) if user found all words and clicked "Reveal" */
+          (allFound && showReveal) ? (
+            <div className="reveal-phase">
+              <h3>Here's your memory!</h3>
+              <img src={currentPuzzle.src} alt="Revealed" className="reveal-image" />
+              <p className="caption">{currentPuzzle.caption}</p>
+            </div>
+          ) :
+            /* 4) Main Puzzle UI */
+            (
+              <div className="game-ui">
+                <div className="target-words">
+                  <h3>Find These Words:</h3>
+                  <ul>
+                    {targetWords.map((word, idx) => {
+                      const foundIt = foundWordData.some((fw) => fw.word === word);
+                      return (
+                        <li key={idx} className={foundIt ? 'found' : ''}>
+                          {word.toUpperCase()}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
 
-          <div
-            className="grid-container"
-            onMouseUp={finalizeSelection}
-            onMouseLeave={() => {
-              if (selecting) finalizeSelection();
-            }}
-          >
-            {grid.map((row, rowIndex) => (
-              <div key={rowIndex} className="grid-row">
-                {row.map((letter, colIndex) => {
-                  // Is this cell in the current drag selection?
-                  const isHighlighted = selectedCells.some(
-                    (cell) => cell.row === rowIndex && cell.col === colIndex
-                  );
-                  // Is this cell part of a found word?
-                  const isPersistFound = isCellFound(rowIndex, colIndex);
+                <div
+                  className="grid-container"
+                  onMouseUp={finalizeSelection}
+                  onMouseLeave={() => {
+                    if (selecting) finalizeSelection();
+                  }}
+                >
+                  {grid.map((row, rowIndex) => (
+                    <div key={rowIndex} className="grid-row">
+                      {row.map((letter, colIndex) => {
+                        // Is this cell in the current drag selection?
+                        const isHighlighted = selectedCells.some(
+                          (cell) => cell.row === rowIndex && cell.col === colIndex
+                        );
+                        // Is this cell part of a found word?
+                        const isPersistFound = isCellFound(rowIndex, colIndex);
 
-                  let cellClass = 'grid-cell';
-                  if (isHighlighted) cellClass += ' highlighted';
-                  if (isPersistFound) cellClass += ' foundWordCell';
+                        let cellClass = 'grid-cell';
+                        if (isHighlighted) cellClass += ' highlighted';
+                        if (isPersistFound) cellClass += ' foundWordCell';
 
-                  return (
-                    <span
-                      key={colIndex}
-                      className={cellClass}
-                      onMouseDown={() => {
-                        setSelecting(true);
-                        setStartCell({ row: rowIndex, col: colIndex });
-                        setEndCell({ row: rowIndex, col: colIndex });
-                      }}
-                      onMouseEnter={() => {
-                        if (selecting) {
-                          setEndCell({ row: rowIndex, col: colIndex });
-                        }
-                      }}
-                    >
-                      {letter}
-                    </span>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+                        return (
+                          <span
+                            key={colIndex}
+                            className={cellClass}
+                            onMouseDown={() => {
+                              setSelecting(true);
+                              setStartCell({ row: rowIndex, col: colIndex });
+                              setEndCell({ row: rowIndex, col: colIndex });
+                            }}
+                            onMouseEnter={() => {
+                              if (selecting) {
+                                setEndCell({ row: rowIndex, col: colIndex });
+                              }
+                            }}
+                          >
+                            {letter}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
 
-          <div className="timer-display">
-            {!allFound ? (
-              <p>Time elapsed: {Math.floor((Date.now() - timer) / 1000)} seconds</p>
-            ) : (
-              // The user found all words, but hasn't revealed the memory yet
-              <div className="finished-phase">
-                <h3>Congratulations! You've found all the words!</h3>
-                <p>Your time: {timeTaken} seconds</p>
-                <button className="reveal-button" onClick={() => setShowReveal(true)}>
-                  Reveal
-                </button>
+                <div className="timer-display">
+                  {!allFound ? (
+                    <p>Time elapsed: {Math.floor((Date.now() - timer) / 1000)} seconds</p>
+                  ) : (
+                    // The user found all words, but hasn't revealed the memory yet
+                    <div className="finished-phase">
+                      <h3>Congratulations! You've found all the words!</h3>
+                      <p>Your time: {timeTaken} seconds</p>
+                      <button className="reveal-button" onClick={() => setShowReveal(true)}>
+                        Reveal
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
