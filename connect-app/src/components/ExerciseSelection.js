@@ -8,7 +8,7 @@ function ExerciseSelection() {
   return (
     <div className="exercise-container">
       {/* Top Bar */}
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">CogniSphere</div>
         <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
       </nav>
@@ -29,13 +29,13 @@ function ExerciseSelection() {
         <div className="exercise-card" onClick={() => navigate("/optionsformatching")}>
           <div className="exercise-icon">🎨</div>
           <p className="exercise-name">Color Match</p>
-        </div>   
+        </div>
         <div className="exercise-card" onClick={() => navigate("/writingexercise")}>
           <div className="exercise-icon">✍️</div>
           <p className="exercise-name">Writing Exercise</p>
+        </div>
       </div>
     </div>
-  </div>
   );
 }
 

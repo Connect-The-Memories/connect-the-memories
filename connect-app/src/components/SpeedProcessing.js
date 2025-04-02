@@ -8,12 +8,22 @@ function SpeedProcessing() {
   const [startTime, setStartTime] = useState(null);
   const [reactionTime, setReactionTime] = useState(null);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(30); // 30-second countdown
+  const [timeLeft, setTimeLeft] = useState(100); // countdown
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
+  const [clickedNumbers, setClickedNumbers] = useState({});
+
+  const sampleNums = [2, 4, 5, 1, 3]; // numbers to use for sample
+  const correctNumber = 5; // define the correct number for sample
+
+  const handleSampleClick = (num) => {
+    setClickedNumbers((prev) => ({
+      ...prev,
+      [num]: num === correctNumber ? "correct" : "wrong",
+    }));
+  };
 
   useEffect(() => {
-    generateNumbers();
-
     // Countdown Timer
     const timer = setInterval(() => {
       setTimeLeft(prevTime => {
@@ -31,8 +41,14 @@ function SpeedProcessing() {
 
   function generateNumbers() {
     if (!gameOver) {
-      const newNumbers = Array.from({ length: 5 }, () => Math.floor(Math.random() * 100));
-      setNumbers(newNumbers);
+      const newNumbers = new Set();
+
+      while (newNumbers.size < 5) {
+        newNumbers.add(Math.floor(Math.random() * 100));
+      }
+
+      setNumbers([...newNumbers]); // convert set to array
+      setClickedNumbers({})
       setStartTime(Date.now());
     }
   }
@@ -41,6 +57,12 @@ function SpeedProcessing() {
     if (gameOver) return; // Stop game if time is up
 
     const maxNumber = Math.max(...numbers);
+
+    setClickedNumbers((prev) => ({
+      ...prev,
+      [number]: number === maxNumber ? "correct" : "wrong",
+    }));
+
     if (number === maxNumber) {
       const endTime = Date.now();
       setReactionTime(endTime - startTime);
@@ -49,34 +71,87 @@ function SpeedProcessing() {
     }
   }
 
+  function startExercise() {
+    generateNumbers()
+    setTimeLeft(30);
+    setShowInstructions(false);
+  }
+
   return (
     <div className="exercise-container">
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <div className="title">Speed of Processing</div>
-        <button className="back-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
+        <button className="logout-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
       </nav>
 
-      {gameOver ? (
-        <div className="game-over">
-          <h2>Game Over!</h2>
-          <p>Final Score: {score}</p>
-          <button className="restart-button" onClick={() => window.location.reload()}>Play Again</button>
-        </div>
-      ) : (
-        <>
-          <p>Time Left: {timeLeft}s</p>
-          <p>Click the **largest** number as fast as you can!</p>
-          <div className="number-container">
-            {numbers.map((num, index) => (
-              <button key={index} className="number-button" onClick={() => handleClick(num)}>
-                {num}
-              </button>
-            ))}
+      <div className="inner-box">
+        {showInstructions ? (
+          <div className="instructions-container">
+            <h1 className="instructions-title">Instructions</h1>
+            <p className="instructions-text">
+              You will be shown 5 numbers, keep selecting the largest number
+              in each series as quick as possible until the time runs out!
+            </p>
+            <p className="exercise-text">Try it out:</p>
+            <div className="number-container">
+              {sampleNums.map((num, index) => (
+                <div key={index} className="button-wrapper">
+                  <button
+                    key={index}
+                    className={`number-button ${clickedNumbers[num]}`}
+                    onClick={() => handleSampleClick(num)}
+                  >
+                    {num}
+                  </button>
+                  {clickedNumbers[num] === "correct" ? (
+                    <span className="correct-check">✓</span>
+                  ) : clickedNumbers[num] === "wrong" ? (
+                    <span className="wrong-x">✖</span>
+                  ) : (
+                    <span className="unclicked">.</span>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button className="start-exercise-button" onClick={() => startExercise()}>Start!</button>
           </div>
-          {reactionTime && <p>Reaction Time: {reactionTime}ms</p>}
-          <p>Score: {score}</p>
-        </>
-      )}
+        ) : (gameOver ? (
+          <div className="game-over">
+            <h2 className="game-over-title">Game Over!</h2>
+            <p className="game-over-score">Final Score: {score}</p>
+            <button className="restart-button" onClick={() => window.location.reload()}>Play Again</button>
+          </div>
+        ) : (
+          <>
+            <p className="exercise-text">Time Left: {timeLeft}s</p>
+            <p className="exercise-text">Click the largest number as fast as you can!</p>
+            <div className="number-container">
+              {numbers.map((num, index) => (
+                <div key={index} className="button-wrapper">
+                  <button
+                    key={index}
+                    className={`number-button ${clickedNumbers[num]}`}
+                    onClick={() => handleClick(num)}
+                  >
+                    {num}
+                  </button>
+                  {clickedNumbers[num] === "correct" ? (
+                    <span className="correct-check">✓</span>
+                  ) : clickedNumbers[num] === "wrong" ? (
+                    <span className="wrong-x">✖</span>
+                  ) : (
+                    <span className="unclicked">.</span>
+                  )}
+                </div>
+              ))}
+            </div>
+            {reactionTime && <p>Reaction Time: {reactionTime}ms</p>}
+            <p className="exercise-text">Score: {score}</p>
+          </>
+        )
+        )}
+      </div>
+
     </div>
   );
 }
