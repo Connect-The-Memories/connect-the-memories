@@ -179,10 +179,18 @@ h3 {
 }
 
 .game-over {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 32px;
     color: red;
     margin-top: 15px;
+    text-align: center;
+}
+
+.game-over-title {
+    font-size: 48px;
+}
+
+.game-over-score {
+    font-size: 30px;
 }
 
 .check-answers-button {
