@@ -8,9 +8,10 @@ function SpeedProcessing() {
   const [startTime, setStartTime] = useState(null);
   const [reactionTime, setReactionTime] = useState(null);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(100); // countdown
+  const [timeLeft, setTimeLeft] = useState(100); // exercise timer
   const [gameOver, setGameOver] = useState(false);
-  const [showInstructions, setShowInstructions] = useState(true);
+  const [countdown, setCountdown] = useState(null); // starting countdown
+  const [ready, setReady] = useState(false);
   const [clickedNumbers, setClickedNumbers] = useState({});
 
   const sampleNums = [2, 4, 5, 1, 3]; // numbers to use for sample
@@ -24,20 +25,33 @@ function SpeedProcessing() {
   };
 
   useEffect(() => {
-    // Countdown Timer
-    const timer = setInterval(() => {
-      setTimeLeft(prevTime => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          setGameOver(true);
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
+    console.log("Countdown:", countdown);
+    if (countdown === null) return;
 
-    return () => clearInterval(timer); // Cleanup on unmount
-  }, []);
+    if (countdown > 0) {
+      // Exercise start countdown
+      const timer1 = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+      return () => clearTimeout(timer1);
+
+    } else {
+      // Exercise Timer
+      setStartTime(Date.now());
+      const timer = setInterval(() => {
+        console.log("time left:", timeLeft);
+        setTimeLeft(prevTime => {
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            setGameOver(true);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer); // Cleanup on unmount
+    }
+
+  }, [countdown]);
 
   function generateNumbers() {
     if (!gameOver) {
@@ -49,7 +63,6 @@ function SpeedProcessing() {
 
       setNumbers([...newNumbers]); // convert set to array
       setClickedNumbers({})
-      setStartTime(Date.now());
     }
   }
 
@@ -74,7 +87,8 @@ function SpeedProcessing() {
   function startExercise() {
     generateNumbers()
     setTimeLeft(30);
-    setShowInstructions(false);
+    setCountdown(3);
+    setReady(true);
   }
 
   return (
@@ -84,73 +98,79 @@ function SpeedProcessing() {
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
       </nav>
 
-      <div className="inner-box">
-        {showInstructions ? (
-          <div className="instructions-container">
-            <h1 className="instructions-title">Instructions</h1>
-            <p className="instructions-text">
-              You will be shown 5 numbers, keep selecting the largest number
-              in each series as quick as possible until the time runs out!
-            </p>
-            <p className="exercise-text">Try it out:</p>
-            <div className="number-container">
-              {sampleNums.map((num, index) => (
-                <div key={index} className="button-wrapper">
-                  <button
-                    key={index}
-                    className={`number-button ${clickedNumbers[num]}`}
-                    onClick={() => handleSampleClick(num)}
-                  >
-                    {num}
-                  </button>
-                  {clickedNumbers[num] === "correct" ? (
-                    <span className="correct-check">✓</span>
-                  ) : clickedNumbers[num] === "wrong" ? (
-                    <span className="wrong-x">✖</span>
-                  ) : (
-                    <span className="unclicked">.</span>
-                  )}
-                </div>
-              ))}
+      {countdown !== null && countdown !== 0 ? (
+        <div className="countdown-screen">
+          <h1>{countdown}</h1>
+        </div>
+      ) : (
+        <div className="inner-box">
+          {!ready ? (
+            <div className="instructions-container">
+              <h1 className="instructions-title">Instructions</h1>
+              <p className="instructions-text">
+                You will be shown 5 numbers, keep selecting the largest number
+                in each series as quick as possible until the time runs out!
+              </p>
+              <p className="exercise-text">Try it out:</p>
+              <div className="number-container">
+                {sampleNums.map((num, index) => (
+                  <div key={index} className="button-wrapper">
+                    <button
+                      key={index}
+                      className={`number-button ${clickedNumbers[num]}`}
+                      onClick={() => handleSampleClick(num)}
+                    >
+                      {num}
+                    </button>
+                    {clickedNumbers[num] === "correct" ? (
+                      <span className="correct-check">✓</span>
+                    ) : clickedNumbers[num] === "wrong" ? (
+                      <span className="wrong-x">✖</span>
+                    ) : (
+                      <span className="unclicked">.</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button className="start-exercise-button" onClick={() => startExercise()}>Start!</button>
             </div>
-            <button className="start-exercise-button" onClick={() => startExercise()}>Start!</button>
-          </div>
-        ) : (gameOver ? (
-          <div className="game-over">
-            <h2 className="game-over-title">Game Over!</h2>
-            <p className="game-over-score">Final Score: {score}</p>
-            <button className="restart-button" onClick={() => window.location.reload()}>Play Again</button>
-          </div>
-        ) : (
-          <>
-            <p className="exercise-text">Time Left: {timeLeft}s</p>
-            <p className="exercise-text">Click the largest number as fast as you can!</p>
-            <div className="number-container">
-              {numbers.map((num, index) => (
-                <div key={index} className="button-wrapper">
-                  <button
-                    key={index}
-                    className={`number-button ${clickedNumbers[num]}`}
-                    onClick={() => handleClick(num)}
-                  >
-                    {num}
-                  </button>
-                  {clickedNumbers[num] === "correct" ? (
-                    <span className="correct-check">✓</span>
-                  ) : clickedNumbers[num] === "wrong" ? (
-                    <span className="wrong-x">✖</span>
-                  ) : (
-                    <span className="unclicked">.</span>
-                  )}
-                </div>
-              ))}
+          ) : (gameOver ? (
+            <div className="game-over">
+              <h2 className="game-over-title">Game Over!</h2>
+              <p className="game-over-score">Final Score: {score}</p>
+              <button className="restart-button" onClick={() => window.location.reload()}>Play Again</button>
             </div>
-            {reactionTime && <p>Reaction Time: {reactionTime}ms</p>}
-            <p className="exercise-text">Score: {score}</p>
-          </>
-        )
-        )}
-      </div>
+          ) : (
+            <>
+              <p className="exercise-text">Time Left: {timeLeft}s</p>
+              <p className="exercise-text">Click the largest number as fast as you can!</p>
+              <div className="number-container">
+                {numbers.map((num, index) => (
+                  <div key={index} className="button-wrapper">
+                    <button
+                      key={index}
+                      className={`number-button ${clickedNumbers[num]}`}
+                      onClick={() => handleClick(num)}
+                    >
+                      {num}
+                    </button>
+                    {clickedNumbers[num] === "correct" ? (
+                      <span className="correct-check">✓</span>
+                    ) : clickedNumbers[num] === "wrong" ? (
+                      <span className="wrong-x">✖</span>
+                    ) : (
+                      <span className="unclicked">.</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {reactionTime && <p>Reaction Time: {reactionTime}ms</p>}
+              <p className="exercise-text">Score: {score}</p>
+            </>
+          )
+          )}
+        </div>
+      )}
 
     </div>
   );
