@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import "./EventsExercise.css";
 import { useNavigate } from "react-router-dom";
-
-import babyleah from "../../assets/babyleah.jpg";
-import boatride from "../../assets/boatride.jpg";
-import familychurch from "../../assets/familychurch.jpg";
+import { getRandomizedMedia } from "../../api/database";
 
 const DraggableImage = ({ id, image }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id });
@@ -16,7 +13,7 @@ const DraggableImage = ({ id, image }) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes} className="draggable-image">
-      <img src={image.src} alt={image.title} className="image" />
+      <img src={image.signed_url || image.src} alt={image.title} className="image" />
     </div>
   );
 };
@@ -32,7 +29,6 @@ function shuffleArray(array) {
 
 const DroppableContainer = ({ id, children, label, result }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
-
   let borderStyle;
   if (result === "correct") {
     borderStyle = "6px solid #00ff00";
@@ -41,7 +37,6 @@ const DroppableContainer = ({ id, children, label, result }) => {
   } else {
     borderStyle = "2px dashed " + (isOver ? "blue" : "gray");
   }
-
   const style = {
     border: borderStyle,
     width: "300px",
@@ -51,7 +46,6 @@ const DroppableContainer = ({ id, children, label, result }) => {
     justifyContent: "center",
     position: "relative",
   };
-
   return (
     <div ref={setNodeRef} style={style} className="droppable-container">
       <span className="zone-label">{label}</span>
@@ -62,18 +56,9 @@ const DroppableContainer = ({ id, children, label, result }) => {
 
 function EventsExercise() {
   const navigate = useNavigate();
-  // initial array
-  const initialPalette = [
-    { id: "1", title: "Image 1", src: babyleah, metadata: { date: "2021-01-01" } },
-    { id: "2", title: "Image 2", src: boatride, metadata: { date: "2013-01-01" } },
-    { id: "3", title: "Image 3", src: familychurch, metadata: { date: "2019-01-01" } },
-  ];
 
-  const correctOrder = [...initialPalette]
-    .sort((a, b) => new Date(a.metadata.date) - new Date(b.metadata.date))
-    .map(item => item.id);
-
-  const [palette, setPalette] = useState(() => shuffleArray(initialPalette));
+  const [palette, setPalette] = useState([]);
+  const [originalPalette, setOriginalPalette] = useState([]);
   const [dropZones, setDropZones] = useState({
     "drop-0": null,
     "drop-1": null,
@@ -83,12 +68,13 @@ function EventsExercise() {
 
   const [ready, setReady] = useState(false);
   const [countdown, setCountdown] = useState(null);
-
   const [startTime, setStartTime] = useState(null);
+  const [results, setResults] = useState(null);
+
   useEffect(() => {
     if (countdown === null) return;
     if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+      const timer = setTimeout(() => setCountdown(prev => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       setCountdown(null);
@@ -97,7 +83,42 @@ function EventsExercise() {
     }
   }, [countdown]);
 
-  const [results, setResults] = useState(null);
+useEffect(() => {
+  if (ready) {
+    const fetchRandomMedia = async () => {
+      try {
+        const res = await getRandomizedMedia(3);
+        if (res.status === 200 && res.data.media && res.data.media.length > 0) {
+          const transformed = res.data.media.map((m, idx) => ({
+            id: m.media_id || `media-${idx}`,
+            title: m.description || `Image ${idx + 1}`,
+            src: m.signed_url,
+            metadata: {
+              date: m.approx_date_taken || "2021-01-01",
+            },
+          }));
+          const shuffled = shuffleArray(transformed);
+          setOriginalPalette(shuffled); 
+          setPalette(shuffled);
+        } else {
+          console.error("No randomized media returned from database");
+          setOriginalPalette([]);
+          setPalette([]);
+        }
+      } catch (err) {
+        console.error("Error fetching randomized media:", err);
+        setOriginalPalette([]);
+        setPalette([]);
+      }
+    };
+    fetchRandomMedia();
+  }
+}, [ready]);
+
+  const correctOrder = originalPalette
+    .slice()
+    .sort((a, b) => new Date(a.metadata.date) - new Date(b.metadata.date))
+    .map(item => item.id);
 
   const handleDragStart = (event) => {
     const { active } = event;
@@ -118,12 +139,10 @@ function EventsExercise() {
       return;
     }
     const destination = over.id;
-
     if (destination === activeFrom) {
       setActiveFrom(null);
       return;
     }
-
     if (destination.startsWith("drop")) {
       if (dropZones[destination] !== null) {
         setActiveFrom(null);
@@ -137,7 +156,6 @@ function EventsExercise() {
         }
       }
     }
-
     if (destination === "palette" && activeFrom !== "palette") {
       const item = dropZones[activeFrom];
       if (item) {
@@ -149,7 +167,7 @@ function EventsExercise() {
   };
 
   const handleResetBoard = () => {
-    setPalette(shuffleArray(initialPalette));
+    setPalette([...originalPalette]);
     setDropZones({
       "drop-0": null,
       "drop-1": null,
@@ -158,8 +176,30 @@ function EventsExercise() {
     setResults(null);
   };
 
-  const handleRedo = () => {
-    setPalette(shuffleArray(initialPalette));
+  const handleRedo = async () => {
+    try {
+      const res = await getRandomizedMedia(3);
+      if (res.status === 200 && res.data.media && res.data.media.length > 0) {
+        const transformed = res.data.media.map((m, idx) => ({
+          id: m.media_id || `media-${idx}`,
+          title: m.description || `Image ${idx + 1}`,
+          src: m.signed_url,
+          metadata: {
+            date: m.approx_date_taken || "2021-01-01",
+          },
+        }));
+        const shuffled = shuffleArray(transformed);
+        setOriginalPalette(shuffled);
+        setPalette(shuffled);
+      } else {
+        console.error("No randomized media returned, using fallback data");
+        const fallback = shuffleArray([...originalPalette]);
+        setPalette(fallback);
+      }
+    } catch (err) {
+      console.error("Error fetching randomized media:", err);
+      setPalette([...originalPalette]);
+    }
     setDropZones({
       "drop-0": null,
       "drop-1": null,
@@ -175,9 +215,7 @@ function EventsExercise() {
       alert("Please fill all drop zones before checking your answers.");
       return;
     }
-
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
-
     let correctCount = 0;
     zoneKeys.forEach((zone, index) => {
       const placedId = dropZones[zone]?.id;
@@ -186,7 +224,6 @@ function EventsExercise() {
         correctCount++;
       }
     });
-
     setResults({
       correctCount,
       total: zoneKeys.length,
@@ -211,7 +248,8 @@ function EventsExercise() {
             In this fun and engaging game, you'll be arranging cherished photos in the order of their dates.
           </p>
           <p>
-            Simply drag and drop each picture into the drop zone that best fits its chronological order. Enjoy a gentle stroll down memory lane while keeping your mind active!
+            Simply drag and drop each picture into the drop zone that best fits its chronological order.
+            Enjoy a gentle stroll down memory lane while keeping your mind active!
           </p>
           <p>
             Once you've arranged the photos, press <strong>"Check Answers"</strong> to see if your order is correct.

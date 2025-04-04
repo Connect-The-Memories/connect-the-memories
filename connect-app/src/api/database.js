@@ -34,7 +34,7 @@ export async function getLinkedAccounts() {
 // Get n amount of Randomized IMG/VID/TXT
 export async function getRandomizedMedia(count=1) {
     return axiosInstance.get('/database/firestore/media/random_indexed', {
-        count,
+        params: { count },
     }); 
 }
 
