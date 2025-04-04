@@ -108,3 +108,10 @@ textarea {
   margin: 0;
   padding: 20px;
 }
+
+.media-image {
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}

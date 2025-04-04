@@ -69,12 +69,12 @@ function WritingExercise() {
         setLoadingMedia(true);
         try {
           const res = await getRandomizedMedia();
-          const mediaData = res.data;
-          console.log(mediaData);
-          if (res.status === 200) {
-            setMedia(mediaData.media || null);
+          console.log("Fetched media data:", res.data);
+
+          if (res.status === 200 && res.data.media?.length > 0) {
+            setMedia(res.data.media[0]);
           } else {
-            console.error(mediaData.error || "Failed to load media");
+            console.error(res.data.error || "No media returned");
           }
         } catch (err) {
           console.error("Fetch error:", err);
@@ -123,9 +123,13 @@ function WritingExercise() {
       ) : (
         <div className="writing-exercise-container">
           <div className="media-container">
-            <div className="media-placeholder">
-              <p>[Media Placeholder]</p>
-            </div>
+            {loadingMedia ? (
+              <p>Loading media...</p>
+            ) : media ? (
+              <img src={media.signed_url} alt="Memory Prompt" className="media-image" />
+            ) : (
+              <p>No media available.</p>
+            )}
           </div>
 
           <div className="writing-section">
