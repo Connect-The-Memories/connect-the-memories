@@ -7,19 +7,19 @@
   padding: 0;
   overflow: hidden; 
 }
-
+/* Main Container for Media & Writing */
 .writing-exercise-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: stretch;
-  width: 90vw;
-  height: 439px; 
+  align-items: flex-start;
+  width: 90%;
   max-width: 1200px;
-  margin-top: 20px;
-  gap: 30px; 
+  margin-top: 40px;
+  gap: 40px;
 }
 
+/* Media Container (Image/Video) */
 .media-container {
   flex: 1;
   display: flex;
@@ -27,91 +27,91 @@
   align-items: center;
 }
 
-.media-placeholder {
-  width: 700px;
-  height: 400px;
-  background-color: #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  border-radius: 10px;
-}
-
-.writing-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.writing-section h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.writing-section p {
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-
-textarea {
-  width: 100%;
-  height: 200px;
-  font-size: 16px;
-  padding: 10px;
-  border-radius: 5px;
+/* If media is an image */
+.media-image {
+  max-width: 500px;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.char-count {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #555;
+/* Writing Section */
+.writing-section {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px 25px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
+.writing-section textarea {
+  width: 95%;
+  min-height: 200px;
+  font-size: 1.5rem;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  resize: vertical;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.writing-section p {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Character Count */
+.char-count {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Submit Button */
 .submit-button {
-  padding: 10px 20px;
-  font-size: 16px;
+  font-size: 1.1rem;
+  padding: 10px 25px;
   background-color: #ffba57;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 10px;
+  margin-left: -3px;   
 }
-
 .submit-button:hover:not(:disabled) {
-  background-color: #e09e44;
+  background-color: #d99b47;
 }
-
 .submit-button:disabled {
-  background-color: #aaa;
+  background-color: #bbb;
   cursor: not-allowed;
 }
 
+/* Success Message */
 .success-message {
+  margin-top: 15px;
+  font-size: 1.2rem;
   color: green;
-  font-size: 18px;
-  margin-top: 20px;
-  text-align: center;
 }
 
-.instructions-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center;     
-  text-align: center;
-  height: 70vh; 
-  margin: 0;
-  padding: 20px;
-}
-
-.media-image {
-  max-width: 400px;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 8px;
+/* Responsive Behavior */
+@media (max-width: 768px) {
+  .writing-exercise-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .media-container, .writing-section {
+    max-width: 90%;
+  }
+  .media-image {
+    max-width: 100%;
+    max-height: 300px;
+  }
 }
