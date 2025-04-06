@@ -10,45 +10,22 @@
     background: none !important; 
 }
 
-.top-bar {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    min-width: 95vw;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-.title {
-    font-size: 36px;
-    font-weight: bold;
-}
-
-.back-button {
-    background-color: #ffba57; 
-    border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
 .exercise-title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color:white; 
+    font-size: 40px;
+    font-family: Fustat Bold;
+    margin: 5px;
+    color:black; 
+    text-decoration: underline;
 }
 
 .exercise-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    padding: 20px;
-    width: 80%;
+    padding: 10px;
+    width: 90%;
     text-align: center;
+    overflow-y: scroll;
 }
 
 .exercise-card {
@@ -66,6 +43,10 @@
     background-color: #ffba57;
 }
 
+.exercise-name {
+    color: black;
+}
+
 .exercise-icon {
     font-size: 40px;
     margin-bottom: 10px;
@@ -74,8 +55,4 @@
 .inactive {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.exercise-name {
-    color: black;
 }

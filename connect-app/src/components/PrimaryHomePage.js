@@ -12,7 +12,7 @@ function PrimaryHomePage() {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    async function fetchUserInfo(){
+    async function fetchUserInfo() {
       try {
         const userInfo = await getUserInfo();
         const first_name = userInfo.data.first_name;
@@ -37,11 +37,6 @@ function PrimaryHomePage() {
       </nav>
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>
-        <div className="inner-box-top-row">
-          <div style={{ width: "27vw" }}></div>
-          <button className="top-row-button" onClick={() => navigate("/stats")}>Exercise Statistics</button>
-          <button className="top-row-button" onClick={() => navigate("/journal")}>Journal</button>
-        </div>
         <div className="action-buttons-container">
           <div className="button-container">
             <button className=" action-button gallery-button" onClick={() => navigate("/gallery")}>
@@ -62,6 +57,13 @@ function PrimaryHomePage() {
             </button>
           </div>
         </div>
+
+        <div className="hp-sub-row">
+          <button className="hp-sub-button" onClick={() => navigate("/journal")}>Journal</button>
+          <button className="hp-sub-button" onClick={() => navigate("/stats")}>Exercise Statistics</button>
+          <button className="hp-sub-button" onClick={() => navigate("/managesupport")}>Manage Support System</button>
+        </div>
+
       </div>
     </div >
   );

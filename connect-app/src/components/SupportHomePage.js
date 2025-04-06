@@ -33,7 +33,7 @@ function SupportHomePage() {
         <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
       </nav>
       <div className="inner-box">
-        <div className="welcome-message">Welcome, {userName}</div>
+        <div className="welcome-message">Welcome, {userName}!</div>
         <div className="action-buttons-container support-container">
           <div className="button-container">
             <button className=" action-button gallery-button" onClick={() => navigate("/upload")}>
