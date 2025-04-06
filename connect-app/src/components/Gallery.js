@@ -3,16 +3,26 @@ import { useNavigate } from "react-router-dom";
 import "./Gallery.css";
 import { useMedia } from "./MediaContext";
 
+
 // TODO: Eventually implement pagination for messages and img/vid to avoid performance issues
 function GalleryPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("photos");
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const { photos, messages, fetchMediaData } = useMedia();
 
   useEffect(() => {
     fetchMediaData();
   }, []);
+
+  const openPhotoModal = (photoUrl) => {
+    setSelectedPhoto(photoUrl);
+  };
+
+  const closePhotoModal = () => {
+    setSelectedPhoto(null);
+  };
 
   return (
     <div className="gallery-container">
@@ -44,7 +54,12 @@ function GalleryPage() {
             <div className="photo-grid">
               {photos.map((photo, index) => (
                 <div key={index} className="photo-item">
-                  <img src={photo.signed_url} alt={`Uploaded by ${photo.support_user_name}`} className="photo-image" />
+                  <img
+                    src={photo.signed_url}
+                    alt={`Uploaded by ${photo.support_user_name}`}
+                    className="photo-image"
+                    onClick={() => openPhotoModal(photo.signed_url)}
+                  />
                   <p className="uploaded-by">Uploaded by: {photo.support_user_name}</p>
                 </div>
               ))}
@@ -68,6 +83,17 @@ function GalleryPage() {
           )
         )}
       </div>
+
+      {selectedPhoto && (
+        <div className="modal-overlay" onClick={closePhotoModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <img src={selectedPhoto} alt="Enlarged" className="enlarged-photo" />
+            <button className="close-button" onClick={closePhotoModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
