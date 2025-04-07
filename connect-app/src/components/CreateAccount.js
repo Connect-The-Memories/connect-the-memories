@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CreateAccount.css";
+import DarkModeToggle from "./DarkModeToggle";
 import { createAccount } from "../api/auth";
-import CogniSphereIcon from '../assets/cognisphere-icon-white.png';
+
+import CogniSphereIconDark from '../assets/cognisphere-icon-white.png';
+import CogniSphereIconLight from '../assets/cognisphere-icon-black.png';
+import "./CreateAccount.css";
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -13,6 +16,30 @@ function CreateAccount() {
   const [birthday, setBirthday] = useState("");
   const [accountType, setAccountType] = useState("main");
   const [error, setError] = useState("");
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const currentTheme = document.querySelector("body").getAttribute("data-theme");
+    setTheme(currentTheme);
+
+    // Listen for future theme changes if toggle affects body dynamically
+    const observer = new MutationObserver(() => {
+      const updatedTheme = document.querySelector("body").getAttribute("data-theme");
+      setTheme(updatedTheme);
+    });
+
+    observer.observe(document.querySelector("body"), {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Set icon to appropriate theme version
+  const iconSrc = theme === "dark"
+    ? CogniSphereIconDark
+    : CogniSphereIconLight;
 
   const handleCreateAccount = async () => {
     if (!email || !password || !birthday) {
@@ -62,8 +89,11 @@ function CreateAccount() {
   return (
     <div className="container">
       <div className="left-side">
-        <img src={CogniSphereIcon} alt="CogniSphere Icon" className="landing-page-icon" />
+        <img src={iconSrc} alt="CogniSphere Icon" className="landing-page-icon" />
         <h1 className="landing-page-title">CogniSphere</h1>
+        <div className="landing-pg-theme-toggle">
+          <DarkModeToggle />
+        </div>
       </div>
       <div className="right-side">
         <div className="login-box">

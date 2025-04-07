@@ -1,18 +1,3 @@
-@font-face {
-    font-family: "Hammersmith One";
-    src: url("../assets/HammersmithOne-Regular.ttf");
-}
-
-@font-face {
-    font-family: Fustat Regular;
-    src: url("../assets/Fustat-Regular.ttf");
-}
-
-@font-face {
-    font-family: Fustat Bold;
-    src: url("../assets/Fustat-Bold.ttf");
-}
-
 a {
     color: inherit;
     text-decoration: none;
