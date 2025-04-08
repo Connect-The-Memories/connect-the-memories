@@ -100,12 +100,25 @@ function UploadPage() {
         }
 
         // Alert if photos/videos are missing descriptions.
-        selectedFiles.forEach((fileObj) => {
+        for (const fileObj of selectedFiles) {
+            // Check if there's ANY description
             if (!fileObj.description) {
-                alert("Please add a description for every photo/video.")
-                return;
+              alert("Please add a description for every photo/video.");
+              return;
             }
-        });
+        
+            // If this is an image, enforce min character count
+            if (fileObj.file.type.startsWith("image/")) {
+              const minChars = 150; // or whichever length you consider ~3 sentences
+              if (fileObj.description.trim().length < minChars) {
+                alert(
+                  `Each image description must be at least ${minChars} characters. ` +
+                  "Please revise your description."
+                );
+                return; // Stop upload
+              }
+            }
+          }
 
         try {
             if (activeTab === "Messages") {

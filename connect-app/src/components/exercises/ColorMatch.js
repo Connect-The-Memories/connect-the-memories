@@ -10,10 +10,13 @@ function ColorMatch() {
   const navigate = useNavigate();
 
   const [ready, setReady] = useState(false);
-  const [countdown, setCountdown] = useState(null); // Countdown state
+  const [countdown, setCountdown] = useState(null); 
 
   const [score, setScore] = useState(0);
   const [guessCount, setGuessCount] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);        
+  const [sumReactionTime, setSumReactionTime] = useState(0);  
+
   const [leftWord, setLeftWord] = useState("");
   const [leftColor, setLeftColor] = useState("");
   const [rightWord, setRightWord] = useState("");
@@ -53,7 +56,6 @@ function ColorMatch() {
     guessStartTimeRef.current = Date.now();
   };
 
-  // Countdown Effect
   useEffect(() => {
     if (countdown === null) return;
 
@@ -62,7 +64,7 @@ function ColorMatch() {
       return () => clearTimeout(timer);
     } else {
       setCountdown(null);
-      setReady(true); // Start the game when countdown reaches 0
+      setReady(true); // start the game when countdown reaches 0
     }
   }, [countdown]);
 
@@ -87,6 +89,7 @@ function ColorMatch() {
     if (ready && !gameOver) {
       setupNewStimuli();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, gameOver]);
 
   useEffect(() => {
@@ -103,14 +106,14 @@ function ColorMatch() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [ready, gameOver, leftColor, rightWord, guessStartTimeRef.current]);
+  }, [ready, gameOver, leftColor, rightWord]);
 
   const handleUserResponse = (isUserSayingMatch) => {
     if (gameOver || respondedRef.current) return;
     respondedRef.current = true;
 
-    const reactionTime = Date.now() - guessStartTimeRef.current;
-    const isMatch = (leftColor === rightWord);
+    const reactionTime = Date.now() - guessStartTimeRef.current; // in ms
+    const isMatch = leftColor === rightWord;
 
     let isCorrect = false;
     if (isUserSayingMatch && isMatch) {
@@ -124,6 +127,9 @@ function ColorMatch() {
       const bonus = Math.max(0, 1 - reactionTimeInSeconds);
       setScore((prev) => prev + 1 + bonus);
       setMessage(`Correct! +${(1 + bonus).toFixed(2)} points`);
+      
+      setCorrectCount((prev) => prev + 1);            // INCREMENT CORRECT GUESS
+      setSumReactionTime((prev) => prev + reactionTime);  // ADD REACTION TIME
     } else {
       setMessage("Incorrect!");
     }
@@ -140,15 +146,23 @@ function ColorMatch() {
   const handleRestart = () => {
     setScore(0);
     setGuessCount(0);
+    setCorrectCount(0);      // RESET CORRECT COUNT
+    setSumReactionTime(0);   // RESET SUM REACTION TIME
     setTimeLeft(totalTime);
     setGameOver(false);
     setCountdown(null);
     setReady(false);
   };
 
+  // calculate accuracy and average reaction time
+  // if you want average reaction time for *all* guesses, you'd use sumReactionTime / guessCount
+  // if you only want it for correct guesses (common in reaction tasks), do sumReactionTime / correctCount
+  const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
+  const avgReactionTime =
+    correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0; // in seconds
+
   return (
     <div className="memory-container">
-      {/* Navigation Bar */}
       <nav className="nav-bar">
         <div className="title">CogniSphere</div>
         <button
@@ -159,7 +173,6 @@ function ColorMatch() {
         </button>
       </nav>
 
-      {/* If countdown is active, show countdown */}
       {countdown !== null ? (
         <div className="countdown-screen">
           <h1>{countdown}</h1>
@@ -172,13 +185,16 @@ function ColorMatch() {
             Each time, you'll see:
           </p>
           <ul>
-            <li><strong>Left:</strong> A color word displayed in a random color (e.g., "BLUE" in red text).</li>
-            <li><strong>Right:</strong> A color word in neutral text (e.g., "red").</li>
+            <li>
+              <strong>Left:</strong> A color word displayed in a random color (e.g., "BLUE" in red text).
+            </li>
+            <li>
+              <strong>Right:</strong> A color word in neutral text (e.g., "red").
+            </li>
           </ul>
           <p>
             If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.”
-            Otherwise, click “No Match.”
-            Answer quickly for a reaction-time bonus!
+            Otherwise, click “No Match.” Answer quickly for a reaction-time bonus!
           </p>
           <p>
             You can use your keyboard (press "M" for Match and "N" for No Match)
@@ -195,7 +211,6 @@ function ColorMatch() {
               <h2 className="timer-text">Time Left: {timeLeft}s</h2>
               <h3>Score: {score.toFixed(2)}</h3>
 
-              {/* Display the two stimuli */}
               <div className="stimuli">
                 <div className="left-stimulus" style={{ color: leftColor }}>
                   {leftWord}
@@ -203,10 +218,19 @@ function ColorMatch() {
                 <div className="right-stimulus">{rightWord}</div>
               </div>
 
-              {/* Buttons for user response */}
               <div className="response-buttons">
-                <button className="no-match-button" onClick={() => handleUserResponse(false)}>No Match</button>
-                <button className="match-button" onClick={() => handleUserResponse(true)}>Match</button>
+                <button
+                  className="no-match-button"
+                  onClick={() => handleUserResponse(false)}
+                >
+                  No Match
+                </button>
+                <button
+                  className="match-button"
+                  onClick={() => handleUserResponse(true)}
+                >
+                  Match
+                </button>
               </div>
 
               <p className="message">{message}</p>
@@ -216,6 +240,10 @@ function ColorMatch() {
               <h2 className="timer-text">Time's Up!</h2>
               <h3>Your Final Score: {score.toFixed(2)}</h3>
               <h3>You made {guessCount} guesses in 45 seconds.</h3>
+
+              <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
+              <h3>Average Reaction Time: {avgReactionTime.toFixed(2)}s</h3>
+
               <button className="restart-button" onClick={handleRestart}>
                 Play Again
               </button>
@@ -228,3 +256,4 @@ function ColorMatch() {
 }
 
 export default ColorMatch;
+
