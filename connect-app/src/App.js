@@ -20,6 +20,7 @@ import SurveyPage from "./components/SurveyPage";
 import PreSurvey from "./components/PreSurvey";
 import EventsExercise from "./components/exercises/EventsExercise";
 import WordSearch from "./components/exercises/WordSearch";
+// import CrosswordPage from "./components/exercises/CrosswordPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { MediaProvider } from "./components/MediaContext";
 
