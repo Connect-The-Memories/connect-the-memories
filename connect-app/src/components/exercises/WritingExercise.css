@@ -7,7 +7,7 @@
   padding: 0;
   overflow: hidden; 
 }
-/* Main Container for Media & Writing */
+
 .writing-exercise-container {
   display: flex;
   flex-direction: row;
@@ -19,7 +19,6 @@
   gap: 40px;
 }
 
-/* Media Container (Image/Video) */
 .media-container {
   flex: 1;
   display: flex;
@@ -27,7 +26,6 @@
   align-items: center;
 }
 
-/* If media is an image */
 .media-image {
   max-width: 500px;
   max-height: 400px;
@@ -36,7 +34,6 @@
   border: 1px solid #ccc;
 }
 
-/* Writing Section */
 .writing-section {
   flex: 1;
   background-color: #fff;
@@ -63,17 +60,15 @@
   line-height: 1.4;
   margin-top: 0;
   margin-bottom: 15px;
-  color: #444;
+  color: black;
 }
 
-/* Character Count */
 .char-count {
   font-size: 1rem;
   color: #666;
   margin-bottom: 10px;
 }
 
-/* Submit Button */
 .submit-button {
   font-size: 1.1rem;
   padding: 10px 25px;
@@ -93,13 +88,6 @@
   cursor: not-allowed;
 }
 
-/* Success Message */
-.success-message {
-  margin-top: 15px;
-  font-size: 1.2rem;
-  color: green;
-}
-
 /* Responsive Behavior */
 @media (max-width: 768px) {
   .writing-exercise-container {
@@ -115,3 +103,33 @@
     max-height: 300px;
   }
 }
+
+.epic-button {
+  width: 220px;
+  height: 80px;
+
+  font-size: 25px;
+  font-weight: bold;
+  font-family: Fustat Bold; 
+  color: white;
+
+  background-color: #001447;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.2); 
+}
+
+.epic-button:hover {
+  background-color: #ffcf67;
+  color: black;
+}
+
+
+.epic-text {
+  color: black;
+  font-family: Fustat Bold;
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+

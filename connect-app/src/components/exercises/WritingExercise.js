@@ -7,7 +7,7 @@ function WritingExercise() {
   const navigate = useNavigate();
   const charLimit = 800;
   const [text, setText] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [completed, setCompleted] = useState(false);
   const [ready, setReady] = useState(false);
   const [countdown, setCountdown] = useState(null);
   const [media, setMedia] = useState(null);
@@ -17,23 +17,19 @@ function WritingExercise() {
     setText(e.target.value);
   };
 
-  // spam function
+  // basic spam check 
   const isSpam = (text) => {
     const words = text.split(/\s+/);
     const uniqueWords = new Set(words);
 
-    // 1. check if text contains too many repeated characters (e.g., "aaaaaa")
     const repeatedChars = /(.)\1{5,}/;
     if (repeatedChars.test(text)) return true;
 
-    // 2. check if a single word is repeated too often
     if (uniqueWords.size / words.length < 0.3) return true;
 
-    // 3. check for too many special characters
     const specialChars = text.replace(/[a-zA-Z0-9\s]/g, "");
     if (specialChars.length / text.length > 0.4) return true;
 
-    // 4. check for gibberish (keyboard mashing) — crude approach
     const gibberishPatterns = ["asdf", "qwer", "zxcv", "1234", "7777", "0000"];
     for (let pattern of gibberishPatterns) {
       if (text.toLowerCase().includes(pattern)) return true;
@@ -42,6 +38,7 @@ function WritingExercise() {
     return false;
   };
 
+  // handle Submission
   const handleSubmit = () => {
     if (text.trim().length < charLimit) return;
 
@@ -50,16 +47,17 @@ function WritingExercise() {
       return;
     }
 
-    setSubmitted(true);
-    alert("Submission successful!");
-  };
+    setCompleted(true);
 
+    // send the entry to the backend here (e.g., save to user’s journal).
+    // e.g., saveJournalEntry(text);
+  };
 
   useEffect(() => {
     if (countdown === null) return;
 
     if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+      const timer = setTimeout(() => setCountdown(prev => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       setCountdown(null);
@@ -69,8 +67,6 @@ function WritingExercise() {
         setLoadingMedia(true);
         try {
           const res = await getRandomizedMedia();
-          console.log("Fetched media data:", res.data);
-
           if (res.status === 200 && res.data.media?.length > 0) {
             setMedia(res.data.media[0]);
           } else {
@@ -85,6 +81,40 @@ function WritingExercise() {
       fetchMedia();
     }
   }, [countdown]);
+
+  if (completed) {
+    return (
+      <div className="addpage-container">
+        <nav className="nav-bar">
+          <div className="title">CogniSphere</div>
+          <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
+            ← Back
+          </button>
+        </nav>
+
+        <div className="addpage-inner-box">
+        <p className="epic-text">Thank You for Sharing!</p>
+        <p className="epic-text">Your writing has been saved to your journal.</p>
+        <p className="epic-text">We hope reflecting on these memories helped you feel more connected.</p>
+          
+          <div className="completion-button">
+          <button
+            onClick={() => navigate("/journal")}
+            className="epic-button"
+          >
+            View My Journal
+          </button>
+          <button
+            onClick={() => navigate("/exerciseselection")}
+            className="epic-button"
+          >
+            More Exercises
+          </button>
+        </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="writing-exercise-page">
@@ -103,11 +133,11 @@ function WritingExercise() {
         <div className="instructions-screen">
           <h2>Instructions</h2>
           <p>
-            Take a moment to reflect on what the following image or video brings to mind.
+            Take a moment to reflect on what the following image brings to mind.
             Does it remind you of a special time in your life? A person you cherish? A place you've been?
             Share your thoughts, emotions, or memories in your own words.
             Writing can help strengthen your mind and keep your memories alive.
-            Please write at least <strong>{charLimit}</strong> characters to complete the exercise.
+            Please write at least <strong>{charLimit}</strong> characters (10-12 sentences) to complete the exercise.
           </p>
           <p>
             There’s no right or wrong—just let your thoughts flow. Whether it’s a detailed story, a feeling, or even a small moment,
@@ -133,7 +163,6 @@ function WritingExercise() {
           </div>
 
           <div className="writing-section">
-
             <textarea
               value={text}
               onChange={handleChange}
@@ -150,16 +179,10 @@ function WritingExercise() {
             <button
               className="submit-button"
               onClick={handleSubmit}
-              disabled={text.trim().length < charLimit || submitted}
+              disabled={text.trim().length < charLimit}
             >
               Submit
             </button>
-
-            {submitted && (
-              <p className="success-message">
-                Exercise completed! Your entry has been saved to your journal.
-              </p>
-            )}
           </div>
         </div>
       )}
