@@ -13,6 +13,13 @@ function CreateAccount() {
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState({
+    length: false,
+    lower:  false,
+    upper:  false,
+    digit:  false,
+    special:false,
+  });
   const [birthday, setBirthday] = useState("");
   const [accountType, setAccountType] = useState("main");
   const [error, setError] = useState("");
@@ -35,6 +42,17 @@ function CreateAccount() {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const pwd = password;
+    setPasswordValid({
+      length: pwd.length >= 8,
+      lower:  /[a-z]/.test(pwd),
+      upper:  /[A-Z]/.test(pwd),
+      digit:  /\d/.test(pwd),
+      special:/[!@#$%^&*(),.?":{}|<>]/.test(pwd),
+    });
+  }, [password]);  
 
   // Set icon to appropriate theme version
   const iconSrc = theme === "dark"
@@ -134,6 +152,26 @@ function CreateAccount() {
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={handleKeyDown}
           />
+          <div className="password-requirements">
+            <p>Password must include:</p>
+            <ul>
+              <li className={passwordValid.length  ? "valid" : "invalid"}>
+                At least 8 characters
+              </li>
+              <li className={passwordValid.lower   ? "valid" : "invalid"}>
+                A lowercase letter
+              </li>
+              <li className={passwordValid.upper   ? "valid" : "invalid"}>
+                An uppercase letter
+              </li>
+              <li className={passwordValid.digit   ? "valid" : "invalid"}>
+                A digit
+              </li>
+              <li className={passwordValid.special ? "valid" : "invalid"}>
+                A special character (!@#$…)
+              </li>
+            </ul>
+          </div>
           <input
             type="date"
             className="login-input"
