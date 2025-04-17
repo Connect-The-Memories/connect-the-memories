@@ -1,0 +1,34 @@
+
+  .game-area {
+    margin-top: 40px;
+    color: white;
+  }
+  .answer-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;      
+    margin: 20px 0;  
+  }
+
+  .problem-display {
+    font-size: 10rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin: 20px 0;
+  }
+  
+  .answer-input {
+    font-size: 3.5rem;
+    width: 180px;
+    text-align: center;
+  }
+  
+.status-text {
+    font-size: 2rem;     
+    font-weight: 600;   
+    margin: 10px 0;
+  }
+  
+  

@@ -35,6 +35,18 @@ function ExerciseSelection() {
             <div className="exercise-icon">✍️</div>
             <p className="exercise-name">Writing Exercise</p>
           </div>
+          <div className="exercise-card" onClick={() => navigate("/eventsexercise")}>
+            <div className="exercise-icon">📅</div>
+            <p className="exercise-name">Connect the Memories</p>
+          </div>
+          <div className="exercise-card" onClick={() => navigate("/wordsearch")}>
+            <div className="exercise-icon">🔍</div>
+            <p className="exercise-name">Word Search</p>
+          </div> 
+          <div className="exercise-card" onClick={() => navigate("/singledigitblitz")}>
+            <div className="exercise-icon">🧠</div>
+            <p className="exercise-name">Single-Digit Blitz</p>
+          </div> 
         </div>
       </div>
     </div>
