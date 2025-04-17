@@ -8,7 +8,7 @@ function OptionsForMatching() {
     return (
         <div className="exercise-container">
             <nav className="nav-bar">
-                <div className="title">CogniSphere</div>
+                <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
                 <button className="logout-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
             </nav>
 

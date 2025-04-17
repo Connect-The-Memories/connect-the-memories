@@ -175,7 +175,7 @@ function ShapeMatch() {
     <div className="memory-container">
       {/* Navigation Bar */}
       <nav className="nav-bar">
-        <div className="title">CogniSphere</div>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/optionsformatching")}>
           ← Back
         </button>

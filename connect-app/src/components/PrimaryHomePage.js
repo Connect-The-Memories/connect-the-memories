@@ -29,7 +29,7 @@ function PrimaryHomePage() {
   return (
     <div className="hp-container">
       <nav className="nav-bar">
-        <a href="/"><div className="title">CogniSphere</div></a>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={async () => {
           await logout()
           navigate("/")

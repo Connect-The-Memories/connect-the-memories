@@ -9,7 +9,7 @@ function AddPrimary() {
     const [code, setCode] = useState("");
 
     const handleConnectUser = async () => {
-        try{
+        try {
             const response = await validateOTP(code);
             const msg = response.data.msg;
         } catch (error) {
@@ -21,12 +21,12 @@ function AddPrimary() {
         if (event.key === 'Enter') {
             handleConnectUser();
         }
-      };
+    };
 
     return (
         <div className="addpage-container">
             <nav className="nav-bar">
-                <a href="/"><div className="title">CogniSphere</div></a>
+                <a href="/supporthomepage"><div className="title">CogniSphere</div></a>
                 <button className="logout-button" onClick={() => navigate("/supporthomepage")}>← Back</button>
             </nav>
             <div className="addpage-inner-box">

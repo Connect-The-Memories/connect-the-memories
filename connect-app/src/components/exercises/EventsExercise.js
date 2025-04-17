@@ -83,37 +83,37 @@ function EventsExercise() {
     }
   }, [countdown]);
 
-useEffect(() => {
-  if (ready) {
-    const fetchRandomMedia = async () => {
-      try {
-        const res = await getRandomizedMedia(3);
-        if (res.status === 200 && res.data.media && res.data.media.length > 0) {
-          const transformed = res.data.media.map((m, idx) => ({
-            id: m.media_id || `media-${idx}`,
-            title: m.description || `Image ${idx + 1}`,
-            src: m.signed_url,
-            metadata: {
-              date: m.approx_date_taken || "2021-01-01",
-            },
-          }));
-          const shuffled = shuffleArray(transformed);
-          setOriginalPalette(shuffled); 
-          setPalette(shuffled);
-        } else {
-          console.error("No randomized media returned from database");
+  useEffect(() => {
+    if (ready) {
+      const fetchRandomMedia = async () => {
+        try {
+          const res = await getRandomizedMedia(3);
+          if (res.status === 200 && res.data.media && res.data.media.length > 0) {
+            const transformed = res.data.media.map((m, idx) => ({
+              id: m.media_id || `media-${idx}`,
+              title: m.description || `Image ${idx + 1}`,
+              src: m.signed_url,
+              metadata: {
+                date: m.approx_date_taken || "2021-01-01",
+              },
+            }));
+            const shuffled = shuffleArray(transformed);
+            setOriginalPalette(shuffled);
+            setPalette(shuffled);
+          } else {
+            console.error("No randomized media returned from database");
+            setOriginalPalette([]);
+            setPalette([]);
+          }
+        } catch (err) {
+          console.error("Error fetching randomized media:", err);
           setOriginalPalette([]);
           setPalette([]);
         }
-      } catch (err) {
-        console.error("Error fetching randomized media:", err);
-        setOriginalPalette([]);
-        setPalette([]);
-      }
-    };
-    fetchRandomMedia();
-  }
-}, [ready]);
+      };
+      fetchRandomMedia();
+    }
+  }, [ready]);
 
   const correctOrder = originalPalette
     .slice()
@@ -234,7 +234,7 @@ useEffect(() => {
   return (
     <div className="hp-container">
       <nav className="top-bar">
-        <div className="title">CogniSphere</div>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>

@@ -2,21 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SingleDigitBlitz.css";
 
-const ROUND_SECONDS = 60;         
-const OPS = ["+", "-", "×"];      
+const ROUND_SECONDS = 60;
+const OPS = ["+", "-", "×"];
 
 function generateProblem() {
   const op = OPS[Math.floor(Math.random() * OPS.length)];
   let a = 1 + Math.floor(Math.random() * 9);
   let b = 1 + Math.floor(Math.random() * 9);
-  if (op === "-" && a < b) [a, b] = [b, a];  
+  if (op === "-" && a < b) [a, b] = [b, a];
   const answer = op === "×" ? a * b : op === "+" ? a + b : a - b;
   return { a, b, op, answer };
 }
 
 export default function SingleDigitBlitz() {
   const navigate = useNavigate();
-  const [ready, setReady] = useState(false);   
+  const [ready, setReady] = useState(false);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
   const [problem, setProblem] = useState(generateProblem());
   const [input, setInput] = useState("");
@@ -64,13 +64,13 @@ export default function SingleDigitBlitz() {
     return (
       <div className="exercise-container">
         <nav className="nav-bar">
-          <div className="title">CogniSphere</div>
+          <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
           <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
             ← Back
           </button>
         </nav>
         <div className="instructions-screen">
-        <h2>Instructions</h2>
+          <h2>Instructions</h2>
           <p>Solve as many single‑digit (+, −, ×) problems as you can in 60 seconds.</p>
           <p>Type the answer and press <strong>Enter</strong> or click <em>Submit</em> to move to the next problem.</p>
           <button className="start-button" onClick={startRound}>Start</button>
@@ -92,31 +92,31 @@ export default function SingleDigitBlitz() {
 
       {!finished ? (
         <div className="game-area">
-        <h2 className="status-text">Time Left: {timeLeft}s</h2>
-    
-        <div className="problem-display">
-          {problem.a} {problem.op} {problem.b} =
+          <h2 className="status-text">Time Left: {timeLeft}s</h2>
+
+          <div className="problem-display">
+            {problem.a} {problem.op} {problem.b} =
+          </div>
+
+          <div className="answer-area">
+            <input
+              className="answer-input"
+              type="number"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              autoFocus
+            />
+            <button className="start-button" onClick={handleSubmit}>
+              Submit
+            </button>
+          </div>
+
+          <p className="status-text">
+            Correct: {correct} / {total}
+          </p>
         </div>
-    
-        <div className="answer-area">
-          <input
-            className="answer-input"
-            type="number"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            autoFocus
-          />
-          <button className="start-button" onClick={handleSubmit}>
-            Submit
-          </button>
-        </div>
-    
-        <p className="status-text">
-          Correct: {correct} / {total}
-        </p>
-      </div>
-    ) : (
+      ) : (
         <div className="instructions-screen">
           <h2>Round Complete!</h2>
           <p>You answered {total} problems.</p>

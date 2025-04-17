@@ -9,7 +9,7 @@ function ExerciseSelection() {
     <div className="exercise-container">
       {/* Top Bar */}
       <nav className="nav-bar">
-        <div className="title">CogniSphere</div>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
       </nav>
 
@@ -42,11 +42,11 @@ function ExerciseSelection() {
           <div className="exercise-card" onClick={() => navigate("/wordsearch")}>
             <div className="exercise-icon">🔍</div>
             <p className="exercise-name">Word Search</p>
-          </div> 
+          </div>
           <div className="exercise-card" onClick={() => navigate("/singledigitblitz")}>
             <div className="exercise-icon">🧠</div>
             <p className="exercise-name">Single-Digit Blitz</p>
-          </div> 
+          </div>
         </div>
       </div>
     </div>

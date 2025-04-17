@@ -10,12 +10,12 @@ function ColorMatch() {
   const navigate = useNavigate();
 
   const [ready, setReady] = useState(false);
-  const [countdown, setCountdown] = useState(null); 
+  const [countdown, setCountdown] = useState(null);
 
   const [score, setScore] = useState(0);
   const [guessCount, setGuessCount] = useState(0);
-  const [correctCount, setCorrectCount] = useState(0);        
-  const [sumReactionTime, setSumReactionTime] = useState(0);  
+  const [correctCount, setCorrectCount] = useState(0);
+  const [sumReactionTime, setSumReactionTime] = useState(0);
 
   const [leftWord, setLeftWord] = useState("");
   const [leftColor, setLeftColor] = useState("");
@@ -127,7 +127,7 @@ function ColorMatch() {
       const bonus = Math.max(0, 1 - reactionTimeInSeconds);
       setScore((prev) => prev + 1 + bonus);
       setMessage(`Correct! +${(1 + bonus).toFixed(2)} points`);
-      
+
       setCorrectCount((prev) => prev + 1);            // INCREMENT CORRECT GUESS
       setSumReactionTime((prev) => prev + reactionTime);  // ADD REACTION TIME
     } else {
@@ -164,7 +164,7 @@ function ColorMatch() {
   return (
     <div className="memory-container">
       <nav className="nav-bar">
-        <div className="title">CogniSphere</div>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button
           className="logout-button"
           onClick={() => navigate("/optionsformatching")}

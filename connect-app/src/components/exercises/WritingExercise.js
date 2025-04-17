@@ -93,24 +93,24 @@ function WritingExercise() {
         </nav>
 
         <div className="addpage-inner-box">
-        <p className="epic-text">Thank You for Sharing!</p>
-        <p className="epic-text">Your writing has been saved to your journal.</p>
-        <p className="epic-text">We hope reflecting on these memories helped you feel more connected.</p>
-          
+          <p className="epic-text">Thank You for Sharing!</p>
+          <p className="epic-text">Your writing has been saved to your journal.</p>
+          <p className="epic-text">We hope reflecting on these memories helped you feel more connected.</p>
+
           <div className="completion-button">
-          <button
-            onClick={() => navigate("/journal")}
-            className="epic-button"
-          >
-            View My Journal
-          </button>
-          <button
-            onClick={() => navigate("/exerciseselection")}
-            className="epic-button"
-          >
-            More Exercises
-          </button>
-        </div>
+            <button
+              onClick={() => navigate("/journal")}
+              className="epic-button"
+            >
+              View My Journal
+            </button>
+            <button
+              onClick={() => navigate("/exerciseselection")}
+              className="epic-button"
+            >
+              More Exercises
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -119,7 +119,7 @@ function WritingExercise() {
   return (
     <div className="writing-exercise-page">
       <nav className="nav-bar">
-        <div className="title">CogniSphere</div>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>

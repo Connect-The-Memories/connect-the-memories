@@ -9,7 +9,7 @@ function AddSupport() {
     const [randomCode, setRandomCode] = useState('');
 
     const handleGenerateCode = async () => {
-        try{
+        try {
             const response = await generateOTP();
             const code = response.data.otp;
             setRandomCode(code);
@@ -22,7 +22,7 @@ function AddSupport() {
     return (
         <div className="addpage-container">
             <nav className="nav-bar">
-                <a href="/"><div className="title">CogniSphere</div></a>
+                <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
                 <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
             </nav>
             <div className="addpage-inner-box">

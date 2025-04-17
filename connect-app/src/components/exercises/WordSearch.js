@@ -19,13 +19,13 @@ function selectTargetWords(caption) {
   // Common English stopwords to exclude.
   // Feel free to expand or adjust this list for your audience.
   const STOPWORDS = new Set([
-    'the','and','for','are','but','not','you','all','any','can','had',
-    'her','was','one','our','out','day','get','has','him','his','how','man','new',
-    'now','old','see','two','way','who','boy','did','its','let','put','say','she',
-    'too','use','that','this','from','they','with','like','what','were','been','then',
-    'when','where','would','could','there','their','some','your','just','over','into',
-    'very','once','such','here','have','more','than','much','those','after','also',
-    'because','which','while','about','could','have','into','other','these','thing'
+    'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'any', 'can', 'had',
+    'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new',
+    'now', 'old', 'see', 'two', 'way', 'who', 'boy', 'did', 'its', 'let', 'put', 'say', 'she',
+    'too', 'use', 'that', 'this', 'from', 'they', 'with', 'like', 'what', 'were', 'been', 'then',
+    'when', 'where', 'would', 'could', 'there', 'their', 'some', 'your', 'just', 'over', 'into',
+    'very', 'once', 'such', 'here', 'have', 'more', 'than', 'much', 'those', 'after', 'also',
+    'because', 'which', 'while', 'about', 'could', 'have', 'into', 'other', 'these', 'thing'
   ]);
 
   // Split on whitespace, preserving the original word (for capitalization checks)
@@ -35,7 +35,7 @@ function selectTargetWords(caption) {
   let filteredWords = [];
   rawWords.forEach((originalWord) => {
     // Remove all punctuation except letters and numbers
-    const cleaned = originalWord.replace(/[^\p{L}\p{N}]+/gu, '').toLowerCase(); 
+    const cleaned = originalWord.replace(/[^\p{L}\p{N}]+/gu, '').toLowerCase();
     if (cleaned.length >= 3 && !STOPWORDS.has(cleaned)) {
       filteredWords.push({
         lower: cleaned,
@@ -334,7 +334,7 @@ const WordSearch = () => {
     <div className="exercise-container">
       {/* Top Bar */}
       <div className="nav-bar">
-        <div className="title">CogniSphere</div>
+        <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>
