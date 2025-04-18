@@ -6,34 +6,65 @@ import galleryIcon from '../assets/gallery-icon-black.png';
 import exerciseIcon from '../assets/exercise-icon-black.png';
 import friendIcon from '../assets/friend-icon-black.png';
 import { logout, getUserInfo } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 function PrimaryHomePage() {
   const navigate = useNavigate();
+  const { token, logout: contextLogout } = useAuth();
   const [userName, setUserName] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    if (!token) {
+      console.log("No token found, redirecting to login.");
+      setError("You are not logged in.");
+      // Optional: Redirect if no token is found after a brief moment
+      // setTimeout(() => navigate("/"), 100);
+      return; // Stop the effect if not authenticated
+    }
+
     async function fetchUserInfo() {
       try {
         const userInfo = await getUserInfo();
         const first_name = userInfo.data.first_name;
         setUserName(first_name);
       } catch (error) {
-        console.error(error);
+        console.error("Failed to fetch user info:", error);
+        if (error.response && error.response.status === 401) {
+          setError("Authentication failed. Please log in again.");
+        } else {
+          setError("Could not load user data.");
+        }
         setUserName("Guest");
       }
     }
 
     fetchUserInfo();
-  }, []);
+  }, [token, navigate]);
+
+  const handleLogout = async () => {
+    try {
+      // Optional: Call the backend logout endpoint first
+      await apiLogout();
+    } catch (error) {
+      console.error("Backend logout failed:", error);
+      // Decide if you still want to log out frontend if backend fails
+      // Often, you still want to clear the frontend state
+    } finally {
+      // CRITICAL: Call context logout to clear token state and Axios header
+      contextLogout();
+      // Navigate to landing/login page
+      navigate("/");
+    }
+  };
+
 
   return (
     <div className="hp-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
-        <button className="logout-button" onClick={async () => {
-          await logout()
-          navigate("/")
-        }}>LOGOUT</button>
+        <button className="logout-button" onClick={handleLogout}>LOGOUT</button>
       </nav>
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>

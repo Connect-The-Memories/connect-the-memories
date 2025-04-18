@@ -29,3 +29,8 @@ export async function logout() {
 export async function getUserInfo() {
     return axiosInstance.get('/auth/account');
 }
+
+// Request Password Reset
+export async function requestPasswordReset(email) {
+  return axiosInstance.post('/auth/account/reset_password', { email });
+}

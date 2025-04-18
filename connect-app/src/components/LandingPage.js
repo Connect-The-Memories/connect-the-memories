@@ -5,11 +5,13 @@ import DarkModeToggle from "./DarkModeToggle";
 import './LandingPage.css';
 
 import { login } from '../api/auth';
+import { useAuth } from "../context/AuthContext";
 import CogniSphereIconDark from '../assets/cognisphere-icon-white.png';
 import CogniSphereIconLight from '../assets/cognisphere-icon-black.png';
 
 function LandingPage() {
   const navigate = useNavigate();
+  const { login: contextLogin } = useAuth();
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -49,33 +51,42 @@ function LandingPage() {
 
     try {
       const response = await login(userName, password);
-      const account_type = response.data.account_type;
+      
+      if (response.data && response.data.idToken) {
+        const idToken = response.data.idToken;
+        const account_type = response.data.account_type;
 
-      if (account_type === "main") {
-        setIsLoading(true);
-        setTimeout(() => {
-          navigate("/primaryhomepage");
-        }, 2000);
-      } else if (account_type === "support") {
-        setIsLoading(true);
-        setTimeout(() => {
-          navigate("/supporthomepage");
-        }, 2000);
-      } else {
-        setIsLoading(true);
-        setTimeout(() => {
-          navigate("/primaryhomepage");
-        }, 2000);
+        contextLogin(idToken, { accountType: account_type });
+
+        if (account_type === "main") {
+          setIsLoading(true);
+          setTimeout(() => {
+            navigate("/primaryhomepage");
+          }, 2000);
+        } else if (account_type === "support") {
+          setIsLoading(true);
+          setTimeout(() => {
+            navigate("/supporthomepage");
+          }, 2000);
+        } else {
+          setIsLoading(true);
+          setTimeout(() => {
+            navigate("/primaryhomepage");
+          }, 2000);
+        }
       }
 
     } catch (error) {
-      setError(error.response.data.message);
-
       if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
-      } else {
-        setError("An error occurred while logging in. Please try again.");
+        setError(`Login failed: ${error.response.data.message}`);
+      } else if (error.request) {
+         setError("Login failed: No response received from server.");
       }
+      else {
+        setError("An error occurred during login. Please try again.");
+      }
+      console.error("Login API error:", error);
+      setIsLoading(false); // Reset loading state on error
     }
   };
 
