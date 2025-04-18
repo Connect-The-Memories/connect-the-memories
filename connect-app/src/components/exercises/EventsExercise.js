@@ -233,7 +233,7 @@ function EventsExercise() {
 
   return (
     <div className="hp-container">
-      <nav className="top-bar">
+      <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back

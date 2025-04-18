@@ -22,10 +22,15 @@ a {
     padding-bottom: 10px;
 }
 
+.navbar-separator {
+    width: 65%;
+}
+
 .title {
     font-family: Hammersmith One;
     font-size: 36px;
     font-weight: bold;
+    color: var(--title-text-color);
 }
 
 .inner-box {
@@ -52,17 +57,16 @@ a {
     font-size: 25px;
     font-weight: bold;
     font-family: Fustat Bold; 
-    color: white;
+    color: var(--title-text-color);
 
-    background-color: #001447;
+    background-color: var(--secondary-button-color);
     border-radius: 10px;
     border: none;
-    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.2); 
+    box-shadow: var(--shadow); 
 }
 
 .logout-button:hover {
-    background-color: #ffcf67;
-    color: black;
+    background-color: var(--secondary-button-hover);
 }
 
 .hp-sub-row {

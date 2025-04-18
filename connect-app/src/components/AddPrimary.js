@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddPrimarySupport.css";
 import { validateOTP } from "../api/database";
+import DarkModeToggle from "./DarkModeToggle";
 
 function AddPrimary() {
     const navigate = useNavigate();
@@ -27,6 +28,8 @@ function AddPrimary() {
         <div className="addpage-container">
             <nav className="nav-bar">
                 <a href="/supporthomepage"><div className="title">CogniSphere</div></a>
+                <div className="navbar-separator"></div>
+                <DarkModeToggle />
                 <button className="logout-button" onClick={() => navigate("/supporthomepage")}>← Back</button>
             </nav>
             <div className="addpage-inner-box">

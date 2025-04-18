@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./ExerciseSelection.css";
+import DarkModeToggle from "./DarkModeToggle";
 
 function ExerciseSelection() {
   const navigate = useNavigate();
@@ -10,6 +11,8 @@ function ExerciseSelection() {
       {/* Top Bar */}
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
       </nav>
 

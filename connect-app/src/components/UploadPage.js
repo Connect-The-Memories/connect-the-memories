@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UploadPage.css";
 import { uploadMessages, uploadMedia, getLinkedAccounts } from "../api/database";
+import DarkModeToggle from "./DarkModeToggle";
 
 function UploadPage() {
     const navigate = useNavigate();
@@ -103,22 +104,22 @@ function UploadPage() {
         for (const fileObj of selectedFiles) {
             // Check if there's ANY description
             if (!fileObj.description) {
-              alert("Please add a description for every photo/video.");
-              return;
+                alert("Please add a description for every photo/video.");
+                return;
             }
-        
+
             // If this is an image, enforce min character count
             if (fileObj.file.type.startsWith("image/")) {
-              const minChars = 150; // or whichever length you consider ~3 sentences
-              if (fileObj.description.trim().length < minChars) {
-                alert(
-                  `Each image description must be at least ${minChars} characters. ` +
-                  "Please revise your description."
-                );
-                return; // Stop upload
-              }
+                const minChars = 150; // or whichever length you consider ~3 sentences
+                if (fileObj.description.trim().length < minChars) {
+                    alert(
+                        `Each image description must be at least ${minChars} characters. ` +
+                        "Please revise your description."
+                    );
+                    return; // Stop upload
+                }
             }
-          }
+        }
 
         try {
             if (activeTab === "Messages") {
@@ -146,6 +147,8 @@ function UploadPage() {
         <div className="upload-container">
             <nav className="nav-bar">
                 <a href="/supporthomepage"><div className="title">CogniSphere</div></a>
+                <div className="navbar-separator"></div>
+                <DarkModeToggle />
                 <button className="logout-button" onClick={() => navigate("/supporthomepage")}>← Back</button>
             </nav>
             <div className="upload-inner-box">

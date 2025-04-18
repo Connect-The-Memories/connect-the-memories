@@ -101,7 +101,7 @@ function LandingPage() {
       <div className="left-side">
         <img src={iconSrc} alt="CogniSphere Icon" className="landing-page-icon" />
         <h1 className="landing-page-title">CogniSphere</h1>
-        <div className="landing-pg-theme-toggle">
+        <div className="theme-toggle">
           <DarkModeToggle />
         </div>
       </div>

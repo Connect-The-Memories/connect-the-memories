@@ -57,11 +57,12 @@ p {
 .start-exercise-button:hover {
   background-color: #372294;
 }
-
+ 
 .exercise-text {
   color: black;
   font-size: 30px;
   margin: 5px;
+  font-family: Fustat Semibold;
 }
 
 .number-button {

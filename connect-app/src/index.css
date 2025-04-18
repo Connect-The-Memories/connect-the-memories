@@ -37,17 +37,17 @@ body {
 /* Light Mode color variables (default theme) */
 :root {
   --background-color: linear-gradient(100deg, #F8B76D 0%, #F5D7DC 100%);
-  --shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  --shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
 
   --primary-text-color: black;
   --secondary-text-color: white;
   --title-text-color: black;
 
-  --primary-button-color:#FFCED6;
+  --primary-button-color:#feb8c4;
   --secondary-button-color: #ffb55a;
   --tertiary-button-color: #ffcf67;
 
-  --primary-button-hover: #ffaab8;
+  --primary-button-hover: #ff98aa;
   --secondary-button-hover: #ff961e;
   --tertiary-button-hover: #ffcf67;
 }
@@ -62,10 +62,10 @@ body {
   --title-text-color: white;
 
   --primary-button-color:#5741BA;
-  --secondary-button-color: #1C3A86;
+  --secondary-button-color: #001e69;
   --tertiary-button-color: #ffcf67;
 
   --primary-button-hover: #3d289a;
-  --secondary-button-hover: #0c225b;
+  --secondary-button-hover: #001343;
   --tertiary-button-hover: #ffcf67;
 }

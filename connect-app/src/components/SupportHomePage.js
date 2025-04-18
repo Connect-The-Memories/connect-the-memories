@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 
+import DarkModeToggle from "./DarkModeToggle";
 import galleryIcon from '../assets/gallery-icon-black.png';
 import friendIcon from '../assets/friend-icon-black.png';
 import { getUserInfo } from "../api/auth";
@@ -30,6 +31,8 @@ function SupportHomePage() {
     <div className="hp-container">
       <nav className="nav-bar">
         <a href="/supporthomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
       </nav>
       <div className="inner-box">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./Journal.css";
+import DarkModeToggle from "./DarkModeToggle";
 import { useNavigate } from "react-router-dom";
 
 function Journal() {
@@ -19,6 +20,8 @@ function Journal() {
       {/* Top Bar */}
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>
           ← Back
         </button>

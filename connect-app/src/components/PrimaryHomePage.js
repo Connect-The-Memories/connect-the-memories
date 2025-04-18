@@ -7,6 +7,7 @@ import exerciseIcon from '../assets/exercise-icon-black.png';
 import friendIcon from '../assets/friend-icon-black.png';
 import { logout, getUserInfo } from "../api/auth";
 import { useAuth } from "../context/AuthContext";
+import DarkModeToggle from "./DarkModeToggle";
 
 function PrimaryHomePage() {
   const navigate = useNavigate();
@@ -64,8 +65,13 @@ function PrimaryHomePage() {
     <div className="hp-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
-        <button className="logout-button" onClick={handleLogout}>LOGOUT</button>
-      </nav>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
+        <button className="logout-button" onClick={async () => {
+          await logout()
+          navigate("/")
+        }}>LOGOUT</button>
+      </nav >
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>
         <div className="action-buttons-container">

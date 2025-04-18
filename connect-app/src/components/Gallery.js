@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Gallery.css";
 import { useMedia } from "./MediaContext";
+import DarkModeToggle from "./DarkModeToggle";
 
 
 // TODO: Eventually implement pagination for messages and img/vid to avoid performance issues
@@ -28,6 +29,8 @@ function GalleryPage() {
     <div className="gallery-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>
           ← Back
         </button>

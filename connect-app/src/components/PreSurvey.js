@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PreSurvey.css";
+import DarkModeToggle from "./DarkModeToggle";
 
 function PreSurvey() {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ function PreSurvey() {
     <div className="survey-page">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button
           className="logout-button"
           onClick={() => navigate("/")}
