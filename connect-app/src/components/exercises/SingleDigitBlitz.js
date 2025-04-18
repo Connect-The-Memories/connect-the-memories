@@ -37,9 +37,12 @@ export default function SingleDigitBlitz() {
   };
 
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || finished) return;
+  
+    clearInterval(timerRef.current);
+  
     timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current);
           setFinished(true);
@@ -48,8 +51,10 @@ export default function SingleDigitBlitz() {
         return prev - 1;
       });
     }, 1000);
+  
     return () => clearInterval(timerRef.current);
-  }, [ready]);
+  }, [ready, finished]);
+  
 
   const handleSubmit = () => {
     if (input.trim() === "") return;
