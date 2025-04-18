@@ -46,7 +46,7 @@ function PrimaryHomePage() {
   const handleLogout = async () => {
     try {
       // Optional: Call the backend logout endpoint first
-      await apiLogout();
+      await logout();
     } catch (error) {
       console.error("Backend logout failed:", error);
       // Decide if you still want to log out frontend if backend fails
