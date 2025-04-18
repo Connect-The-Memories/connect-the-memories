@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UploadPage.css";
 import { uploadMessages, uploadMedia, getLinkedAccounts } from "../api/database";
+import trashIcon from '../assets/trash-can.png';
 import DarkModeToggle from "./DarkModeToggle";
 
 function UploadPage() {
@@ -211,7 +212,12 @@ function UploadPage() {
                             </div>
                             <div className="media-preview-box">
                                 {[...messages].reverse().map((msg, index) => (
-                                    <p key={index} className="msg-preview-text">{msg}</p>
+                                    <div className="msg-preview-item">
+                                        <p key={index} className="msg-preview-text">{msg}</p>
+                                        <button className="trash-btn">
+                                            <img className="trash-icon" src={trashIcon} alt="trashcan" />
+                                        </button>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -257,6 +263,9 @@ function UploadPage() {
                                                         value={fileObj.date || ""}
                                                         onChange={(e) => handleFileDateChange(originalIndex, e.target.value)}
                                                     />
+                                                    <button className="trash-btn">
+                                                        <img className="trash-icon" src={trashIcon} alt="trashcan" />
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

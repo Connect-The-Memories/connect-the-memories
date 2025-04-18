@@ -63,7 +63,7 @@
 .primary-dropdown {
     font-family: Fustat Semibold;
     font-size: 16px;
-    border-color: #5741BA;
+    border-color: var(--primary-button-color);
     border-width: 2px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
@@ -93,12 +93,20 @@
 
 .media-preview-box {
     background-color: #f0f0f0;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 10px;
     border-radius: 10px;
     overflow-y: auto;
     max-height: 60%;
+}
+
+.msg-preview-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
 }
 
 .msg-preview-text {
@@ -115,6 +123,7 @@
     width: 97%;
     height: 100px;
     font-family: Fustat Regular;
+    font-size: 16px;
 }
 
 .upload-message-input::placeholder {
@@ -138,7 +147,7 @@
 }
 
 .drag-drop-area {
-    background-color: #3d289a;
+    background-color: var(--primary-button-color);
     width: 100%;
     height: 130px;
     border-radius: 15px;
@@ -152,7 +161,7 @@
 .drag-drop-text {
     font-family: Fustat Semibold;
     font-size: 24px;
-    color: white;
+    color: var(--title-text-color);
     margin: 10px;
 }
 
@@ -186,16 +195,19 @@
     height: 250px;
     display: flex;
     flex-direction: row;
+    padding-top: 15px;
+    border-bottom: 1px solid #ccc;
 }
 
 .file-preview-left {
     width: 30%;
-    margin: 5px;
+    margin-right: 5px;
 }
 
 .image-preview {
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
+    min-width: 150px;
+    max-height: 200px;
 }
 
 .video-preview {
@@ -214,6 +226,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 45px;
 }
 
 .media-date-text {
@@ -228,7 +243,7 @@
     font-family: Fustat Semibold;
     font-size: 18px;
     border-radius: 8px;
-    border-color: #5741BA;
+    border: none;
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -241,24 +256,37 @@
     width: 95%;
     height: 64%;
     font-family: Fustat Regular;
+    font-size: 16px;
 }
 
 .file-decription-input::placeholder {
     font-family: Fustat Regular;
     color: black;
 }
+
+.trash-btn {
+    padding: 5px;
+    border: none;
+    margin: 5px 5px 5px auto
+}
+
+.trash-icon {
+    width: 25px;
+    height: 25px;
+}
+
 .upload-button {
     width: 200px;
     height: 50px;
-    color: white;
+    color: var(--title-text-color);
     font-family: Fustat Semibold;
     font-size: 24px;
-    background-color: #5741BA;
+    background-color: var(--primary-button-color);
     border: none;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
 }
 
 .upload-button:hover {
-    background-color: #3d289a;
+    background-color: var(--primary-button-hover);
 }
