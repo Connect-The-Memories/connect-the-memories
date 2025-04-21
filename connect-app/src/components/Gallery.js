@@ -19,7 +19,6 @@ function GalleryPage() {
   useEffect(() => {
 
     if (!token) {
-      setError("You are not logged in.");
       setTimeout(() => navigate("/"), 100);
       return;
     }
