@@ -286,12 +286,26 @@ const WordSearch = () => {
     }
   }, [allFound, timer]);
 
+  useEffect(() => {
+    // don’t start until timer has a value, 
+    // and stop once all words are found
+    if (timer === null || allFound) return;
+  
+    const intervalId = setInterval(() => {
+      setTimeTaken(Math.floor((Date.now() - timer) / 1000));
+    }, 1000);
+  
+    return () => clearInterval(intervalId);
+  }, [timer, allFound]);
+  
+
   const finalizeSelection = () => {
     if (!startCell || !endCell) {
       setSelecting(false);
       setSelectedCells([]);
       return;
     }
+    
 
     const lineCells = getLineOfCells(startCell, endCell);
     if (lineCells.length === 0) {
@@ -394,7 +408,6 @@ const WordSearch = () => {
               })}
             </ul>
           </div>
-
           <div
             className="grid-container"
             onMouseUp={finalizeSelection}
@@ -438,10 +451,12 @@ const WordSearch = () => {
               </div>
             ))}
           </div>
-
-          <div className="timer-display">
+        </div>
+      )}
+      {ready && countdown === null && (
+      <div className="timer-display">
             {!allFound ? (
-              <p>Time elapsed: {Math.floor((Date.now() - timer) / 1000)} seconds</p>
+              <p>Time elapsed: {timeTaken} seconds</p>
             ) : (
               // The user found all words, but hasn't revealed the memory yet
               <div className="finished-phase">
@@ -453,7 +468,6 @@ const WordSearch = () => {
               </div>
             )}
           </div>
-        </div>
       )}
     </div>
   );
