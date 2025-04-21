@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Gallery.css";
 import { useMedia } from "./MediaContext";
+import { useAuth } from "../context/AuthContext";
 import DarkModeToggle from "./DarkModeToggle";
 
 
@@ -11,9 +12,18 @@ function GalleryPage() {
   const [activeTab, setActiveTab] = useState("photos");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
+  const { token } = useAuth();
+
   const { photos, messages, fetchMediaData } = useMedia();
 
   useEffect(() => {
+
+    if (!token) {
+      setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
     fetchMediaData();
   }, []);
 

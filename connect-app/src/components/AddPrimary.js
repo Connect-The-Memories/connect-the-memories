@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddPrimarySupport.css";
 import { validateOTP } from "../api/database";
 import DarkModeToggle from "./DarkModeToggle";
+import { useAuth } from "../context/AuthContext";
 
 function AddPrimary() {
     const navigate = useNavigate();
+    const { token } = useAuth();
 
     const [code, setCode] = useState("");
+
+    useEffect(() => {
+        if (!token) {
+            setTimeout(() => navigate("/"), 100);
+            return;
+        }
+    }, [token, navigate]);
 
     const handleConnectUser = async () => {
         try {

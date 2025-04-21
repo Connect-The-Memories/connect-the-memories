@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddPrimarySupport.css";
 import { generateOTP } from "../api/database";
 import DarkModeToggle from "./DarkModeToggle";
+import { useAuth } from "../context/AuthContext";
 
 function AddSupport() {
     const navigate = useNavigate();
+    const { token } = useAuth();
 
     const [randomCode, setRandomCode] = useState('');
+
+    useEffect(() => {
+
+        if (!token) {
+            setTimeout(() => navigate("/"), 100);
+            return;
+          }
+    
+    }, [token, navigate]);
 
     const handleGenerateCode = async () => {
         try {

@@ -6,13 +6,23 @@ import "./HomePage.css";
 import DarkModeToggle from "./DarkModeToggle";
 import galleryIcon from '../assets/gallery-icon-black.png';
 import friendIcon from '../assets/friend-icon-black.png';
-import { getUserInfo } from "../api/auth";
+import { logout, getUserInfo } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 function SupportHomePage() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const { token, logout: contextLogout } = useAuth();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    if (!token) {
+      setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
     async function fetchUserInfo() {
       try {
         const userInfo = await getUserInfo();
@@ -20,12 +30,24 @@ function SupportHomePage() {
         setUserName(first_name);
       } catch (error) {
         console.error(error);
-        setUserName("Guest");
+        setTimeout(() => navigate("/"), 100);
       }
     }
 
     fetchUserInfo();
-  }, []);
+  }, [token, navigate]);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Backend logout failed:", error);
+    } finally {
+      contextLogout();
+      navigate("/");
+    }
+  };
+
 
   return (
     <div className="hp-container">
@@ -33,7 +55,7 @@ function SupportHomePage() {
         <a href="/supporthomepage"><div className="title">CogniSphere</div></a>
         <div className="navbar-separator"></div>
         <DarkModeToggle />
-        <button className="logout-button" onClick={() => navigate("/")}>LOGOUT</button>
+        <button className="logout-button" onClick={() => handleLogout() }>LOGOUT</button>
       </nav>
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>

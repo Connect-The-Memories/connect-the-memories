@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import { createAccount } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
+
 
 import CogniSphereIconDark from '../assets/cognisphere-icon-white.png';
 import CogniSphereIconLight from '../assets/cognisphere-icon-black.png';
@@ -9,6 +11,7 @@ import "./CreateAccount.css";
 
 function CreateAccount() {
   const navigate = useNavigate();
+  const { login: contextLogin } = useAuth();
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -68,33 +71,41 @@ function CreateAccount() {
 
     try {
       const response = await createAccount(fname, lname, email, password, birthday, accountType);
-      const account_type = response.data.account_type;
 
-      if (account_type === "main") {
-        // setIsLoading(true);
-        setTimeout(() => {
-          navigate("/primaryhomepage");
-        }, 2000);
-      } else if (account_type === "support") {
-        // setIsLoading(true);
-        setTimeout(() => {
-          navigate("/supporthomepage");
-        }, 2000);
-      } else {
-        // setIsLoading(true);
-        setTimeout(() => {
-          navigate("/primaryhomepage");
-        }, 2000);
+      if (response.data && response.data.idToken) {
+        const idToken = response.data.idToken;
+        const account_type = response.data.account_type;
+
+        contextLogin(idToken, { accountType: account_type });
+
+        if (account_type === "main") {
+          // setIsLoading(true);
+          setTimeout(() => {
+            navigate("/primaryhomepage");
+          }, 2000);
+        } else if (account_type === "support") {
+          // setIsLoading(true);
+          setTimeout(() => {
+            navigate("/supporthomepage");
+          }, 2000);
+        } else {
+          // setIsLoading(true);
+          setTimeout(() => {
+            navigate("/primaryhomepage");
+          }, 2000);
+        }
       }
 
     } catch (error) {
-      setError(error.response.data.message);
-
       if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
-      } else {
-        setError("An error occurred while creating your account. Please try again.");
+        setError(`Account Creation failed: ${error.response.data.message}`);
+      } else if (error.request) {
+         setError("Account Creation failed: No response received from server.");
       }
+      else {
+        setError("An error occurred during login. Please try again.");
+      }
+      console.error("Account Creation API error:", error);
     }
   };
 

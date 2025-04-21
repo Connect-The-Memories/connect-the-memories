@@ -4,9 +4,6 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || "http://127.0.0.1:5000/api",
   withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // Add a request interceptor to include the token in headers

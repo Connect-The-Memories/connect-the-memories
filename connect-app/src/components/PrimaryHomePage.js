@@ -18,11 +18,9 @@ function PrimaryHomePage() {
   useEffect(() => {
 
     if (!token) {
-      console.log("No token found, redirecting to login.");
       setError("You are not logged in.");
-      // Optional: Redirect if no token is found after a brief moment
-      // setTimeout(() => navigate("/"), 100);
-      return; // Stop the effect if not authenticated
+      setTimeout(() => navigate("/"), 100);
+      return;
     }
 
     async function fetchUserInfo() {
@@ -46,16 +44,11 @@ function PrimaryHomePage() {
 
   const handleLogout = async () => {
     try {
-      // Optional: Call the backend logout endpoint first
       await logout();
     } catch (error) {
       console.error("Backend logout failed:", error);
-      // Decide if you still want to log out frontend if backend fails
-      // Often, you still want to clear the frontend state
     } finally {
-      // CRITICAL: Call context logout to clear token state and Axios header
       contextLogout();
-      // Navigate to landing/login page
       navigate("/");
     }
   };
@@ -67,10 +60,7 @@ function PrimaryHomePage() {
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <div className="navbar-separator"></div>
         <DarkModeToggle />
-        <button className="logout-button" onClick={async () => {
-          await logout()
-          navigate("/")
-        }}>LOGOUT</button>
+        <button className="logout-button" onClick={ () => { handleLogout() }}>LOGOUT</button>
       </nav >
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>

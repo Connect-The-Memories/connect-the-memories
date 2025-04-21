@@ -1,14 +1,26 @@
 // src/context/MediaContext.js
 import React, { createContext, useState, useEffect } from "react";
 import { getMedia, getMessage } from "../api/database";
+import { useAuth } from "../context/AuthContext";
 
 export const MediaContext = createContext();
 
 export const MediaProvider = ({ children }) => {
+  const { token } = useAuth();
   const [photos, setPhotos] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!token) {
+      setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
+    fetchMediaData();
+  }, [token]);
 
   const fetchMediaData = async () => {
     setLoading(true);

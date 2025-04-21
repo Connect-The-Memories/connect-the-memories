@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UploadPage.css";
 import { uploadMessages, uploadMedia, getLinkedAccounts } from "../api/database";
+import { useAuth } from "../context/AuthContext";
 import trashIcon from '../assets/trash-can.png';
 import DarkModeToggle from "./DarkModeToggle";
 
 function UploadPage() {
     const navigate = useNavigate();
+    const { token } = useAuth();
 
     const [activeTab, setActiveTab] = useState("Messages")
     const [primaryUsers, setPrimaryUsers] = useState([]); // List of linked primary users
@@ -17,6 +19,12 @@ function UploadPage() {
 
     // Get list of linked users
     useEffect(() => {
+
+        if (!token) {
+            setTimeout(() => navigate("/"), 100);
+            return;
+        }
+      
         const fetchLinkedAccounts = async () => {
             try {
                 const response = await getLinkedAccounts();
@@ -27,7 +35,7 @@ function UploadPage() {
             }
         };
         fetchLinkedAccounts();
-    }, []);
+    }, [token, navigate]);
 
     // Handle primary user selection
     const handlePrimaryChange = (e) => {
@@ -125,8 +133,7 @@ function UploadPage() {
         try {
             if (activeTab === "Messages") {
                 const response = await uploadMessages(messages, selectedPrimary);
-                console.log(response);
-                alert("Messages uploaded successful!");
+                alert(response.data.message);
             } else {
                 const formData = new FormData();
                 formData.append("main_user_name", selectedPrimary);
@@ -135,8 +142,8 @@ function UploadPage() {
                     formData.append(`descriptions`, description);
                     formData.append(`dates`, date);
                 });
-                console.log(formData);
                 const response = await uploadMedia(formData);
+                alert(response.data.message);
             }
         } catch (error) {
             console.error(error);
