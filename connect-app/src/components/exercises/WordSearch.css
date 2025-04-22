@@ -2,11 +2,6 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background: linear-gradient(
-    90deg,
-    #0a1f44 0%,
-    #4e359f 100%
-  );
 
   overflow-x: hidden;
 }

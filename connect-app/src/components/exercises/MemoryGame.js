@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "../DarkModeToggle";
 import "./MemoryGame.css";
 import { easyMediumWords, hardWords } from "../../thaiWords";
 
@@ -183,6 +184,8 @@ function MemoryGame() {
     <div className="memory-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button
           className="logout-button"
           onClick={() => navigate("/exerciseselection")}
@@ -191,117 +194,120 @@ function MemoryGame() {
         </button>
       </nav>
 
-      <h1 className="game-title">Match the Thai Words with English Meaning</h1>
+      <div className="inner-box">
+        <h1 className="game-title">Match the Thai Words with English Meaning</h1>
 
-      {!difficulty ? (
-        <div className="difficulty-selection">
-          <h3>Select Difficulty</h3>
-          <button
-            className="difficulty-button easy"
-            onClick={() => handleDifficultySelect("easy")}
-          >
-            Easy
-          </button>
-          <button
-            className="difficulty-button medium"
-            onClick={() => handleDifficultySelect("medium")}
-          >
-            Medium
-          </button>
-          <button
-            className="difficulty-button hard"
-            onClick={() => handleDifficultySelect("hard")}
-          >
-            Hard
-          </button>
-        </div>
-      ) : showLearningPhase ? (
-        <div className="learning-phase">
-          <h3>Memorize these words!</h3>
-          <div className="learning-grid">
-            {selectedWords.map((pair, index) => (
-              <div key={index} className="learning-item">
-                <p className="thai-word">{pair.thai}</p>
-                <p className="english-word">{pair.english}</p>
-              </div>
-            ))}
+        {!difficulty ? (
+          <div className="difficulty-selection">
+            <h3 className="game-title">Select Difficulty</h3>
+            <button
+              className="difficulty-button easy"
+              onClick={() => handleDifficultySelect("easy")}
+            >
+              Easy
+            </button>
+            <button
+              className="difficulty-button medium"
+              onClick={() => handleDifficultySelect("medium")}
+            >
+              Medium
+            </button>
+            <button
+              className="difficulty-button hard"
+              onClick={() => handleDifficultySelect("hard")}
+            >
+              Hard
+            </button>
           </div>
-          <button className="start-button" onClick={handleStartGame}>
-            I'm Ready!
-          </button>
-        </div>
-      ) : (
-        <div>
-          <h2 className="round-text">Round {currentRound} of {totalRounds}</h2>
-          <h3 className="timer-text">Time Left: {timer}s</h3>
-          <div className="grid">
-            {cards.map((card, index) => {
-              let cardClass = "card";
-              if (checked) {
-                if (matched.includes(index)) {
-                  cardClass += " matched";
-                } else if (guessedIndices.includes(index)) {
-                  cardClass += " incorrect";
-                }
-              } else {
-                if (guessedIndices.includes(index)) {
-                  cardClass += " guessed";
-                }
-                if (selected.includes(index)) {
-                  cardClass += " selected";
-                }
-              }
-              return (
-                <button
-                  key={index}
-                  className={cardClass}
-                  onClick={() => handleSelect(index)}
-                  disabled={gameOver || guessedIndices.includes(index)}
-                >
-                  {card.text}
-                </button>
-              );
-            })}
+        ) : showLearningPhase ? (
+          <div className="learning-phase">
+            <h3 className="instructions-text">Memorize these words!</h3>
+            <div className="learning-grid">
+              {selectedWords.map((pair, index) => (
+                <div key={index} className="learning-item">
+                  <p className="thai-word">{pair.thai}</p>
+                  <p className="english-word">{pair.english}</p>
+                </div>
+              ))}
+            </div>
+            <button className="start-button" onClick={handleStartGame}>
+              I'm Ready!
+            </button>
           </div>
+        ) : (
           <div>
-            {!checked && (
-              <button
-                className="check-answers-button"
-                onClick={handleCheckAnswers}
-                disabled={guesses.length === 0}
-              >
-                Check Answers
-              </button>
-            )}
-            {checked && (
-              <p>
-                You got{" "}
-                {
-                  guesses.filter((guess) => {
-                    if (guess.length !== 2) return false;
-                    const firstCard = cards[guess[0]];
-                    const secondCard = cards[guess[1]];
-                    return (
-                      firstCard.match === secondCard.text &&
-                      secondCard.match === firstCard.text
-                    );
-                  }).length
-                }{" "}
-                out of {(cards.length / 2)} correct!
-              </p>
-            )}
-            {checked && currentRound < totalRounds && (
-              <button
-                className="check-answers-button"
-                onClick={() => handleNextRound()}
-              >
-                Next Round
-              </button>
-            )}
+            <p className="round-text">Round {currentRound} of {totalRounds}</p>
+            {gameOver ? <p className="game-over">Time's up!</p>
+              : <p className="timer-text">Time Left: {timer}s</p>}
+
+            <div className="grid">
+              {cards.map((card, index) => {
+                let cardClass = "card";
+                if (checked) {
+                  if (matched.includes(index)) {
+                    cardClass += " matched";
+                  } else if (guessedIndices.includes(index)) {
+                    cardClass += " incorrect";
+                  }
+                } else {
+                  if (guessedIndices.includes(index)) {
+                    cardClass += " guessed";
+                  }
+                  if (selected.includes(index)) {
+                    cardClass += " selected";
+                  }
+                }
+                return (
+                  <button
+                    key={index}
+                    className={cardClass}
+                    onClick={() => handleSelect(index)}
+                    disabled={gameOver || guessedIndices.includes(index)}
+                  >
+                    {card.text}
+                  </button>
+                );
+              })}
+            </div>
+            <div>
+              {!checked && (
+                <button
+                  className="check-answers-button"
+                  onClick={handleCheckAnswers}
+                  disabled={guesses.length === 0}
+                >
+                  Check Answers
+                </button>
+              )}
+              {checked && (
+                <p>
+                  You got{" "}
+                  {
+                    guesses.filter((guess) => {
+                      if (guess.length !== 2) return false;
+                      const firstCard = cards[guess[0]];
+                      const secondCard = cards[guess[1]];
+                      return (
+                        firstCard.match === secondCard.text &&
+                        secondCard.match === firstCard.text
+                      );
+                    }).length
+                  }{" "}
+                  out of {(cards.length / 2)} correct!
+                </p>
+              )}
+              {checked && currentRound < totalRounds && (
+                <button
+                  className="check-answers-button"
+                  onClick={() => handleNextRound()}
+                >
+                  Next Round
+                </button>
+              )}
+            </div>
           </div>
-          {gameOver && <h3 className="game-over">Time's up!</h3>}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

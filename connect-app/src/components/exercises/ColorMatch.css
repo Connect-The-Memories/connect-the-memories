@@ -44,12 +44,11 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    font-weight: bold;
     color: black;
     transition: background-color 0.3s;
     margin-top: 30px;
     width: 200px;
-    height: 100px; 
+    height: 65px; 
     font-family: Fustat Bold;    
   }
   
@@ -163,11 +162,6 @@
   
   .restart-button:hover {
     background-color: #2980b9;
-  }
-  
-  .timer-text {
-    color: #fff;  
-    font-size: 40px;
   }
 
   .advanced-color-match h3 { font-size: 32px; }

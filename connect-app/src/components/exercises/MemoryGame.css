@@ -12,7 +12,7 @@
     font-size: 24px;
     margin-bottom: 5px;
     text-align: center;
-    color: white; 
+    color: var(--primary-text-color); 
 }
 
 /* Learning Phase */
@@ -60,20 +60,21 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    gap: 10px;
     padding: 10px;
 }
 
 .card {
     background-color: white;
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
+    font-family: Fustat Semibold;
     cursor: pointer;
     width: 150px;
-    height: 100px;
+    height: 90px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -96,43 +97,34 @@
     color: white;
 }
 
-h3 {
-    font-size: 28px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 15px;
-}
-
 .difficulty-selection {
     text-align: center;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .difficulty-button {
-    padding: 12px 20px;
-    margin: 10px;
-    font-size: 18px;
+    font-family: Fustat Semibold;
+    font-size: 24px;
     font-weight: bold;
+    margin: 10px;
     cursor: pointer;
     border: none;
     border-radius: 8px;
     transition: 0.3s;
+    width: 165px;
+    height: 65px;
 }
 
 .easy { 
     background-color: #76c7c0;
-    width: 150px;
-    height: 50px;
 }
+
 .medium { 
         background-color: #ffba57;
-        width: 150px;
-        height: 50px; 
 }
+
 .hard { 
-    background-color: #e74c3c; 
-    width: 150px;
-    height: 50px;
+    background-color: #e74c3c;
 }
 
 .easy:hover { background-color: #5ba09b; }
@@ -141,27 +133,25 @@ h3 {
 
 .timer-text {
     font-size: 24px;
-    font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
+    color: var(--primary-text-color);
 }
 
 .round-text {
     font-size: 24px;
     font-weight: bold;
     text-align: left; 
+    margin: 10px;
     margin-left: 94px; 
+    color: var(--primary-text-color);
 }
 
 .game-over {
-    font-size: 32px;
+    font-size: 30px;
     color: red;
-    margin-top: 15px;
+    margin: 10px;
     text-align: center;
-}
-
-.game-over-title {
-    font-size: 48px;
 }
 
 .game-over-score {
@@ -170,14 +160,13 @@ h3 {
 
 .check-answers-button {
     background-color: #3498db;
-    font-size: 20px;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 10px;
+    font-family: Fustat Bold;
+    font-size: 24px;
     color: white;
 }
 

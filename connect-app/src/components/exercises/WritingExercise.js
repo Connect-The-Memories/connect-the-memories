@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./WritingExercise.css";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "../DarkModeToggle";
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
 
@@ -129,6 +130,8 @@ function WritingExercise() {
     <div className="writing-exercise-page">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>
@@ -139,20 +142,20 @@ function WritingExercise() {
           <h1>{countdown}</h1>
         </div>
       ) : !ready ? (
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>
+        <div className="inner-box">
+          <p className="instructions-title">Instructions</p>
+          <p className="writing-instructions-text">
             Take a moment to reflect on what the following image brings to mind.
             Does it remind you of a special time in your life? A person you cherish? A place you've been?
             Share your thoughts, emotions, or memories in your own words.
             Writing can help strengthen your mind and keep your memories alive.
             Please write at least <strong>{charLimit}</strong> characters (10-12 sentences) to complete the exercise.
           </p>
-          <p>
+          <p className="writing-instructions-text">
             There’s no right or wrong—just let your thoughts flow. Whether it’s a detailed story, a feeling, or even a small moment,
             everything you write is meaningful. Take your time, and enjoy the process!
           </p>
-          <p>
+          <p className="writing-instructions-text">
             Click "Next" when you're ready to see the image or video and complete the exercise!
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
@@ -167,7 +170,7 @@ function WritingExercise() {
             ) : media ? (
               <img src={media.signed_url} alt="Memory Prompt" className="media-image" />
             ) : (
-              <p>No media available.</p>
+              <p className="no-media-text">No media available.</p>
             )}
           </div>
 

@@ -7,9 +7,6 @@
     min-height: 100vh;
   }
   
-  /* reuse instruction styling */
-  .instructions-screen { /* same as before */ }
-  
   /* main game wrapper */
   .easy-color-match {
     display: flex;
@@ -20,7 +17,6 @@
   }
   
   /* bigger timer & score */
-  .timer-text          { font-size: 40px; }
   .easy-color-match h3 { font-size: 32px; margin: 10px 0; }
   
   /* stimuli row */

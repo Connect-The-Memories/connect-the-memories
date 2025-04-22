@@ -12,11 +12,6 @@
   margin-top: 15px;
 }
   
-p {
-  font-size: 20px;
-  margin-top: 20px;
-}
-  
 .instructions-container {
   display: flex;
   flex-direction: column;
@@ -41,9 +36,17 @@ p {
   margin: 15px;
 }
 
+.instructions-subtext {
+  color: black;
+  font-size: 28px;
+  font-family: Fustat Semibold;
+  margin: 5px;
+  text-align: left;
+}
+
 .start-exercise-button {
-  background-color: #5741BA;
-  color: white;
+  background-color: var(--primary-button-color);
+  color: var(--title-text-color);
   font-family: Fustat Semibold;
   font-size: 30px;
   border-radius: 10px;
@@ -55,7 +58,7 @@ p {
 }
 
 .start-exercise-button:hover {
-  background-color: #372294;
+  background-color: var(--primary-button-hover);
 }
  
 .exercise-text {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "../DarkModeToggle";
 import "./ColorMatch.css";
 import "./Shapes.css";
 
@@ -176,6 +177,8 @@ function ShapeMatch() {
       {/* Navigation Bar */}
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/optionsformatching")}>
           ← Back
         </button>
@@ -187,21 +190,21 @@ function ShapeMatch() {
           <h1>{countdown}</h1>
         </div>
       ) : !ready ? (
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>
+        <div className="inner-box">
+          <h2 className="instructions-title">Instructions</h2>
+          <p className="instructions-subtext">
             Welcome to Shape Match! You have 45 seconds total to see how many matches you can get.
             Each time, you'll see:
           </p>
           <ul>
-            <li><strong>Left:</strong> A shape displayed visually (e.g., ⬛).</li>
-            <li><strong>Right:</strong> A shape name in text (e.g., "square").</li>
+            <li className="instructions-subtext"><strong>Left:</strong> A shape displayed visually (e.g., ⬛).</li>
+            <li className="instructions-subtext"><strong>Right:</strong> A shape name in text (e.g., "square").</li>
           </ul>
-          <p>
-            If the **shape on the left matches the shape name on the right**, click “Match.” Otherwise, click “No Match.”
+          <p className="instructions-subtext">
+            If the shape on the left matches the shape name on the right, click “Match.” Otherwise, click “No Match.”
             Answer quickly for a reaction-time bonus!
           </p>
-          <p>
+          <p className="instructions-subtext">
             You can use your keyboard (press "M" for Match and "N" for No Match) or click the buttons with your mouse/pad.
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>

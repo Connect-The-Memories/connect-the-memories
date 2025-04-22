@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './WordSearch.css';
+import DarkModeToggle from '../DarkModeToggle';
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
 
@@ -299,14 +300,14 @@ const WordSearch = () => {
     // don’t start until timer has a value, 
     // and stop once all words are found
     if (timer === null || allFound) return;
-  
+
     const intervalId = setInterval(() => {
       setTimeTaken(Math.floor((Date.now() - timer) / 1000));
     }, 1000);
-  
+
     return () => clearInterval(intervalId);
   }, [timer, allFound]);
-  
+
 
   const finalizeSelection = () => {
     if (!startCell || !endCell) {
@@ -314,7 +315,7 @@ const WordSearch = () => {
       setSelectedCells([]);
       return;
     }
-    
+
 
     const lineCells = getLineOfCells(startCell, endCell);
     if (lineCells.length === 0) {
@@ -358,6 +359,8 @@ const WordSearch = () => {
       {/* Top Bar */}
       <div className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>
@@ -365,13 +368,13 @@ const WordSearch = () => {
 
       {/* 1) Pre-Instructions Screen */}
       {!ready && countdown === null ? (
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>
+        <div className="inner-box">
+          <h2 className='instructions-title'>Instructions</h2>
+          <p className='instructions-subtext'>
             In this fun activity, you'll search for words hidden in a grid.
             They can appear horizontally, vertically, or diagonally.
           </p>
-          <p>
+          <p className='instructions-subtext'>
             <strong>How to Play:</strong>
             <br />
             Press and hold your mouse button on the first letter of the word.
@@ -379,7 +382,7 @@ const WordSearch = () => {
             then release.
             If it's correct, the word will be marked as found!
           </p>
-          <p>
+          <p className='instructions-subtext'>
             Once you've found all the words, you'll see a "Congratulations!" screen.
             Press "Reveal" to see the memory photo and caption.
           </p>
@@ -463,28 +466,28 @@ const WordSearch = () => {
         </div>
       )}
       {ready && countdown === null && (
-  <div
-    className="timer-display"
-    style={{
-      /* only show while the game is done but before the Reveal button is pressed */
-      visibility: (!showReveal && allFound)
-        ? 'visible'
-        : 'hidden'
-    }}
-  >
-    {!allFound ? (
-      <p>Time elapsed: {timeTaken} seconds</p>
-    ) : (
-      <div className="finished-phase">
-        <h3>Congratulations! You've found all the words!</h3>
-        <p>Your time: {timeTaken} seconds</p>
-        <button className="reveal-button" onClick={() => setShowReveal(true)}>
-          Reveal
-        </button>
-      </div>
-    )}
-  </div>
-)}
+        <div
+          className="timer-display"
+          style={{
+            /* only show while the game is done but before the Reveal button is pressed */
+            visibility: (!showReveal && allFound)
+              ? 'visible'
+              : 'hidden'
+          }}
+        >
+          {!allFound ? (
+            <p>Time elapsed: {timeTaken} seconds</p>
+          ) : (
+            <div className="finished-phase">
+              <h3>Congratulations! You've found all the words!</h3>
+              <p>Your time: {timeTaken} seconds</p>
+              <button className="reveal-button" onClick={() => setShowReveal(true)}>
+                Reveal
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
     </div>
   );

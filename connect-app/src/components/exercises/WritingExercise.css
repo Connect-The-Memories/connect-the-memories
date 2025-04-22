@@ -19,6 +19,20 @@
   gap: 40px;
 }
 
+.writing-instructions-text {
+  color: var(--primary-text-color);
+  font-family: Fustat Semibold;
+  font-size: 24px;
+  text-align: left;
+  margin: 15px;
+}
+
+.no-media-text {
+  color: var(--title-text-color);
+  font-family: Fustat Semibold;
+  font-size: 24px;
+}
+
 .media-container {
   flex: 1;
   display: flex;

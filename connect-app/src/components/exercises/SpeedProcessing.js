@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "../DarkModeToggle";
 import "./SpeedProcessing.css";
 
 function SpeedProcessing() {
@@ -95,6 +96,8 @@ function SpeedProcessing() {
     <div className="exercise-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>← Back</button>
       </nav>
 

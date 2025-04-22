@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "../DarkModeToggle";
 import "./ColorMatch.css";
 
 const initialColors = ["red", "blue", "green", "yellow"];
@@ -165,6 +166,8 @@ function ColorMatch() {
     <div className="memory-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button
           className="logout-button"
           onClick={() => navigate("/optionsformatching")}
@@ -178,25 +181,25 @@ function ColorMatch() {
           <h1>{countdown}</h1>
         </div>
       ) : !ready ? (
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>
+        <div className="inner-box">
+          <h2 className="instructions-title">Instructions</h2>
+          <p className="instructions-subtext">
             Welcome to Color Match! You have 45 seconds total to see how many matches you can get.
             Each time, you'll see:
           </p>
           <ul>
-            <li>
+            <li className="instructions-subtext">
               <strong>Left:</strong> A color word displayed in a random color (e.g., "BLUE" in red text).
             </li>
-            <li>
+            <li className="instructions-subtext">
               <strong>Right:</strong> A color word in neutral text (e.g., "red").
             </li>
           </ul>
-          <p>
+          <p className="instructions-subtext">
             If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.”
             Otherwise, click “No Match.” Answer quickly for a reaction-time bonus!
           </p>
-          <p>
+          <p className="instructions-subtext">
             You can use your keyboard (press "M" for Match and "N" for No Match)
             or click the buttons with your mouse/pad.
           </p>

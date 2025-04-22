@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import "./EventsExercise.css";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "../DarkModeToggle";
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
 
@@ -244,6 +245,8 @@ function EventsExercise() {
     <div className="hp-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        <div className="navbar-separator"></div>
+        <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
           ← Back
         </button>
@@ -251,16 +254,16 @@ function EventsExercise() {
 
       {/* Pre-Instructions and Countdown */}
       {!ready && countdown === null ? (
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>
-            In this fun and engaging game, you'll be arranging cherished photos in the order of their dates.
+        <div className="inner-box">
+          <h2 className="instructions-title">Instructions</h2>
+          <p className="instructions-subtext">
+            In this game, you'll be arranging cherished photos in the order of their dates.
           </p>
-          <p>
+          <p className="instructions-subtext">
             Simply drag and drop each picture into the drop zone that best fits its chronological order.
             Enjoy a gentle stroll down memory lane while keeping your mind active!
           </p>
-          <p>
+          <p className="instructions-subtext">
             Once you've arranged the photos, press <strong>"Check Answers"</strong> to see if your order is correct.
             If you wish to try again before checking, use the <strong>"Reset"</strong> button to clear your selections.
             There are three rounds per game. Have Fun!
@@ -276,73 +279,75 @@ function EventsExercise() {
       ) : (
         // Main game UI (when ready)
         <>
-          <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-            <div className="dropzones-container">
-              <h3>Drop Zones</h3>
-              <div className="dropzones">
-                {["drop-0", "drop-1", "drop-2"].map((zoneId, index) => {
-                  let result;
-                  if (results && dropZones[zoneId]) {
-                    result = (dropZones[zoneId].id === correctOrder[index])
-                      ? "correct"
-                      : "incorrect";
-                  }
-                  return (
-                    <div key={zoneId} className="zone-and-date">
-                      <DroppableContainer
-                        id={zoneId}
-                        label={index + 1}
-                        result={result}
-                      >
-                        {dropZones[zoneId] && (
-                          <DraggableImage
-                            id={dropZones[zoneId].id}
-                            image={dropZones[zoneId]}
-                          />
+          <div className="inner-box">
+            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+              <div className="dropzones-container">
+                <h3 className="exercise-text">Drop Zones</h3>
+                <div className="dropzones">
+                  {["drop-0", "drop-1", "drop-2"].map((zoneId, index) => {
+                    let result;
+                    if (results && dropZones[zoneId]) {
+                      result = (dropZones[zoneId].id === correctOrder[index])
+                        ? "correct"
+                        : "incorrect";
+                    }
+                    return (
+                      <div key={zoneId} className="zone-and-date">
+                        <DroppableContainer
+                          id={zoneId}
+                          label={index + 1}
+                          result={result}
+                        >
+                          {dropZones[zoneId] && (
+                            <DraggableImage
+                              id={dropZones[zoneId].id}
+                              image={dropZones[zoneId]}
+                            />
+                          )}
+                        </DroppableContainer>
+                        {results && dropZones[zoneId] && (
+                          <p className="image-date">{dropZones[zoneId].metadata.date}</p>
                         )}
-                      </DroppableContainer>
-                      {results && dropZones[zoneId] && (
-                        <p className="image-date">{dropZones[zoneId].metadata.date}</p>
-                      )}
-                    </div>
-                  );
-                })}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
+
+              <div className="palette-container">
+                <div id="palette" className="palette">
+                  {palette.map((item) => (
+                    <DraggableImage key={item.id} id={item.id} image={item} />
+                  ))}
+                </div>
+              </div>
+            </DndContext>
+
+            <div className="buttons-container">
+              {!results && (
+                <>
+                  <button className="check-answers-button" onClick={handleCheckAnswers}>
+                    Check Answers
+                  </button>
+                  <button className="check-answers-button" onClick={handleResetBoard}>
+                    Reset
+                  </button>
+                </>
+              )}
+              {results && (
+                <button className="redo-button" onClick={handleRedo}>
+                  Redo
+                </button>
+              )}
             </div>
 
-            <div className="palette-container">
-              <div id="palette" className="palette">
-                {palette.map((item) => (
-                  <DraggableImage key={item.id} id={item.id} image={item} />
-                ))}
-              </div>
-            </div>
-          </DndContext>
-
-          <div className="buttons-container">
-            {!results && (
-              <>
-                <button className="check-answers-button" onClick={handleCheckAnswers}>
-                  Check Answers
-                </button>
-                <button className="check-answers-button" onClick={handleResetBoard}>
-                  Reset
-                </button>
-              </>
-            )}
             {results && (
-              <button className="redo-button" onClick={handleRedo}>
-                Redo
-              </button>
+              <div className="results">
+                <p>You got {results.correctCount} out of {results.total} correct!</p>
+                <p>Time taken: {results.timeTaken} seconds</p>
+              </div>
             )}
           </div>
-
-          {results && (
-            <div className="results">
-              <p>You got {results.correctCount} out of {results.total} correct!</p>
-              <p>Time taken: {results.timeTaken} seconds</p>
-            </div>
-          )}
         </>
       )}
     </div>

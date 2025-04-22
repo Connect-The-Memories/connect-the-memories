@@ -55,7 +55,7 @@ function SupportHomePage() {
         <a href="/supporthomepage"><div className="title">CogniSphere</div></a>
         <div className="navbar-separator"></div>
         <DarkModeToggle />
-        <button className="logout-button" onClick={() => handleLogout() }>LOGOUT</button>
+        <button className="logout-button" onClick={() => handleLogout()}>LOGOUT</button>
       </nav>
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>
