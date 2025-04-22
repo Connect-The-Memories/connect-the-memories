@@ -135,7 +135,6 @@
 
 .epic-button:hover {
   background-color: var(--secondary-button-hover);
-  color: black;
 }
 
 .epic-text {

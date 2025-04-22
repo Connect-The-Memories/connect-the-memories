@@ -97,12 +97,14 @@ function WritingExercise() {
       <div className="addpage-container">
         <nav className="nav-bar">
           <div className="title">CogniSphere</div>
+          <div className="navbar-separator"></div>
+          <DarkModeToggle />
           <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
             ← Back
           </button>
         </nav>
 
-        <div className="addpage-inner-box">
+        <div className="inner-box">
           <p className="epic-text">Thank You for Sharing!</p>
           <p className="epic-text">Your writing has been saved to your journal.</p>
           <p className="epic-text">We hope reflecting on these memories helped you feel more connected.</p>
