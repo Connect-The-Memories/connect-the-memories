@@ -1,0 +1,71 @@
+.image-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .chrono-image {
+    width: 400px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .image-option button {
+    font-size: 26px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .image-option button:hover {
+    background-color: #2980b9;
+  }
+
+  .game-over-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+    min-height: 50vh;
+  }
+  
+  .game-over-screen h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .game-over-screen h3 {
+    font-size: 28px;
+    margin: 10px 0;
+  }
+  
+  .restart-button {
+    font-family: Fustat Semibold;
+    margin-top: 30px;
+    padding: 14px 28px;
+    font-size: 22px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .restart-button:hover {
+    background-color: #2980b9;
+  }
+  
+  

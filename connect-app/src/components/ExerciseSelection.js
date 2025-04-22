@@ -50,6 +50,10 @@ function ExerciseSelection() {
             <div className="exercise-icon">🧠</div>
             <p className="exercise-name">Single-Digit Blitz</p>
           </div>
+          <div className="exercise-card" onClick={() => navigate("/quickchronology")}>
+          <div className="exercise-icon">⏳</div>
+          <p className="exercise-name">Quick Chronology</p>
+        </div>
         </div>
       </div>
     </div>

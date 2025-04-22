@@ -27,6 +27,7 @@ import { MediaProvider } from "./components/MediaContext";
 import EasyColorMatch from "./components/exercises/EasyColorMatch";
 import OptionsForColor from "./components/exercises/OptionsForColor";
 import RequireGalleryImages from "./components/RequiredGalleryImages";
+import QuickChronology from "./components/exercises/QuickChronology";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
           <Route path="/easycolormatch" element={<EasyColorMatch />} />
           <Route path="/optionsforcolor" element={<OptionsForColor />} />
           <Route path="/requiredgalleryimages" element={<RequireGalleryImages />} />
+          <Route path="/quickchronology" element={<QuickChronology />} />
           {/* <Route path="/crossword" element={<CrosswordPage />} /> */}
         </Routes>
       </Router>
