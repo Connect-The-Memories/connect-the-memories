@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './WordSearch.css';
 import { getRandomizedMedia } from "../../api/database";
+import { useAuth } from "../../context/AuthContext";
 
 /** 
  * Helper function: Select up to 5 words from the caption.
@@ -167,6 +168,7 @@ function getLineOfCells(startCell, endCell) {
 
 const WordSearch = () => {
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   // ------------------------------
   //  1) Puzzle Data (Fetched)
@@ -201,6 +203,13 @@ const WordSearch = () => {
   //  3) Countdown to "Ready"
   // ------------------------------
   useEffect(() => {
+
+    if (!token) {
+      // setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
     if (countdown === null) return;
     if (countdown > 0) {
       const timerId = setTimeout(() => setCountdown(prev => prev - 1), 1000);

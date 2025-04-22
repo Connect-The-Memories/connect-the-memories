@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./WritingExercise.css";
 import { useNavigate } from "react-router-dom";
 import { getRandomizedMedia } from "../../api/database";
+import { useAuth } from "../../context/AuthContext";
 
 function WritingExercise() {
   const navigate = useNavigate();
+  const { token } = useAuth();
   const charLimit = 800;
   const [text, setText] = useState("");
   const [completed, setCompleted] = useState(false);
@@ -54,6 +56,13 @@ function WritingExercise() {
   };
 
   useEffect(() => {
+
+    if (!token) {
+      // setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
     if (countdown === null) return;
 
     if (countdown > 0) {

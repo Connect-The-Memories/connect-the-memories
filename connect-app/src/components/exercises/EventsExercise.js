@@ -3,6 +3,7 @@ import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import "./EventsExercise.css";
 import { useNavigate } from "react-router-dom";
 import { getRandomizedMedia } from "../../api/database";
+import { useAuth } from "../../context/AuthContext";
 
 const DraggableImage = ({ id, image }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id });
@@ -56,6 +57,7 @@ const DroppableContainer = ({ id, children, label, result }) => {
 
 function EventsExercise() {
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const [palette, setPalette] = useState([]);
   const [originalPalette, setOriginalPalette] = useState([]);
@@ -72,6 +74,13 @@ function EventsExercise() {
   const [results, setResults] = useState(null);
 
   useEffect(() => {
+
+    if (!token) {
+      // setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
     if (countdown === null) return;
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(prev => prev - 1), 1000);
