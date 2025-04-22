@@ -65,7 +65,7 @@
 .image-date {
   font-size: 24px;
   font-weight: bold;
-  color: white;
+  color: black;
 }
 
 .zone-and-date {
@@ -92,7 +92,13 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 20px;
   color: white;
+  margin-bottom: 20px;
+  margin-top: -40px;
+}
+
+.results {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: -20px;
 }

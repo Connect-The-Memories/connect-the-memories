@@ -73,6 +73,8 @@ function EventsExercise() {
   const [countdown, setCountdown] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [results, setResults] = useState(null);
+  const [round, setRound] = useState(1);   
+  const MAX_ROUNDS = 3;
 
   useEffect(() => {
 
@@ -186,7 +188,7 @@ function EventsExercise() {
     setResults(null);
   };
 
-  const handleRedo = async () => {
+  const handleNextRound = async () => {
     try {
       const res = await getRandomizedMedia(3);
       if (res.status === 200 && res.data.media && res.data.media.length > 0) {
@@ -216,6 +218,7 @@ function EventsExercise() {
       "drop-2": null,
     });
     setResults(null);
+    setRound(prev => prev + 1); 
     setStartTime(Date.now());
   };
 
@@ -334,10 +337,13 @@ function EventsExercise() {
                   </button>
                 </>
               )}
-              {results && (
-                <button className="redo-button" onClick={handleRedo}>
-                  Redo
+              {results && round < MAX_ROUNDS && (
+                <button className="redo-button" onClick={handleNextRound}>
+                  Next Round
                 </button>
+              )}
+              {results && round === MAX_ROUNDS && (
+                <p className="results">All three rounds complete! 🎉</p>
               )}
             </div>
 
