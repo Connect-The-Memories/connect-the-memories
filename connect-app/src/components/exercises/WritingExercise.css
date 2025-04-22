@@ -125,25 +125,24 @@
   font-size: 25px;
   font-weight: bold;
   font-family: Fustat Bold; 
-  color: white;
+  color: var(--title-text-color);
 
-  background-color: #001447;
+  background-color: var(--secondary-button-color);
   border-radius: 10px;
   border: none;
   box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.2); 
 }
 
 .epic-button:hover {
-  background-color: #ffcf67;
+  background-color: var(--secondary-button-hover);
   color: black;
 }
-
 
 .epic-text {
   color: black;
   font-family: Fustat Bold;
-  font-size: 50px;
+  font-size: 40px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
