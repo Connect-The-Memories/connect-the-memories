@@ -182,7 +182,7 @@ export default function EasyColorMatch() {
   <div className="game-over-screen">
     <h2 className="timer-text">Time’s Up!</h2>
     <h3>Final Score: {score.toFixed(2)}</h3>
-    <h3>Total Guesses: {guessCnt}</h3>
+    <h3>You made {guessCnt} guesses in 45 seconds.</h3>
     <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
     <h3>Average Reaction Time: {avgRT.toFixed(2)} s</h3>
     <button className="restart-button" onClick={restart}>Play Again</button>

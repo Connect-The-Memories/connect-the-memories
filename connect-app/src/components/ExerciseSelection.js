@@ -24,7 +24,7 @@ function ExerciseSelection() {
         <div className="exercise-grid">
           <div className="exercise-card" onClick={() => navigate("/speed-processing")}>
             <div className="exercise-icon">⚡</div>
-            <p className="exercise-name">Speed Processing</p>
+            <p className="exercise-name">Number Sprint</p>
           </div>
           <div className="exercise-card" onClick={() => navigate("/memorygame")}>
             <div className="exercise-icon">🧩</div>
@@ -36,7 +36,7 @@ function ExerciseSelection() {
           </div>
           <div className="exercise-card" onClick={() => navigate("/writingexercise")}>
             <div className="exercise-icon">✍️</div>
-            <p className="exercise-name">Writing Exercise</p>
+            <p className="exercise-name">Memory Reflections</p>
           </div>
           <div className="exercise-card" onClick={() => navigate("/eventsexercise")}>
             <div className="exercise-icon">📅</div>

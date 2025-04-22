@@ -14,6 +14,9 @@ function SpeedProcessing() {
   const [countdown, setCountdown] = useState(null); // starting countdown
   const [ready, setReady] = useState(false);
   const [clickedNumbers, setClickedNumbers] = useState({});
+  const [guessCount, setGuessCount] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [sumReactionTime, setSumReactionTime] = useState(0);
 
   const sampleNums = [2, 4, 5, 1, 3]; // numbers to use for sample
   const correctNumber = 5; // define the correct number for sample
@@ -68,20 +71,27 @@ function SpeedProcessing() {
   }
 
   function handleClick(number) {
-    if (gameOver) return; // Stop game if time is up
-
+    if (gameOver) return;
+  
     const maxNumber = Math.max(...numbers);
-
+    const endTime = Date.now();
+    const reaction = endTime - startTime;
+  
+    setGuessCount(prev => prev + 1);
+  
+    const isCorrect = number === maxNumber;
     setClickedNumbers((prev) => ({
       ...prev,
-      [number]: number === maxNumber ? "correct" : "wrong",
+      [number]: isCorrect ? "correct" : "wrong",
     }));
-
-    if (number === maxNumber) {
-      const endTime = Date.now();
-      setReactionTime(endTime - startTime);
-      setScore(score + 1);
+  
+    if (isCorrect) {
+      setCorrectCount(prev => prev + 1);
+      setSumReactionTime(prev => prev + reaction);
+      setReactionTime(reaction);
+      setScore(prev => prev + 1);
       generateNumbers();
+      setStartTime(Date.now());
     }
   }
 
@@ -91,6 +101,11 @@ function SpeedProcessing() {
     setCountdown(3);
     setReady(true);
   }
+
+  const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
+  const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
+
+
 
   return (
     <div className="exercise-container">
@@ -141,6 +156,8 @@ function SpeedProcessing() {
             <div className="game-over">
               <h2 className="game-over-title">Game Over!</h2>
               <p className="game-over-score">Final Score: {score}</p>
+              <p className="game-over-score">Accuracy: {accuracy.toFixed(1)}%</p>
+              <p className="game-over-score">Avg Reaction Time: {avgReactionTime.toFixed(2)}s</p>
               <button className="restart-button" onClick={() => window.location.reload()}>Play Again</button>
             </div>
           ) : (

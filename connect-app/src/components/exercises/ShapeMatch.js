@@ -16,6 +16,9 @@ function ShapeMatch() {
 
   const [score, setScore] = useState(0);
   const [guessCount, setGuessCount] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [sumReactionTime, setSumReactionTime] = useState(0);
+
   const [leftShape, setLeftShape] = useState("");
   const [displayedShape, setDisplayedShape] = useState("");
   const [rightShapeName, setRightShapeName] = useState("");
@@ -62,11 +65,9 @@ function ShapeMatch() {
       )
     };
 
-
-
     setDisplayedShape(shapeMap[randomLeftShape]);
 
-    const isMatchTrial = Math.random() < 0.4; // 40% chance for a match
+    const isMatchTrial = Math.random() < 0.4;
 
     let newRightShapeName;
     if (isMatchTrial) {
@@ -82,7 +83,6 @@ function ShapeMatch() {
 
   useEffect(() => {
     if (countdown === null) return;
-
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
@@ -149,6 +149,8 @@ function ShapeMatch() {
       const reactionTimeInSeconds = reactionTime / 1000;
       const bonus = Math.max(0, 1 - reactionTimeInSeconds);
       setScore((prev) => prev + 1 + bonus);
+      setCorrectCount((prev) => prev + 1);
+      setSumReactionTime((prev) => prev + reactionTime);
       setMessage(`Correct! +${(1 + bonus).toFixed(2)} points`);
     } else {
       setMessage("Incorrect!");
@@ -166,15 +168,19 @@ function ShapeMatch() {
   const handleRestart = () => {
     setScore(0);
     setGuessCount(0);
+    setCorrectCount(0);
+    setSumReactionTime(0);
     setTimeLeft(totalTime);
     setGameOver(false);
     setCountdown(null);
     setReady(false);
   };
 
+  const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
+  const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
+
   return (
     <div className="memory-container">
-      {/* Navigation Bar */}
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <div className="navbar-separator"></div>
@@ -184,7 +190,6 @@ function ShapeMatch() {
         </button>
       </nav>
 
-      {/* If countdown is active, show countdown */}
       {countdown !== null ? (
         <div className="countdown-screen">
           <h1>{countdown}</h1>
@@ -218,17 +223,13 @@ function ShapeMatch() {
               <h2 className="timer-text">Time Left: {timeLeft}s</h2>
               <h3>Score: {score.toFixed(2)}</h3>
 
-              {/* Display the two stimuli */}
               <div className="stimuli">
-                {/* Left Stimulus: Shape Icon */}
                 <div className="left-stimulus">
                   {displayedShape}
                 </div>
-                {/* Right Stimulus: Shape Name */}
                 <div className="right-stimulus">{rightShapeName}</div>
               </div>
 
-              {/* Buttons for user response */}
               <div className="response-buttons">
                 <button className="no-match-button" onClick={() => handleUserResponse(false)}>No Match</button>
                 <button className="match-button" onClick={() => handleUserResponse(true)}>Match</button>
@@ -241,6 +242,8 @@ function ShapeMatch() {
               <h2 className="timer-text">Time's Up!</h2>
               <h3>Your Final Score: {score.toFixed(2)}</h3>
               <h3>You made {guessCount} guesses in 45 seconds.</h3>
+              <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
+              <h3>Average Reaction Time: {avgReactionTime.toFixed(2)}s</h3>
               <button className="restart-button" onClick={handleRestart}>
                 Play Again
               </button>
