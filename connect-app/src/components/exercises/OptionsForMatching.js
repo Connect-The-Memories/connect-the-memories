@@ -18,13 +18,12 @@ function OptionsForMatching() {
             <div className="inner-box">
                 {/* title */}
                 <h1 className="exercise-title">Options</h1>
-
-                {/* Exercise Grid */}
-                <div className="exercise-grid">
-                    <div className="exercise-card" onClick={() => navigate("/colormatch")}>
-                        <div className="exercise-icon">🎨</div>
-                        <p className="exercise-name">Color Match</p>
-                    </div>
+            {/* Exercise Grid */}
+            <div className="exercise-grid">
+                <div className="exercise-card" onClick={() => navigate("/optionsforcolor")}>
+                    <div className="exercise-icon">🎨</div>
+                    <p className="exercise-name">Color Match</p>
+                </div>
 
                     <div className="exercise-card" onClick={() => navigate("/shapematch")}>
                         <div className="exercise-icon">🔺</div>

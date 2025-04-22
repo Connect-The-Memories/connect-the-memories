@@ -17,17 +17,27 @@ function generateProblem() {
 
 export default function SingleDigitBlitz() {
   const navigate = useNavigate();
-  const [ready, setReady] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
-  const [problem, setProblem] = useState(generateProblem());
-  const [input, setInput] = useState("");
-  const [correct, setCorrect] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [finished, setFinished] = useState(false);
+
+  /* ───────── state ───────── */
+  const [ready,      setReady]      = useState(false);
+  const [countdown,  setCountdown]  = useState(null);       // ← NEW
+  const [timeLeft,   setTimeLeft]   = useState(ROUND_SECONDS);
+  const [problem,    setProblem]    = useState(generateProblem());
+  const [input,      setInput]      = useState("");
+  const [correct,    setCorrect]    = useState(0);
+  const [total,      setTotal]      = useState(0);
+  const [finished,   setFinished]   = useState(false);
 
   const timerRef = useRef(null);
 
-  const startRound = () => {
+  /* ───────── helpers ───────── */
+  const primeRound = () => {                                 // ← renamed
+    setCountdown(3);          // trigger overlay countdown   // ← NEW
+    setFinished(false);
+    setReady(false);          // will flip to true after c/d  // ← NEW
+  };
+
+  const actuallyStart = () => {                              // ← NEW
     setReady(true);
     setTimeLeft(ROUND_SECONDS);
     setProblem(generateProblem());
@@ -37,9 +47,21 @@ export default function SingleDigitBlitz() {
     setFinished(false);
   };
 
+  /* ───────── countdown overlay ───────── */                // ← NEW
+  useEffect(() => {
+    if (countdown === null) return;
+    if (countdown > 0) {
+      const id = setTimeout(() => setCountdown(c => c - 1), 1000);
+      return () => clearTimeout(id);
+    }
+    // reached zero → start the round
+    setCountdown(null);
+    actuallyStart();
+  }, [countdown]);
+
+  /* ───────── round timer ───────── */
   useEffect(() => {
     if (!ready || finished) return;
-
     clearInterval(timerRef.current);
 
     timerRef.current = setInterval(() => {
@@ -56,15 +78,28 @@ export default function SingleDigitBlitz() {
     return () => clearInterval(timerRef.current);
   }, [ready, finished]);
 
-
   const handleSubmit = () => {
     if (input.trim() === "") return;
     const isCorrect = parseInt(input, 10) === problem.answer;
-    if (isCorrect) setCorrect((c) => c + 1);
-    setTotal((t) => t + 1);
+    if (isCorrect) setCorrect(c => c + 1);
+    setTotal(t => t + 1);
     setInput("");
     setProblem(generateProblem());
   };
+
+  /* ─────────  UI  ───────── */
+  if (countdown !== null) {
+    return (
+      <div className="exercise-container">
+        <nav className="nav-bar">
+          <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
+        </nav>
+        <div className="countdown-screen">
+          <h1>{countdown}</h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!ready) {
     return (
@@ -74,35 +109,35 @@ export default function SingleDigitBlitz() {
           <div className="navbar-separator"></div>
           <DarkModeToggle />
           <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
-            ← Back
+            ← Back
           </button>
         </nav>
-        <div className="inner-box">
-          <h2 className="instructions-title">Instructions</h2>
-          <p className="instructions-text">Solve as many single‑digit (+, −, ×) problems as you can in 60 seconds.</p>
-          <p className="instructions-subtext">Type the answer and press <strong>Enter</strong> or click <em>Submit</em> to move to the next problem.</p>
-          <button className="start-button" onClick={startRound}>Start!</button>
+
+        <div className="instructions-screen">
+          <h2>Instructions</h2>
+          <p>Solve as many single‑digit (+, −, ×) problems as you can in 60 seconds.</p>
+          <p>Type the answer and press <strong>Enter</strong> or click <em>Submit</em>.</p>
+          <button className="start-button" onClick={primeRound}>Start</button>
         </div>
       </div>
     );
   }
 
-  // Game or results screen
+  /* ───────── game / results ───────── */
   return (
     <div className="exercise-container">
-      {/* Top Bar */}
       <div className="nav-bar">
         <div className="title">CogniSphere</div>
         <div className="navbar-separator"></div>
         <DarkModeToggle />
         <button className="logout-button" onClick={() => navigate("/exerciseselection")}>
-          ← Back
+          ← Back
         </button>
       </div>
 
       {!finished ? (
-        <div className="inner-box">
-          <h2 className="status-text">Time Left: {timeLeft}s</h2>
+        <div className="game-area">
+          <h2 className="status-text">Time Left: {timeLeft}s</h2>
 
           <div className="problem-display">
             {problem.a} {problem.op} {problem.b} =
@@ -113,26 +148,22 @@ export default function SingleDigitBlitz() {
               className="answer-input"
               type="number"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleSubmit()}
               autoFocus
             />
-            <button className="start-button" onClick={handleSubmit}>
-              Submit
-            </button>
+            <button className="start-button" onClick={handleSubmit}>Submit</button>
           </div>
 
-          <p className="status-text">
-            Correct: {correct} / {total}
-          </p>
+          <p className="status-text">Correct: {correct} / {total}</p>
         </div>
       ) : (
-        <div className="inner-box">
-          <h2 className="instructions-text">Round Complete!</h2>
-          <p className="instructions-subtext">You answered {total} problems.</p>
-          <p className="instructions-subtext">Correct answers: {correct}</p>
-          <p className="instructions-subtext">Accuracy: {total ? ((correct / total) * 100).toFixed(1) : 0}%</p>
-          <button className="start-button" onClick={startRound}>Play Again</button>
+        <div className="instructions-screen">
+          <h2>Round Complete!</h2>
+          <p>You answered {total} problems.</p>
+          <p>Correct answers: {correct}</p>
+          <p>Accuracy: {total ? ((correct / total) * 100).toFixed(1) : 0}%</p>
+          <button className="start-button" onClick={primeRound}>Play Again</button>
         </div>
       )}
     </div>

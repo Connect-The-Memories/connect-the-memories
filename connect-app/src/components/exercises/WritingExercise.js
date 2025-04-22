@@ -16,6 +16,20 @@ function WritingExercise() {
   const [media, setMedia] = useState(null);
   const [loadingMedia, setLoadingMedia] = useState(false);
 
+   const fetchRandomMedia = async () => {              
+    setLoadingMedia(true);                          
+    try {                                           
+      const res = await getRandomizedMedia();        
+      if (res.status === 200 && res.data.media?.length) {
+        setMedia(res.data.media[0]);                  
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);            
+    } finally {
+      setLoadingMedia(false);                      
+    }
+  };
+
   const handleChange = (e) => {
     setText(e.target.value);
   };
@@ -57,39 +71,18 @@ function WritingExercise() {
   };
 
   useEffect(() => {
+    if (!token) { setTimeout(() => navigate("/"), 100); return; }
 
-    if (!token) {
-      // setError("You are not logged in.");
-      setTimeout(() => navigate("/"), 100);
-      return;
-    }
-
+    /* Countdown logic */
     if (countdown === null) return;
-
     if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(prev => prev - 1), 1000);
-      return () => clearTimeout(timer);
-    } else {
-      setCountdown(null);
-      setReady(true);
-
-      const fetchMedia = async () => {
-        setLoadingMedia(true);
-        try {
-          const res = await getRandomizedMedia();
-          if (res.status === 200 && res.data.media?.length > 0) {
-            setMedia(res.data.media[0]);
-          } else {
-            console.error(res.data.error || "No media returned");
-          }
-        } catch (err) {
-          console.error("Fetch error:", err);
-        } finally {
-          setLoadingMedia(false);
-        }
-      };
-      fetchMedia();
+      const t = setTimeout(() => setCountdown(c => c - 1), 1000);
+      return () => clearTimeout(t);
     }
+    /* countdown reached 0 → ready */
+    setCountdown(null);
+    setReady(true);
+    fetchRandomMedia();                               // ← NEW  (initial fetch)
   }, [countdown]);
 
   if (completed) {
@@ -152,13 +145,14 @@ function WritingExercise() {
             Share your thoughts, emotions, or memories in your own words.
             Writing can help strengthen your mind and keep your memories alive.
             Please write at least <strong>{charLimit}</strong> characters (10-12 sentences) to complete the exercise.
+            Press the randomize image button to see a new image if you need more inspiration.
           </p>
           <p className="writing-instructions-text">
             There’s no right or wrong—just let your thoughts flow. Whether it’s a detailed story, a feeling, or even a small moment,
             everything you write is meaningful. Take your time, and enjoy the process!
           </p>
-          <p className="writing-instructions-text">
-            Click "Next" when you're ready to see the image or video and complete the exercise!
+          <p>
+            Click "Next" when you're ready to see the image and complete the exercise!
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
             Next
@@ -168,14 +162,26 @@ function WritingExercise() {
         <div className="writing-exercise-container">
           <div className="media-container">
             {loadingMedia ? (
-              <p>Loading media...</p>
+              <p>Loading media…</p>
             ) : media ? (
-              <img src={media.signed_url} alt="Memory Prompt" className="media-image" />
+              <>
+                <img
+                  src={media.signed_url}
+                  alt="Memory Prompt"
+                  className="media-image"
+                />
+                <button
+                  className="randomize-button"
+                  onClick={() => fetchRandomMedia()}
+                  disabled={loadingMedia}
+                >
+                  ⟳ Randomize Image
+                </button>
+              </>
             ) : (
               <p className="no-media-text">No media available.</p>
             )}
           </div>
-
           <div className="writing-section">
             <textarea
               value={text}

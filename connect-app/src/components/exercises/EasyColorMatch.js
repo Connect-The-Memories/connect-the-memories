@@ -33,6 +33,8 @@ export default function EasyColorMatch() {
   const guessStartTimeRef     = useRef(null);
 
   /* ── helper: set up a single trial ───────────────── */
+  const [correctCnt, setCorrectCnt]   = useState(0);   // NEW
+  const [sumRT,      setSumRT]        = useState(0);   // NEW (ms)
   const newTrial = () => {
     respondedRef.current = false;
     setMessage("");
@@ -99,9 +101,14 @@ export default function EasyColorMatch() {
       const bonus = Math.max(0, 1 - rt);
       setScore(s => s + 1 + bonus);
       setMessage(`Correct +${(1 + bonus).toFixed(2)} pts`);
+    
+      /* NEW: track accuracy + reaction time */
+      setCorrectCnt(c => c + 1);
+      setSumRT(ms => ms + rt * 1000);
     } else {
       setMessage("Incorrect!");
     }
+    
     setGuessCnt(c => c + 1);
 
     setTimeout(() => { if (timeLeft > 0) newTrial(); }, 500);
@@ -111,7 +118,13 @@ export default function EasyColorMatch() {
   const restart = () => {
     setReady(false); setCountdown(null); setTimeLeft(TOTAL_TIME);
     setScore(0); setGuessCnt(0); setMessage("");
+    setCorrectCnt(0);
+    setSumRT(0);
   };
+
+  const accuracy = guessCnt > 0 ? (correctCnt / guessCnt) * 100 : 0;
+  const avgRT    = correctCnt > 0 ? (sumRT / correctCnt) / 1000 : 0;   // sec
+
 
   /* ──────────────────────────────────────────────────
      RENDER
@@ -166,13 +179,15 @@ export default function EasyColorMatch() {
 
       {/* game‑over */}
       {ready && timeLeft === 0 && (
-        <div className="game-over-screen">
-          <h2 className="timer-text">Time’s Up!</h2>
-          <h3>Final Score: {score.toFixed(2)}</h3>
-          <h3>Total Guesses: {guessCnt}</h3>
-          <button className="restart-button" onClick={restart}>Play Again</button>
-        </div>
-      )}
+  <div className="game-over-screen">
+    <h2 className="timer-text">Time’s Up!</h2>
+    <h3>Final Score: {score.toFixed(2)}</h3>
+    <h3>Total Guesses: {guessCnt}</h3>
+    <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
+    <h3>Average Reaction Time: {avgRT.toFixed(2)} s</h3>
+    <button className="restart-button" onClick={restart}>Play Again</button>
+  </div>
+)}
     </div>
   );
 }
