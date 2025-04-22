@@ -454,21 +454,29 @@ const WordSearch = () => {
         </div>
       )}
       {ready && countdown === null && (
-      <div className="timer-display">
-            {!allFound ? (
-              <p>Time elapsed: {timeTaken} seconds</p>
-            ) : (
-              // The user found all words, but hasn't revealed the memory yet
-              <div className="finished-phase">
-                <h3>Congratulations! You've found all the words!</h3>
-                <p>Your time: {timeTaken} seconds</p>
-                <button className="reveal-button" onClick={() => setShowReveal(true)}>
-                  Reveal
-                </button>
-              </div>
-            )}
-          </div>
-      )}
+  <div
+    className="timer-display"
+    style={{
+      /* only show while the game is done but before the Reveal button is pressed */
+      visibility: (!showReveal && allFound)
+        ? 'visible'
+        : 'hidden'
+    }}
+  >
+    {!allFound ? (
+      <p>Time elapsed: {timeTaken} seconds</p>
+    ) : (
+      <div className="finished-phase">
+        <h3>Congratulations! You've found all the words!</h3>
+        <p>Your time: {timeTaken} seconds</p>
+        <button className="reveal-button" onClick={() => setShowReveal(true)}>
+          Reveal
+        </button>
+      </div>
+    )}
+  </div>
+)}
+
     </div>
   );
 };
