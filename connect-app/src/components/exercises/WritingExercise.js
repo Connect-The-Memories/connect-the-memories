@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
+import RequiredGalleryImages from "../RequiredGalleryImages.js"; 
 
 function WritingExercise() {
   const navigate = useNavigate();
@@ -122,6 +123,7 @@ function WritingExercise() {
   }
 
   return (
+  <RequiredGalleryImages min={20}>
     <div className="writing-exercise-page">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
@@ -207,6 +209,7 @@ function WritingExercise() {
         </div>
       )}
     </div>
+    </RequiredGalleryImages>
   );
 }
 

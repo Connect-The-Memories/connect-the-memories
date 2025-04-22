@@ -4,6 +4,7 @@ import './WordSearch.css';
 import DarkModeToggle from '../DarkModeToggle';
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
+import RequiredGalleryImages from "../RequiredGalleryImages.js"; 
 
 /** 
  * Helper function: Select up to 5 words from the caption.
@@ -355,6 +356,7 @@ const WordSearch = () => {
   };
 
   return (
+    <RequiredGalleryImages min={20}>
     <div className="exercise-container">
       {/* Top Bar */}
       <div className="nav-bar">
@@ -490,6 +492,7 @@ const WordSearch = () => {
       )}
 
     </div>
+    </RequiredGalleryImages>
   );
 };
 

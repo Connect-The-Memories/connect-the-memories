@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
+import RequiredGalleryImages from "../RequiredGalleryImages.js";
 
 const DraggableImage = ({ id, image }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id });
@@ -245,6 +246,7 @@ function EventsExercise() {
   };
 
   return (
+    <RequiredGalleryImages min={20}>
     <div className="hp-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
@@ -357,6 +359,7 @@ function EventsExercise() {
         </>
       )}
     </div>
+    </RequiredGalleryImages>
   );
 }
 

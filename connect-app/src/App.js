@@ -26,6 +26,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { MediaProvider } from "./components/MediaContext";
 import EasyColorMatch from "./components/exercises/EasyColorMatch";
 import OptionsForColor from "./components/exercises/OptionsForColor";
+import RequireGalleryImages from "./components/RequiredGalleryImages";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           <Route path="/singledigitblitz" element={<SingleDigitBlitz />} />
           <Route path="/easycolormatch" element={<EasyColorMatch />} />
           <Route path="/optionsforcolor" element={<OptionsForColor />} />
+          <Route path="/requiredgalleryimages" element={<RequireGalleryImages />} />
           {/* <Route path="/crossword" element={<CrosswordPage />} /> */}
         </Routes>
       </Router>
