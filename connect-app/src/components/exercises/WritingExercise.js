@@ -123,7 +123,7 @@ function WritingExercise() {
   }
 
   return (
-  <RequiredGalleryImages min={20}>
+  <RequiredGalleryImages min={10}>
     <div className="writing-exercise-page">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>

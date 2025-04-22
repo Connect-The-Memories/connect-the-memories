@@ -356,7 +356,7 @@ const WordSearch = () => {
   };
 
   return (
-    <RequiredGalleryImages min={20}>
+    <RequiredGalleryImages min={10}>
     <div className="exercise-container">
       {/* Top Bar */}
       <div className="nav-bar">

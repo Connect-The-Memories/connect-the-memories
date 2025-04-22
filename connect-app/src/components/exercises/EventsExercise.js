@@ -246,7 +246,7 @@ function EventsExercise() {
   };
 
   return (
-    <RequiredGalleryImages min={20}>
+    <RequiredGalleryImages min={10}>
     <div className="hp-container">
       <nav className="nav-bar">
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
