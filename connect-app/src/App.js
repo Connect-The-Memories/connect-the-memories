@@ -24,6 +24,7 @@ import SingleDigitBlitz from "./components/exercises/SingleDigitBlitz";
 // import CrosswordPage from "./components/exercises/CrosswordPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { MediaProvider } from "./components/MediaContext";
+import EasyColorMatch from "./components/exercises/EasyColorMatch";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/eventsexercise" element={<EventsExercise />} />
           <Route path="/wordsearch" element={<WordSearch />} />
           <Route path="/singledigitblitz" element={<SingleDigitBlitz />} />
+          <Route path="/easycolormatch" element={<EasyColorMatch />} />
           {/* <Route path="/crossword" element={<CrosswordPage />} /> */}
         </Routes>
       </Router>
