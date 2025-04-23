@@ -8,6 +8,7 @@ import Gallery from "./components/Gallery";
 import ExerciseSelection from "./components/ExerciseSelection";
 import AddPrimary from "./components/AddPrimary";
 import AddSupport from "./components/AddSupport";
+import ManageSupport from "./components/ManageSupport"
 import UploadPage from "./components/UploadPage";
 import SpeedProcessing from "./components/exercises/SpeedProcessing";
 import MemoryGame from "./components/exercises/MemoryGame";
@@ -41,6 +42,7 @@ function App() {
           <Route path="/exerciseselection" element={<ExerciseSelection />} />
           <Route path="/addprimary" element={<AddPrimary />} />
           <Route path="/addsupport" element={<AddSupport />} />
+          <Route path="/managesupport" element={<ManageSupport />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/speed-processing" element={<SpeedProcessing />} />
