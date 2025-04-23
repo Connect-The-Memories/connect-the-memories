@@ -54,6 +54,10 @@ function ExerciseSelection() {
           <div className="exercise-icon">⏳</div>
           <p className="exercise-name">Quick Chronology</p>
         </div>
+          <div className="exercise-card" onClick={() => navigate("/sudoku")}>
+            <div className="exercise-icon">🔢</div>
+            <p className="exercise-name">Sudoku</p>
+          </div>
         </div>
       </div>
     </div>
