@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./ManageSupport.css";
 import DarkModeToggle from "./DarkModeToggle";
 import { useAuth } from "../context/AuthContext";
-import getLinkedAccounts from "../api/database";
+// import getLinkedAccounts from "../api/database";
 
 function ManageSupport() {
     const navigate = useNavigate();
@@ -12,24 +12,24 @@ function ManageSupport() {
     const [selectedPrimary, setSelectedPrimary] = useState("");
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!token) {
-            setTimeout(() => navigate("/"), 100);
-            return;
-        }
+    //     if (!token) {
+    //         setTimeout(() => navigate("/"), 100);
+    //         return;
+    //     }
 
-        const fetchLinkedAccounts = async () => {
-            try {
-                const response = await getLinkedAccounts();
-                const user_names = response.data.linked_user_names;
-                setPrimaryUsers(user_names);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchLinkedAccounts();
-    }, [token, navigate]);
+    //     const fetchLinkedAccounts = async () => {
+    //         try {
+    //             const response = await getLinkedAccounts();
+    //             const user_names = response.data.linked_user_names;
+    //             setPrimaryUsers(user_names);
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchLinkedAccounts();
+    // }, [token, navigate]);
 
     const handleRemoveSupportUser = () => {
         // backend logic here

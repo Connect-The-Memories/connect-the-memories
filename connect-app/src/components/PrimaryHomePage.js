@@ -60,7 +60,7 @@ function PrimaryHomePage() {
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <div className="navbar-separator"></div>
         <DarkModeToggle />
-        <button className="logout-button" onClick={ () => { handleLogout() }}>LOGOUT</button>
+        <button className="logout-button" onClick={() => { handleLogout() }}>LOGOUT</button>
       </nav >
       <div className="inner-box">
         <div className="welcome-message">Welcome, {userName}!</div>
@@ -88,7 +88,7 @@ function PrimaryHomePage() {
         <div className="hp-sub-row">
           <button className="hp-sub-button" onClick={() => navigate("/journal")}>Journal</button>
           <button className="hp-sub-button" onClick={() => navigate("/stats")}>Exercise Statistics</button>
-          <button className="hp-sub-button" onClick={() => navigate("/managesupport")}>Manage Support System</button>
+          <button className="hp-sub-button" onClick={() => navigate("/managesupport")}>Manage Support Users</button>
         </div>
 
       </div>
