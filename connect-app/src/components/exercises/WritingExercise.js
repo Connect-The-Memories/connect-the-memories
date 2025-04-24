@@ -69,7 +69,7 @@ function WritingExercise() {
     setCompleted(true);
   
     // send to backend
-    /* try {
+    /*try {
       await logJournalEntry({
         entry: text,
         timestamp: new Date().toISOString(),
@@ -77,7 +77,7 @@ function WritingExercise() {
       });
     } catch (err) {
       console.error("Error saving journal entry:", err);
-    } */
+    } */ 
   };  
 
   useEffect(() => {

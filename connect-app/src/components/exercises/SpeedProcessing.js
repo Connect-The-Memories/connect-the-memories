@@ -106,7 +106,7 @@ function SpeedProcessing() {
   const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
   const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
 
-  /* useEffect(() => {
+  useEffect(() => {
     const sendExerciseResults = async () => {
       try {
         await logExerciseAttempt({
@@ -123,7 +123,7 @@ function SpeedProcessing() {
     if (gameOver && correctCount > 0) {
       sendExerciseResults();
     }
-  }, [gameOver]); */ 
+  }, [gameOver]); 
 
   return (
     <div className="exercise-container">
