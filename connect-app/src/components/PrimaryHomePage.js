@@ -88,13 +88,8 @@ function PrimaryHomePage() {
         <div className="hp-sub-row">
           <button className="hp-sub-button" onClick={() => navigate("/journal")}>Journal</button>
           <button className="hp-sub-button" onClick={() => navigate("/stats")}>Exercise Statistics</button>
-          <button
-            className="hp-sub-button"
-            onClick={() => navigate("/managesupport")}
-            disabled // remove when page is implemented
-          >
-            Manage Support Users
-          </button>
+          {/* <button className="hp-sub-button" onClick={() => navigate("/managesupport")}>Manage Support Users</button> */}
+          {/* ^^ add back when page is implemented */}
         </div>
 
       </div>
