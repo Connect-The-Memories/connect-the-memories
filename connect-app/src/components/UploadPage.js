@@ -20,11 +20,11 @@ function UploadPage() {
     // Get list of linked users
     useEffect(() => {
 
-        if (!token) {
-            setTimeout(() => navigate("/"), 100);
-            return;
-        }
-      
+        // if (!token) {
+        //     setTimeout(() => navigate("/"), 100);
+        //     return;
+        // }
+
         const fetchLinkedAccounts = async () => {
             try {
                 const response = await getLinkedAccounts();
@@ -46,6 +46,18 @@ function UploadPage() {
     const addMessageField = () => {
         setMessages([...messages, currMsg]);
         setcurrMsg("")
+    };
+
+    const deleteDraft = (idx) => {
+        if (activeTab === "Messages") {
+            const reversedMessages = [...messages].reverse();
+            reversedMessages.splice(idx, 1); // remove the item
+            setMessages(reversedMessages.reverse()); // restore original order
+        } else {
+            const reversedFiles = [...selectedFiles].reverse();
+            reversedFiles.splice(idx, 1); // remove the item
+            setSelectedFiles(reversedFiles.reverse()); // restore original order
+        }
     };
 
     const handleDrop = (event) => {
@@ -134,6 +146,7 @@ function UploadPage() {
             if (activeTab === "Messages") {
                 const response = await uploadMessages(messages, selectedPrimary);
                 alert(response.data.message);
+                setMessages([]);
             } else {
                 const formData = new FormData();
                 formData.append("main_user_name", selectedPrimary);
@@ -144,6 +157,7 @@ function UploadPage() {
                 });
                 const response = await uploadMedia(formData);
                 alert(response.data.message);
+                setSelectedFiles([])
             }
         } catch (error) {
             console.error(error);
@@ -221,7 +235,10 @@ function UploadPage() {
                                 {[...messages].reverse().map((msg, index) => (
                                     <div className="msg-preview-item">
                                         <p key={index} className="msg-preview-text">{msg}</p>
-                                        <button className="trash-btn">
+                                        <button
+                                            className="trash-btn"
+                                            onClick={() => deleteDraft(index)}
+                                        >
                                             <img className="trash-icon" src={trashIcon} alt="trashcan" />
                                         </button>
                                     </div>
@@ -270,7 +287,10 @@ function UploadPage() {
                                                         value={fileObj.date || ""}
                                                         onChange={(e) => handleFileDateChange(originalIndex, e.target.value)}
                                                     />
-                                                    <button className="trash-btn">
+                                                    <button
+                                                        className="trash-btn"
+                                                        onClick={() => deleteDraft(reverseIndex)}
+                                                    >
                                                         <img className="trash-icon" src={trashIcon} alt="trashcan" />
                                                     </button>
                                                 </div>
