@@ -51,7 +51,7 @@ export async function getMedia() {
 
 // Send Exercise Results to Database 
 export async function logExerciseAttempt({ exercise, timestamp, accuracy, avg_reaction_time }) {
-    return axiosInstance.post('/database/exercises', {
+    return axiosInstance.post('/database/firestore/exercises', {
       exercise,
       timestamp,
       accuracy,
