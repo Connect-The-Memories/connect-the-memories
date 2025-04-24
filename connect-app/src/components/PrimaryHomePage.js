@@ -88,6 +88,7 @@ function PrimaryHomePage() {
         <div className="hp-sub-row">
           <button className="hp-sub-button" onClick={() => navigate("/journal")}>Journal</button>
           <button className="hp-sub-button" onClick={() => navigate("/stats")}>Exercise Statistics</button>
+          <div className="filler-btn"></div>
           {/* <button className="hp-sub-button" onClick={() => navigate("/managesupport")}>Manage Support Users</button> */}
           {/* ^^ add back when page is implemented */}
         </div>

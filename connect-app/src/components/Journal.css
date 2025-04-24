@@ -12,67 +12,95 @@
   .journal-container {
     display: flex;
     justify-content: space-between;
-    max-width: 1000px; 
-    width: 100%; 
-    min-height: 400px; 
-    background: #FFFFFFB3;
-    padding: 30px; 
-    border-radius: 10px;
     flex-wrap: wrap; 
-    align-items: flex-start; 
-  }
-  
-  .journal-entry {
-    flex: 2;
-    padding: 20px;
-  }
-  
-  .date-navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .nav-button {
-    background-color: #4a4a9e;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin: 0 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .date-text {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .entry-text {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-  }
-  
-  .empty-entry {
-    font-size: 16px;
-    color: gray;
+    align-items: flex-start;
+    position: relative;
+
+    width: 90%; 
+    height: 75%; 
+    padding: 20px; 
+    background: rgba(255, 255, 255, 0.7); 
+    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.5); 
+    border-radius: 10px; 
     text-align: center;
   }
+
+.journal-title {
+  color: black;
+  font-size: 32px;
+  text-decoration: underline;
+  margin: 10px;
+}
   
-  .calendar-section {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-  }
+.journal-entry {
+  flex: 2.5;
+  height: 100%;
+}
+
+.entry-section {
+  background-color: white;
+  border-radius: 20px;
+  padding: 15px 10px 10px 10px;
+  box-shadow: var(--shadow);
+
+  height: 85%;
+}
   
-  .journal-calendar {
-    width: 250px; 
-    max-width: 100%; 
-    font-size: 14px; 
-    padding: 5px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  }
+.date-navigation {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 10px;
+}
+  
+.nav-button {
+  background-color: var(--primary-button-color);
+  color: var(--title-text-color);
+  border: none;
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+  
+.date-text {
+  font-size: 24px;
+}
+  
+.entry-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+  
+.empty-entry {
+  font-size: 18px;
+  color: gray;
+  text-align: center;
+}
+  
+.calendar-section {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+  
+.journal-calendar {
+  width: 250px; 
+  max-width: 300px; 
+  font-family: Fustat Semibold;
+  font-size: 14px; 
+  padding: 5px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+.journal-media {
+  background-color: rgba(255, 255, 255, 0.714);
+  border-radius: 20px;
+  min-width: 310px;
+  min-height: 270px;
+  padding: 20px;
+  margin: 10px;
+}

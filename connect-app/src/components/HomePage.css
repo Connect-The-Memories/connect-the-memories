@@ -181,3 +181,12 @@ button:hover {
 button:active {
     transform: scale(0.95);
 }
+
+/*  remove when manage support page implemented */
+.filler-btn {
+    height: 90%;
+    width: 25vw;
+    min-height: 50px;
+    min-width: 150px;
+    margin: 10px;
+}

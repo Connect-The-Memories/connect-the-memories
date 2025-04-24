@@ -30,17 +30,20 @@ function Journal() {
       <div className="journal-container">
         {/* Journal Entry Section */}
         <div className="journal-entry">
-          <h2>Journal</h2>
-          <div className="date-navigation">
-            <button onClick={() => changeDate(-1)} className="nav-button">&lt;</button>
-            <span className="date-text">{selectedDate.toDateString()}</span>
-            <button onClick={() => changeDate(1)} className="nav-button">&gt;</button>
+          <h2 className="journal-title">Journal</h2>
+          <div className="entry-section">
+            <div className="date-navigation">
+              <button onClick={() => changeDate(-1)} className="nav-button">&lt;</button>
+              <span className="date-text">{selectedDate.toDateString()}</span>
+              <button onClick={() => changeDate(1)} className="nav-button">&gt;</button>
+            </div>
+            <p className="empty-entry">No entry for this day.</p>
           </div>
-          <p className="empty-entry">No entry for this day.</p>
         </div>
 
         <div className="calendar-section">
           <Calendar onChange={setSelectedDate} value={selectedDate} className="journal-calendar" />
+          <div className="journal-media">Media Placeholder</div>
         </div>
       </div>
     </div>
