@@ -84,9 +84,9 @@ function GalleryPage() {
             <div className="message-list">
               {messages.map((message, index) => (
                 <div key={index} className="message-item">
-                  <p>{message.message}</p>
+                  <p className="message-text">{message.message}</p>
                   <p className="uploaded-by">Uploaded by: {message.support_full_name}</p>
-                  <p className="date">Date: {message.timestamp}</p>
+                  <p className="message-date">Date: {message.timestamp}</p>
                 </div>
               ))}
             </div>
