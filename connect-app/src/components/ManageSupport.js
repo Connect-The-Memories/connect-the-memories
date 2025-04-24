@@ -3,31 +3,30 @@ import { useNavigate } from "react-router-dom";
 import "./ManageSupport.css";
 import DarkModeToggle from "./DarkModeToggle";
 import { useAuth } from "../context/AuthContext";
-import { getLinkedAccounts } from "../api/database";
+// import { getLinkedAccounts } from "../api/database";
 
 function ManageSupport() {
     const navigate = useNavigate();
     const { token } = useAuth();
-    const [primaryUsers, setPrimaryUsers] = useState([]);
+    const [linkedAccounts, setLinkedAccounts] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
+        // if (!token) {
+        //     setTimeout(() => navigate("/"), 100);
+        //     return;
+        // }
 
-        if (!token) {
-            setTimeout(() => navigate("/"), 100);
-            return;
-        }
-
-        const fetchLinkedAccounts = async () => {
-            try {
-                const response = await getLinkedAccounts();
-                const user_names = response.data.linked_user_names;
-                setPrimaryUsers(user_names);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchLinkedAccounts();
+        // const fetchLinkedAccounts = async () => {
+        //     try {
+        //         const response = await getLinkedAccounts();
+        //         const user_names = response.data.linked_user_names;
+        //         setLinkedAccounts(user_names);
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // };
+        // fetchLinkedAccounts();
     }, [token, navigate]);
 
     const handleRemoveSupportUser = () => {
@@ -45,8 +44,8 @@ function ManageSupport() {
             <div className="inner-box">
                 <p className="manage-support-title">Manage Support Users</p>
 
-                {primaryUsers.length > 0 ? (<div className="support-user-list">
-                    {primaryUsers.map((name) => (
+                {linkedAccounts.length > 0 ? (<div className="support-user-list">
+                    {linkedAccounts.map((name) => (
                         <div className="support-user-list-item" key={name} value={name}>
                             {name}
                             <button
@@ -78,7 +77,7 @@ function ManageSupport() {
                         <h2 className="remove-modal-header">Remove Support User</h2>
                         <p className="remove-modal-text">Are you sure you want to remove this support user?</p>
                         <div className="remove-modal-buttons">
-                            <button className="confirm-remove-btn" onClick={handleRemoveSupportUser}>Yes, Remove</button>
+                            <button className="confirm-remove-btn" onClick={handleRemoveSupportUser()}>Yes, Remove</button>
                             <button className="cancel-remove-btn" onClick={() => setShowModal(false)}>Cancel</button>
                         </div>
                     </div>
