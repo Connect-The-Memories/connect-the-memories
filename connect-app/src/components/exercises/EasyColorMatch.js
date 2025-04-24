@@ -1,46 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EasyColorMatch.css";
+import { logExerciseAttempt } from "../../api/database";
 
-/* ────────────────────────────────────────────────────
-   CONFIG
-   ────────────────────────────────────────────────── */
-const COLORS = ["red", "blue", "green", "yellow"];      // fixed 4‑color set
-const TOTAL_TIME = 45;                                  // seconds
+const COLORS = ["red", "blue", "green", "yellow"];      
+const TOTAL_TIME = 45;                                  
 
-/* ────────────────────────────────────────────────────
-   COMPONENT
-   ────────────────────────────────────────────────── */
 export default function EasyColorMatch() {
   const navigate = useNavigate();
 
-  /* 𝗚𝗮𝗺𝗲 𝗦𝘁𝗮𝘁𝗲 */
   const [ready,      setReady]      = useState(false);
   const [countdown,  setCountdown]  = useState(null);
   const [timeLeft,   setTimeLeft]   = useState(TOTAL_TIME);
 
-  /* 𝗧𝗿𝗶𝗮𝗹 𝗦𝘁𝗮𝘁𝗲 */
   const [leftColor,  setLeftColor]  = useState("");
   const [rightWord,  setRightWord]  = useState("");
   const [message,    setMessage]    = useState("");
 
-  /* 𝗦𝗰𝗼𝗿𝗶𝗻𝗴 */
   const [score,      setScore]      = useState(0);
   const [guessCnt,   setGuessCnt]   = useState(0);
 
-  /* refs for reaction‑time bonus */
   const respondedRef          = useRef(false);
   const guessStartTimeRef     = useRef(null);
 
-  /* ── helper: set up a single trial ───────────────── */
-  const [correctCnt, setCorrectCnt]   = useState(0);   // NEW
-  const [sumRT,      setSumRT]        = useState(0);   // NEW (ms)
+  const [correctCnt, setCorrectCnt]   = useState(0);
+  const [sumRT,      setSumRT]        = useState(0);  
   const newTrial = () => {
     respondedRef.current = false;
     setMessage("");
 
     const left  = COLORS[Math.floor(Math.random() * COLORS.length)];
-    const match = Math.random() < 0.5;                       // 50 % match
+    const match = Math.random() < 0.5;                       
 
     const right = match
       ? left
@@ -53,7 +43,6 @@ export default function EasyColorMatch() {
     guessStartTimeRef.current = Date.now();
   };
 
-  /* ── countdown before start ──────────────────────── */
   useEffect(() => {
     if (countdown === null) return;
     if (countdown > 0) {
@@ -64,7 +53,6 @@ export default function EasyColorMatch() {
     setReady(true);
   }, [countdown]);
 
-  /* ── game timer ──────────────────────────────────── */
   useEffect(() => {
     if (!ready) return;
     const id = setInterval(() => {
@@ -73,12 +61,10 @@ export default function EasyColorMatch() {
     return () => clearInterval(id);
   }, [ready]);
 
-  /* ── load first trial & each subsequent trial ───── */
   useEffect(() => { if (ready && timeLeft > 0) newTrial(); }, [ready]);
   useEffect(() => { if (timeLeft === 0) respondedRef.current = true; },
             [timeLeft]);
 
-  /* ── keyboard shortcuts (M / N) ─────────────────── */
   useEffect(() => {
     const onKey = e => {
       if (!ready || timeLeft === 0) return;
@@ -89,7 +75,6 @@ export default function EasyColorMatch() {
     return () => window.removeEventListener("keydown", onKey);
   }, [ready, timeLeft, leftColor, rightWord]);
 
-  /* ── user response handler ───────────────────────── */
   const handleAnswer = isMatchSaid => {
     if (respondedRef.current || timeLeft === 0) return;
     respondedRef.current = true;
@@ -101,8 +86,6 @@ export default function EasyColorMatch() {
       const bonus = Math.max(0, 1 - rt);
       setScore(s => s + 1 + bonus);
       setMessage(`Correct +${(1 + bonus).toFixed(2)} pts`);
-    
-      /* NEW: track accuracy + reaction time */
       setCorrectCnt(c => c + 1);
       setSumRT(ms => ms + rt * 1000);
     } else {
@@ -114,7 +97,6 @@ export default function EasyColorMatch() {
     setTimeout(() => { if (timeLeft > 0) newTrial(); }, 500);
   };
 
-  /* ── restart ─────────────────────────────────────── */
   const restart = () => {
     setReady(false); setCountdown(null); setTimeLeft(TOTAL_TIME);
     setScore(0); setGuessCnt(0); setMessage("");
@@ -125,10 +107,27 @@ export default function EasyColorMatch() {
   const accuracy = guessCnt > 0 ? (correctCnt / guessCnt) * 100 : 0;
   const avgRT    = correctCnt > 0 ? (sumRT / correctCnt) / 1000 : 0;   // sec
 
+  // send results to database function
 
-  /* ──────────────────────────────────────────────────
-     RENDER
-     ────────────────────────────────────────────────── */
+  /* useEffect(() => {
+    if (timeLeft === 0 && correctCnt > 0) {
+      const sendResults = async () => {
+        try {
+          await logExerciseAttempt({
+            exercise: "EasyColorMatch",
+            timestamp: new Date().toISOString(),
+            accuracy,
+            avg_reaction_time: avgRT
+          });
+        } catch (err) {
+          console.error("Error sending EasyColorMatch results:", err);
+        }
+      };
+  
+      sendResults();
+    }
+  }, [timeLeft]); */
+  
   return (
     <div className="easy-memory-container">
       <nav className="nav-bar">

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 import "./ColorMatch.css";
+import { logExerciseAttempt } from "../../api/database";
 
 const initialColors = ["red", "blue", "green", "yellow"];
 const extraColors = ["purple", "orange"];
@@ -43,7 +44,7 @@ function ColorMatch() {
     setLeftWord(randomLeftWord);
     setLeftColor(randomLeftColor);
 
-    const isMatchTrial = Math.random() < 0.4; // 40% chance
+    const isMatchTrial = Math.random() < 0.4;
 
     let newRightWord;
     if (isMatchTrial) {
@@ -65,7 +66,7 @@ function ColorMatch() {
       return () => clearTimeout(timer);
     } else {
       setCountdown(null);
-      setReady(true); // start the game when countdown reaches 0
+      setReady(true);
     }
   }, [countdown]);
 
@@ -90,7 +91,6 @@ function ColorMatch() {
     if (ready && !gameOver) {
       setupNewStimuli();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, gameOver]);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ function ColorMatch() {
     if (gameOver || respondedRef.current) return;
     respondedRef.current = true;
 
-    const reactionTime = Date.now() - guessStartTimeRef.current; // in ms
+    const reactionTime = Date.now() - guessStartTimeRef.current;
     const isMatch = leftColor === rightWord;
 
     let isCorrect = false;
@@ -128,9 +128,8 @@ function ColorMatch() {
       const bonus = Math.max(0, 1 - reactionTimeInSeconds);
       setScore((prev) => prev + 1 + bonus);
       setMessage(`Correct! +${(1 + bonus).toFixed(2)} points`);
-
-      setCorrectCount((prev) => prev + 1);            // INCREMENT CORRECT GUESS
-      setSumReactionTime((prev) => prev + reactionTime);  // ADD REACTION TIME
+      setCorrectCount((prev) => prev + 1);
+      setSumReactionTime((prev) => prev + reactionTime);
     } else {
       setMessage("Incorrect!");
     }
@@ -147,20 +146,37 @@ function ColorMatch() {
   const handleRestart = () => {
     setScore(0);
     setGuessCount(0);
-    setCorrectCount(0);      // RESET CORRECT COUNT
-    setSumReactionTime(0);   // RESET SUM REACTION TIME
+    setCorrectCount(0);
+    setSumReactionTime(0);
     setTimeLeft(totalTime);
     setGameOver(false);
     setCountdown(null);
     setReady(false);
   };
 
-  // calculate accuracy and average reaction time
-  // if you want average reaction time for *all* guesses, you'd use sumReactionTime / guessCount
-  // if you only want it for correct guesses (common in reaction tasks), do sumReactionTime / correctCount
   const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
-  const avgReactionTime =
-    correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0; // in seconds
+  const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
+
+  // send results to database function
+
+  /* useEffect(() => {
+    const sendExerciseResults = async () => {
+      try {
+        await logExerciseAttempt({
+          exercise: "HardColorMatch",
+          timestamp: new Date().toISOString(),
+          accuracy,
+          avg_reaction_time: avgReactionTime
+        });
+      } catch (err) {
+        console.error("Error sending HardColorMatch results:", err);
+      }
+    };
+
+    if (gameOver && correctCount > 0) {
+      sendExerciseResults();
+    }
+  }, [gameOver]); */ 
 
   return (
     <div className="memory-container">
@@ -243,10 +259,8 @@ function ColorMatch() {
               <h2 className="timer-text">Time's Up!</h2>
               <h3>Your Final Score: {score.toFixed(2)}</h3>
               <h3>You made {guessCount} guesses in 45 seconds.</h3>
-
               <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
               <h3>Average Reaction Time: {avgReactionTime.toFixed(2)}s</h3>
-
               <button className="restart-button" onClick={handleRestart}>
                 Play Again
               </button>
@@ -259,4 +273,5 @@ function ColorMatch() {
 }
 
 export default ColorMatch;
+
 

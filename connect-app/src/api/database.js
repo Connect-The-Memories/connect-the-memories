@@ -48,3 +48,13 @@ export async function uploadMedia(formData) {
 export async function getMedia() {
     return axiosInstance.get('/database/firebase_storage/media');
 }
+
+// Send Exercise Results to Database 
+export async function logExerciseAttempt({ exercise, timestamp, accuracy, avg_reaction_time }) {
+    return axiosInstance.post('/database/exercises', {
+      exercise,
+      timestamp,
+      accuracy,
+      avg_reaction_time
+    });
+  }

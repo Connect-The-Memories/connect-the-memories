@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 import "./SingleDigitBlitz.css";
+import { logExerciseAttempt } from "../../api/database"; 
 
 const ROUND_SECONDS = 60;
 const OPS = ["+", "-", "×"];
@@ -17,49 +18,48 @@ function generateProblem() {
 
 export default function SingleDigitBlitz() {
   const navigate = useNavigate();
-
-  /* ───────── state ───────── */
   const [ready,      setReady]      = useState(false);
-  const [countdown,  setCountdown]  = useState(null);       // ← NEW
+  const [countdown,  setCountdown]  = useState(null);       
   const [timeLeft,   setTimeLeft]   = useState(ROUND_SECONDS);
   const [problem,    setProblem]    = useState(generateProblem());
   const [input,      setInput]      = useState("");
   const [correct,    setCorrect]    = useState(0);
   const [total,      setTotal]      = useState(0);
   const [finished,   setFinished]   = useState(false);
+  const [sumRT, setSumRT] = useState(0);
+
 
   const timerRef = useRef(null);
+  const problemStartRef = useRef(null);
 
-  /* ───────── helpers ───────── */
-  const primeRound = () => {                                 // ← renamed
-    setCountdown(3);          // trigger overlay countdown   // ← NEW
+  const primeRound = () => {                              
+    setCountdown(3);          
     setFinished(false);
-    setReady(false);          // will flip to true after c/d  // ← NEW
+    setReady(false);        
   };
 
-  const actuallyStart = () => {                              // ← NEW
+  const actuallyStart = () => {                          
     setReady(true);
     setTimeLeft(ROUND_SECONDS);
-    setProblem(generateProblem());
+    const next = generateProblem();
+    problemStartRef.current = Date.now();
+    setProblem(next);
     setInput("");
     setCorrect(0);
     setTotal(0);
     setFinished(false);
   };
 
-  /* ───────── countdown overlay ───────── */                // ← NEW
   useEffect(() => {
     if (countdown === null) return;
     if (countdown > 0) {
       const id = setTimeout(() => setCountdown(c => c - 1), 1000);
       return () => clearTimeout(id);
     }
-    // reached zero → start the round
     setCountdown(null);
     actuallyStart();
   }, [countdown]);
 
-  /* ───────── round timer ───────── */
   useEffect(() => {
     if (!ready || finished) return;
     clearInterval(timerRef.current);
@@ -80,14 +80,45 @@ export default function SingleDigitBlitz() {
 
   const handleSubmit = () => {
     if (input.trim() === "") return;
+  
     const isCorrect = parseInt(input, 10) === problem.answer;
-    if (isCorrect) setCorrect(c => c + 1);
+    const reactionTime = Date.now() - problemStartRef.current;
+  
+    if (isCorrect) {
+      setCorrect(c => c + 1);
+      setSumRT(prev => prev + reactionTime); 
+    }
+  
     setTotal(t => t + 1);
     setInput("");
-    setProblem(generateProblem());
-  };
+  
+    const next = generateProblem();
+    problemStartRef.current = Date.now();
+    setProblem(next);
+  };  
 
-  /* ─────────  UI  ───────── */
+  const accuracy = total > 0 ? (correct / total) * 100 : 0;
+  const avgRT = correct > 0 ? (sumRT / correct) / 1000 : 0;
+
+  /* useEffect(() => {
+    const sendExerciseResults = async () => {
+      try {
+        await logExerciseAttempt({
+          exercise: "SingleDigitBlitz",
+          timestamp: new Date().toISOString(),
+          accuracy,
+          avg_reaction_time: avgRT
+        });
+      } catch (err) {
+        console.error("Error sending SingleDigitBlitz results:", err);
+      }
+    };
+
+    if (finished && correct > 0) {
+      sendExerciseResults();
+    }
+  }, [finished]); */ 
+
   if (countdown !== null) {
     return (
       <div className="exercise-container">
@@ -162,7 +193,8 @@ export default function SingleDigitBlitz() {
           <h2>Round Complete!</h2>
           <p>You answered {total} problems.</p>
           <p>Correct answers: {correct}</p>
-          <p>Accuracy: {total ? ((correct / total) * 100).toFixed(1) : 0}%</p>
+          <p>Accuracy: {accuracy.toFixed(1)}%</p>
+          <p>Average reaction time: {avgRT.toFixed(2)} seconds</p> 
           <button className="start-button" onClick={primeRound}>Play Again</button>
         </div>
       )}

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 import "./ColorMatch.css";
 import "./Shapes.css";
+import { logExerciseAttempt } from "../../api/database"; 
 
 const initialShapes = ["circle", "square", "triangle", "star"];
 const extraShapes = ["diamond", "heart", "pentagon", "hexagon", "oval"];
@@ -178,6 +179,26 @@ function ShapeMatch() {
 
   const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
   const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
+  // send results to database
+
+  /* useEffect(() => {
+    const sendExerciseResults = async () => {
+      try {
+        await logExerciseAttempt({
+          exercise: "ShapeMatch",
+          timestamp: new Date().toISOString(),
+          accuracy,
+          avg_reaction_time: avgReactionTime
+        });
+      } catch (err) {
+        console.error("Error sending ShapeMatch results:", err);
+      }
+    };
+
+    if (gameOver && correctCount > 0) {
+      sendExerciseResults();
+    }
+  }, [gameOver]); */ 
 
   return (
     <div className="memory-container">

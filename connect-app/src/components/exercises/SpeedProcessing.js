@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "../DarkModeToggle";
 import "./SpeedProcessing.css";
+import { logExerciseAttempt } from "../../api/database";
 
 function SpeedProcessing() {
   const navigate = useNavigate();
@@ -105,7 +106,24 @@ function SpeedProcessing() {
   const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
   const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
 
+  /* useEffect(() => {
+    const sendExerciseResults = async () => {
+      try {
+        await logExerciseAttempt({
+          exercise: "NumberSprint",
+          timestamp: new Date().toISOString(),
+          accuracy,
+          avg_reaction_time: avgReactionTime
+        });
+      } catch (err) {
+        console.error("Error sending NumberSprint results:", err);
+      }
+    };
 
+    if (gameOver && correctCount > 0) {
+      sendExerciseResults();
+    }
+  }, [gameOver]); */ 
 
   return (
     <div className="exercise-container">

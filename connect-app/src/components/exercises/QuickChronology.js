@@ -4,6 +4,7 @@ import { getRandomizedMedia } from "../../api/database";
 import RequiredGalleryImages from "../RequiredGalleryImages";
 import DarkModeToggle from "../DarkModeToggle";
 import "./QuickChronology.css";
+import { logExerciseAttempt } from "../../api/database"; 
 
 const totalTime = 45;
 
@@ -142,6 +143,25 @@ function QuickChronology() {
 
   const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
   const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
+
+  /* useEffect(() => {
+    const sendExerciseResults = async () => {
+      try {
+        await logExerciseAttempt({
+          exercise: "QuickChronology",
+          timestamp: new Date().toISOString(),
+          accuracy,
+          avg_reaction_time: avgReactionTime
+        });
+      } catch (err) {
+        console.error("Error sending QuickChronology results:", err);
+      }
+    };
+
+    if (gameOver && correctCount > 0) {
+      sendExerciseResults();
+    }
+  }, [gameOver]); */ 
 
   return (
     <RequiredGalleryImages min={10}>
