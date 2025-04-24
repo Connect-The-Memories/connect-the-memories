@@ -54,7 +54,7 @@
     margin: 0px;
 }
 
-.modal-overlay {
+.remove-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -67,7 +67,7 @@
     z-index: 999;
 }
   
-.modal-content {
+.remove-modal-content {
     background: white;
     padding: 2rem;
     border-radius: 12px;
@@ -78,20 +78,21 @@
     z-index: 1000;
 }
 
-.modal-header {
+.remove-modal-header {
     font-family: Fustat Bold;
     font-size: 24px;
     text-decoration: underline;
     margin: 15px;
+    text-align: center;
 }
 
-.modal-text {
+.remove-modal-text {
     font-size: 20px;
     text-align: center;
     margin: 5px;
 }
 
-.modal-close {
+.remove-modal-close {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -101,10 +102,10 @@
     cursor: pointer;
 }
   
-.modal-buttons {
+.remove-modal-buttons {
     margin-top: 1.5rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
   
 .confirm-remove-btn {
@@ -135,4 +136,24 @@
 
 .cancel-remove-btn:hover {
     background-color: #b0b0b0;
+}
+
+.no-users-found {
+    font-size: 24px;
+    color: rgb(83, 83, 83);
+}
+
+.add-support-btn {
+    background-color: var(--primary-button-color);
+    box-shadow: var(--shadow);
+    color: var(--title-text-color);
+    font-family: Fustat Semibold;
+    font-size: 24px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.add-support-btn:hover {
+    background-color: var(--primary-button-hover);
 }

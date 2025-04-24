@@ -8,13 +8,11 @@ const DarkModeToggle = () => {
     const setDarkMode = () => {
         document.querySelector("body").setAttribute("data-theme", "dark");
         localStorage.setItem("selectedTheme", "dark");
-        console.log("theme: " + document.querySelector("body").getAttribute("data-theme"));
     };
 
     const setLightMode = () => {
         document.querySelector("body").setAttribute("data-theme", "light");
         localStorage.setItem("selectedTheme", "light");
-        console.log("theme: " + document.querySelector("body").getAttribute("data-theme"));
     };
 
     const selectedTheme = localStorage.getItem("selectedTheme");
