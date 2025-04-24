@@ -5,6 +5,7 @@ import DarkModeToggle from "../DarkModeToggle";
 import { getRandomizedMedia } from "../../api/database";
 import { useAuth } from "../../context/AuthContext";
 import RequiredGalleryImages from "../RequiredGalleryImages.js"; 
+import { logJournalEntry } from "../../api/database"; 
 
 function WritingExercise() {
   const navigate = useNavigate();
@@ -57,33 +58,39 @@ function WritingExercise() {
   };
 
   // handle Submission
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (text.trim().length < charLimit) return;
-
+  
     if (isSpam(text)) {
       alert("Your text appears to be spam. Please write a meaningful response.");
       return;
     }
-
+  
     setCompleted(true);
-
-    // send the entry to the backend here (e.g., save to user’s journal).
-    // e.g., saveJournalEntry(text);
-  };
+  
+    // send to backend
+    /* try {
+      await logJournalEntry({
+        entry: text,
+        timestamp: new Date().toISOString(),
+        media_url: media?.signed_url || null
+      });
+    } catch (err) {
+      console.error("Error saving journal entry:", err);
+    } */
+  };  
 
   useEffect(() => {
     if (!token) { setTimeout(() => navigate("/"), 100); return; }
 
-    /* Countdown logic */
     if (countdown === null) return;
     if (countdown > 0) {
       const t = setTimeout(() => setCountdown(c => c - 1), 1000);
       return () => clearTimeout(t);
     }
-    /* countdown reached 0 → ready */
     setCountdown(null);
     setReady(true);
-    fetchRandomMedia();                               // ← NEW  (initial fetch)
+    fetchRandomMedia();                        
   }, [countdown]);
 
   if (completed) {

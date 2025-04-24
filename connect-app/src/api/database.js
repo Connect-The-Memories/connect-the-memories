@@ -58,3 +58,12 @@ export async function logExerciseAttempt({ exercise, timestamp, accuracy, avg_re
       avg_reaction_time
     });
   }
+
+// Send Journal Entry to Database
+export async function logJournalEntry({ entry, timestamp, media_url }) {
+    return axiosInstance.post('/database/exercises', {
+      entry,
+      timestamp,
+      media_url
+    });
+  }

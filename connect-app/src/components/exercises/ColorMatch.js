@@ -157,7 +157,7 @@ function ColorMatch() {
   const accuracy = guessCount > 0 ? (correctCount / guessCount) * 100 : 0;
   const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
 
-  // send results to database function
+  // send results to database 
 
   /* useEffect(() => {
     const sendExerciseResults = async () => {
