@@ -61,7 +61,7 @@ export async function logExerciseAttempt({ exercise, timestamp, accuracy, avg_re
 
 // Send Journal Entry to Database
 export async function logJournalEntry({ entry, timestamp, destination_path }) {
-    return axiosInstance.post('/database/firestore/exercises', {
+    return axiosInstance.post('/database/firestore/journal_entries', {
       entry,
       timestamp,
       destination_path
