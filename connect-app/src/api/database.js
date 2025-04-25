@@ -60,10 +60,10 @@ export async function logExerciseAttempt({ exercise, timestamp, accuracy, avg_re
   }
 
 // Send Journal Entry to Database
-export async function logJournalEntry({ entry, timestamp, media_url }) {
+export async function logJournalEntry({ entry, timestamp, destination_path }) {
     return axiosInstance.post('/database/firestore/exercises', {
       entry,
       timestamp,
-      media_url
+      destination_path
     });
   }

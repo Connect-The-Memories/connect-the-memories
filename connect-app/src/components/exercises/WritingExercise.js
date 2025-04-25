@@ -23,7 +23,7 @@ function WritingExercise() {
     try {                                           
       const res = await getRandomizedMedia();        
       if (res.status === 200 && res.data.media?.length) {
-        setMedia(res.data.media[0]);                  
+        setMedia(res.data.media[0]);
       }
     } catch (err) {
       console.error("Fetch error:", err);            
@@ -73,7 +73,7 @@ function WritingExercise() {
       await logJournalEntry({
         entry: text,
         timestamp: new Date().toISOString(),
-        media_url: media?.signed_url || null
+        destination_path: media?.destination_path || null
       });
     } catch (err) {
       console.error("Error saving journal entry:", err);
