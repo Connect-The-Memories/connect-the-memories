@@ -34,6 +34,8 @@ function GalleryPage() {
     setSelectedPhoto(null);
   };
 
+  console.log("one photo object:", photos[0]);
+
   return (
     <div className="gallery-container">
       <nav className="nav-bar">

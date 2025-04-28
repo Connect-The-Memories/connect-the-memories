@@ -30,6 +30,7 @@ import OptionsForColor from "./components/exercises/OptionsForColor";
 import RequireGalleryImages from "./components/RequiredGalleryImages";
 import QuickChronology from "./components/exercises/QuickChronology";
 import SudokuGame from "./components/exercises/Sudoku";
+import Progress from "./components/Progress"; 
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/requiredgalleryimages" element={<RequireGalleryImages />} />
           <Route path="/quickchronology" element={<QuickChronology />} />
           <Route path="/sudoku" element={<SudokuGame />} />
+          <Route path="/progress" element={<Progress />} />
           {/* <Route path="/crossword" element={<CrosswordPage />} /> */}
         </Routes>
       </Router>
