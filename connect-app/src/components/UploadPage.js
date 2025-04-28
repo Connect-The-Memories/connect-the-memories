@@ -5,6 +5,7 @@ import { uploadMessages, uploadMedia, getLinkedAccounts } from "../api/database"
 import { useAuth } from "../context/AuthContext";
 import trashIcon from '../assets/trash-can.png';
 import DarkModeToggle from "./DarkModeToggle";
+import Alert from "./Alert";
 
 function UploadPage() {
     const navigate = useNavigate();
@@ -16,14 +17,19 @@ function UploadPage() {
     const [currMsg, setcurrMsg] = useState(""); // Current typed message in text area
     const [messages, setMessages] = useState([]); // Array of messages
     const [selectedFiles, setSelectedFiles] = useState([]); // Array of files (images/videos)
+    const charLimit = 150; // ~3 sentences; min length of media description
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertTitle, setAlertTitle] = useState("");
+    const [alertMsg, setAlertMsg] = useState("");
+
 
     // Get list of linked users
     useEffect(() => {
 
-        // if (!token) {
-        //     setTimeout(() => navigate("/"), 100);
-        //     return;
-        // }
+        if (!token) {
+            setTimeout(() => navigate("/"), 100);
+            return;
+        }
 
         const fetchLinkedAccounts = async () => {
             try {
@@ -105,19 +111,25 @@ function UploadPage() {
     const handleUpload = async () => {
         // Alert if no primary user is selected.
         if (!selectedPrimary) {
-            alert("Please select a primary user.");
+            setAlertTitle("Could Not Upload Media");
+            setAlertMsg("Please select a primary user.");
+            setShowAlert(true);
             return;
         }
 
         // Alert if no messages have been drafted.
         if (activeTab === "Messages" && messages.length === 0) {
-            alert("Please add a message to upload.");
+            setAlertTitle("Could Not Upload Media");
+            setAlertMsg("Please add a message to upload.");
+            setShowAlert(true);
             return;
         }
 
         // Alerr if no photos/videos have been drafted.
         if (activeTab === "Photos/Videos" && selectedFiles.length === 0) {
-            alert("Please add a file to upload.");
+            setAlertTitle("Could Not Upload Media");
+            setAlertMsg("Please add a file to upload");
+            setShowAlert(true);
             return;
         }
 
@@ -125,18 +137,19 @@ function UploadPage() {
         for (const fileObj of selectedFiles) {
             // Check if there's ANY description
             if (!fileObj.description) {
-                alert("Please add a description for every photo/video.");
+                setAlertTitle("Could Not Upload Media");
+                setAlertMsg("Please add a description for every photo/video.");
+                setShowAlert(true);
                 return;
             }
 
             // If this is an image, enforce min character count
             if (fileObj.file.type.startsWith("image/")) {
-                const minChars = 150; // or whichever length you consider ~3 sentences
-                if (fileObj.description.trim().length < minChars) {
-                    alert(
-                        `Each image description must be at least ${minChars} characters. ` +
-                        "Please revise your description."
-                    );
+                if (fileObj.description.trim().length < charLimit) {
+                    setAlertTitle("Could Not Upload Media");
+                    setAlertMsg(`Each image description must be at least ${charLimit} characters. ` +
+                        "Please revise your description.");
+                    setShowAlert(true);
                     return; // Stop upload
                 }
             }
@@ -145,7 +158,10 @@ function UploadPage() {
         try {
             if (activeTab === "Messages") {
                 const response = await uploadMessages(messages, selectedPrimary);
-                alert(response.data.message);
+                // alert(response.data.message);
+                setAlertTitle("Upload Successful!");
+                setAlertMsg(`Your messages have been uploaded to ${selectedPrimary}'s gallery.`);
+                setShowAlert(true);
                 setMessages([]);
             } else {
                 const formData = new FormData();
@@ -156,12 +172,18 @@ function UploadPage() {
                     formData.append(`dates`, date);
                 });
                 const response = await uploadMedia(formData);
-                alert(response.data.message);
+                // alert(response.data.message);
+                setAlertTitle("Upload Successful!");
+                setAlertMsg(`Your files have been uploaded to ${selectedPrimary}'s gallery.`);
+                setShowAlert(true);
                 setSelectedFiles([])
             }
         } catch (error) {
             console.error(error);
-            alert("Error occured while uploading.");
+            // alert("Error occured while uploading.");
+            setAlertTitle("Upload Failed.");
+            setAlertMsg("Error occured while uploading.");
+            setShowAlert(true);
         }
     };
 
@@ -278,7 +300,12 @@ function UploadPage() {
                                                     placeholder="Please write a description of the media..."
                                                     value={fileObj.description}
                                                     onChange={(e) => handleFileDescriptionChange(originalIndex, e.target.value)}
+                                                    required
                                                 />
+                                                <div className="char-count">
+                                                    {fileObj.description.trim().length} / {charLimit} characters
+                                                    <a className="required-text">* Required</a>
+                                                </div>
                                                 <div className="media-date-area">
                                                     <p className="media-date-text">Approximate date of media:</p>
                                                     <input
@@ -311,6 +338,18 @@ function UploadPage() {
                     </button>
                 </div>
             </div>
+            {showAlert && (
+                <div>
+                    <Alert
+                        title={alertTitle}
+                        description={alertMsg}
+                        show={showAlert}
+                        onClose={() => setShowAlert(false)}
+                    >
+                        <button className="cancel-remove-btn" onClick={() => setShowAlert(false)}>Close</button>
+                    </Alert>
+                </div>
+            )}
         </div>
     );
 }

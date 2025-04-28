@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ManageSupport.css";
 import DarkModeToggle from "./DarkModeToggle";
+import Alert from "./Alert";
 import { useAuth } from "../context/AuthContext";
 // import { getLinkedAccounts } from "../api/database";
 
@@ -9,7 +10,7 @@ function ManageSupport() {
     const navigate = useNavigate();
     const { token } = useAuth();
     const [linkedAccounts, setLinkedAccounts] = useState([]);
-    const [showModal, setShowModal] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         // if (!token) {
@@ -50,7 +51,7 @@ function ManageSupport() {
                             {name}
                             <button
                                 className="remove-support-btn"
-                                onClick={() => setShowModal(true)}
+                                onClick={() => setShowAlert(true)}
                             >
                                 Remove Support User?
                             </button>
@@ -70,17 +71,17 @@ function ManageSupport() {
                     </div>
                 )}
             </div>
-            {showModal && (
-                <div className="remove-modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="remove-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="remove-modal-close" onClick={() => setShowModal(false)}>×</button>
-                        <h2 className="remove-modal-header">Remove Support User</h2>
-                        <p className="remove-modal-text">Are you sure you want to remove this support user?</p>
-                        <div className="remove-modal-buttons">
-                            <button className="confirm-remove-btn" onClick={handleRemoveSupportUser()}>Yes, Remove</button>
-                            <button className="cancel-remove-btn" onClick={() => setShowModal(false)}>Cancel</button>
-                        </div>
-                    </div>
+            {showAlert && (
+                <div>
+                    <Alert
+                        title="Remove Support User?"
+                        description="Are you sure you want to remove this support user?"
+                        show={showAlert}
+                        onClose={() => setShowAlert(false)}
+                    >
+                        <button className="confirm-remove-btn" onClick={handleRemoveSupportUser()}>Yes, Remove</button>
+                        <button className="cancel-remove-btn" onClick={() => setShowAlert(false)}>Cancel</button>
+                    </Alert>
                 </div>
             )}
         </div >
