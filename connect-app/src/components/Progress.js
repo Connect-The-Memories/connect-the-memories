@@ -65,72 +65,72 @@ export default function Progress() {
   // Mock data to use locally (array of 14 days)
   // const data = [
   //   {
-  //     date: "2025-04-27",
+  //     date: "2025-04-10",
   //     normalized_accuracy: 0.23,
   //     normalized_rt: 0.7349693311852756
   //   },
   //   {
-  //     date: "2025-04-28",
+  //     date: "2025-04-11",
   //     normalized_accuracy: 0.6,
   //     normalized_rt: 0.3590438763409098
   //   },
   //   {
-  //     date: "2025-04-29",
+  //     date: "2025-04-12",
   //     normalized_accuracy: 1,
   //     normalized_rt: 0.2305938453098948
   //   },
   //   {
-  //     date: "2025-04-27",
+  //     date: "2025-04-13",
   //     normalized_accuracy: 0.23,
   //     normalized_rt: 0.7349693311852756
   //   },
   //   {
-  //     date: "2025-04-28",
+  //     date: "2025-04-14",
   //     normalized_accuracy: 0.6,
   //     normalized_rt: 0.3590438763409098
   //   },
   //   {
-  //     date: "2025-04-29",
+  //     date: "2025-04-15",
   //     normalized_accuracy: 1,
   //     normalized_rt: 0.2305938453098948
   //   },
   //   {
-  //     date: "2025-04-27",
+  //     date: "2025-04-16",
   //     normalized_accuracy: 0.23,
   //     normalized_rt: 0.7349693311852756
   //   },
   //   {
-  //     date: "2025-04-28",
+  //     date: "2025-04-17",
   //     normalized_accuracy: 0.6,
   //     normalized_rt: 0.3590438763409098
   //   },
   //   {
-  //     date: "2025-04-29",
+  //     date: "2025-04-18",
   //     normalized_accuracy: 1,
   //     normalized_rt: 0.2305938453098948
   //   },
   //   {
-  //     date: "2025-04-27",
+  //     date: "2025-04-19",
   //     normalized_accuracy: 0.23,
   //     normalized_rt: 0.7349693311852756
   //   },
   //   {
-  //     date: "2025-04-28",
+  //     date: "2025-04-20",
   //     normalized_accuracy: 0.6,
   //     normalized_rt: 0.3590438763409098
   //   },
   //   {
-  //     date: "2025-04-29",
+  //     date: "2025-04-21",
   //     normalized_accuracy: 1,
   //     normalized_rt: 0.2305938453098948
   //   },
   //   {
-  //     date: "2025-04-28",
+  //     date: "2025-04-22",
   //     normalized_accuracy: 0.6,
   //     normalized_rt: 0.3590438763409098
   //   },
   //   {
-  //     date: "2025-04-29",
+  //     date: "2025-04-23",
   //     normalized_accuracy: 1,
   //     normalized_rt: 0.2305938453098948
   //   }
@@ -164,7 +164,7 @@ export default function Progress() {
               dataKey="date"
               tickFormatter={(dateStr) => {
                 const date = new Date(dateStr);
-                return `${date.getMonth() + 1}/${date.getDate()}`;
+                return `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
               }}
             />
             <YAxis tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} domain={[0, 1]} />
@@ -192,7 +192,7 @@ export default function Progress() {
               dataKey="date"
               tickFormatter={(dateStr) => {
                 const date = new Date(dateStr);
-                return `${date.getMonth() + 1}/${date.getDate()}`;
+                return `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
               }}
             />
             <YAxis domain={[0, 1]} />
