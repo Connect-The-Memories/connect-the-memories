@@ -71,3 +71,11 @@ export async function logJournalEntry({ entry, timestamp, destination_path }) {
       destination_path
     });
   }
+
+  // Get all journal entries for a given day (ISO date string)
+export function getJournalEntries(dateIso) {
+    return axiosInstance.get('/database/firestore/journal_entries', {
+      params: { date: dateIso }
+    });
+  }
+  
