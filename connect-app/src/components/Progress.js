@@ -198,7 +198,6 @@ export default function Progress() {
             <YAxis domain={[0, 1]} />
             <Tooltip />
             <Legend />
-            <ReferenceLine y={1} label="Max" stroke="red" strokeDasharray="3 3" />
             <Area type="monotone" dataKey="normalized_rt" name="Reaction Time" stroke="#82ca9d" fill="#82ca9d" />
           </AreaChart>
         </ResponsiveContainer>
