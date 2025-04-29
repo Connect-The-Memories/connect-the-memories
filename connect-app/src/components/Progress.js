@@ -15,17 +15,24 @@ import {
 } from 'recharts';
 
 export default function Progress() {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const navigate = useNavigate();
   const [attempts, setAttempts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    if (!token) {
+      setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
+
     async function fetchData() {
       try {
         const res = await getExerciseAttempts();
-        console.log('✅ Attempts response:', res); 
+        console.log('✅ Attempts response:', res);
         const raw = res.data.exercise_data || [];
         const data = raw.map(item => ({
           ...item,
@@ -41,7 +48,7 @@ export default function Progress() {
       }
     }
     fetchData();
-  }, []);
+  }, [token]);
 
   if (loading) return <p>Loading progress...</p>;
   if (error) return <p>{error}</p>;
