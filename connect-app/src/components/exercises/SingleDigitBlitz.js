@@ -101,7 +101,7 @@ export default function SingleDigitBlitz() {
   const avgRT = correct > 0 ? (sumRT / correct) / 1000 : 0;
 
   // send results to backend
-  useEffect(() => {
+  /* useEffect(() => {
     const sendExerciseResults = async () => {
       try {
         await logExerciseAttempt({
@@ -118,7 +118,7 @@ export default function SingleDigitBlitz() {
     if (finished && correct > 0) {
       sendExerciseResults();
     }
-  }, [finished]);
+  }, [finished]); */ 
 
   if (countdown !== null) {
     return (

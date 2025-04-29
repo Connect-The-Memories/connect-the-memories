@@ -1,3 +1,21 @@
+.inner-box h1.game-title {
+    font-size: 60px;    /* up from 24px */
+    font-weight: 800;   /* extra-bold */
+    line-height: 1.2;   /* a bit tighter if you want */
+    margin-top: -5px;
+  }
+  
+  /* Make any Select‐Difficulty header bigger & bolder */
+  .inner-box h3.game-title {
+    font-size: 46px;    /* up from 24px */
+    font-weight: 700;   /* bold */
+    margin-bottom: 16px;/* give it a little breathing room */
+  }
+
+  .learning-grid h3.instructions-text {
+    font-size: 42px;
+    font-weight: 800;
+  }
 .memory-container {
     display: flex;
     flex-direction: column;
@@ -33,7 +51,7 @@
     padding: 15px;
     border-radius: 10px;
     text-align: center;
-    font-size: 18px;
+    font-size: 30px;
     font-weight: bold;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     color: black;
@@ -59,27 +77,34 @@
 /* Game Grid */
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 12px;
     padding: 10px;
-}
+    margin-top: -10px;
+  }
 
 .card {
     background-color: white;
-    padding: 10px;
+    padding: 16px;           /* a bit more breathing room */
     border-radius: 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 24px;         /* up from 20px */
     font-weight: bold;
     font-family: Fustat Semibold;
     cursor: pointer;
-    width: 150px;
-    height: 90px;
+    width: 170px;             /* up from 150px */
+    height: 105px;            /* up from 90px */
+    line-height: 1.3;         /* to vertically center the text */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
+    transition: transform .1s;/* smooth pop */
+  }
+  
 
 .card.selected {
-    background-color: #ffba57;
+    background-color: white;    /* keep the card body white */
+    border: 3px solid #ffba57;  /* bright gold border to show selection */
+    box-shadow: 0 0 8px #ffba57; /* subtle glow of the same hue */
+    transform: scale(1.03);      /* slight pop-out effect */
 }
 
 .card.guessed {
@@ -104,15 +129,15 @@
 
 .difficulty-button {
     font-family: Fustat Semibold;
-    font-size: 24px;
+    font-size: 42px;
     font-weight: bold;
     margin: 10px;
     cursor: pointer;
     border: none;
     border-radius: 8px;
     transition: 0.3s;
-    width: 165px;
-    height: 65px;
+    width: 205px;
+    height: 95px;
 }
 
 .easy { 
@@ -132,14 +157,15 @@
 .hard:hover { background-color: #c0392b; }
 
 .timer-text {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 30px;
+    margin-bottom: 2px;
     text-align: center;
     color: var(--primary-text-color);
+    margin-top: -25px;
 }
 
 .round-text {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     text-align: left; 
     margin: 10px;
@@ -166,7 +192,7 @@
     cursor: pointer;
     margin: 10px;
     font-family: Fustat Bold;
-    font-size: 24px;
+    font-size: 30px;
     color: white;
 }
 
@@ -178,3 +204,14 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.results-container {
+    text-align: center;
+    margin-top: -20px;
+  }
+  .results-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-text-color);
+  }
+  

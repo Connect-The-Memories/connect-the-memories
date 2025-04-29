@@ -6,6 +6,16 @@ import { easyMediumWords, hardWords } from "../../thaiWords";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
+const PALETTE = [
+  "#FFD700", // gold
+  "#87CEFA", // light sky blue
+  "#DA70D6", // orchid
+  "#FFA07A", // light salmon
+  "#20B2AA", // light sea green
+  "#9370DB", // medium purple
+  "#FFB6C1", // light pink
+];
+
 function getRandomWords(wordsArray, count) {
   const shuffled = shuffleArray(wordsArray);
   return shuffled.slice(0, count);
@@ -27,6 +37,7 @@ function MemoryGame() {
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [guessColors, setGuessColors] = useState({}); 
 
   useEffect(() => {
     if (!gameStarted) return;
@@ -91,6 +102,7 @@ function MemoryGame() {
     setGuesses([]);
     setMatched([]);
     setChecked(false);
+    setGuessColors({});
   };
 
   const handleSelect = (index) => {
@@ -111,8 +123,15 @@ function MemoryGame() {
         }, 500);
         return;
       }
+      const color = PALETTE[guesses.length % PALETTE.length];
 
-      setGuesses((prevGuesses) => [...prevGuesses, newSelected]);
+      setGuessColors((prev) => ({
+        ...prev,
+        [newSelected[0]]: color,
+        [newSelected[1]]: color,
+      }));
+
+      setGuesses((prev) => [...prev, newSelected]);
       setTimeout(() => {
         setSelected([]);
       }, 800);
@@ -121,23 +140,26 @@ function MemoryGame() {
 
 
   const handleCheckAnswers = () => {
-    let newMatched = [];
-    guesses.forEach((guess) => {
-      if (guess.length !== 2) return;
-      const firstCard = cards[guess[0]];
-      const secondCard = cards[guess[1]];
-      if (
-        firstCard.match === secondCard.text &&
-        secondCard.match === firstCard.text
-      ) {
-        newMatched.push(...guess);
-      }
+    let newGuessColors = {};
+  
+    guesses.forEach(([i, j]) => {
+      const a = cards[i], b = cards[j];
+      const correct = a.match === b.text && b.match === a.text;
+      const color = correct ? "#4CAF50" : "#e74c3c"; // green or red
+      newGuessColors[i] = color;
+      newGuessColors[j] = color;
     });
-    setMatched(newMatched);
+  
+    setGuessColors(newGuessColors);
     setChecked(true);
     setGameOver(false);
+    setMatched(
+      Object.entries(newGuessColors)
+        .filter(([_, c]) => c === "#4CAF50")
+        .flatMap(([idx]) => [+idx])
+    );
   };
-
+  
   const handleNextRound = () => {
     if (currentRound < totalRounds) {
       setCurrentRound((prevRound) => prevRound + 1);
@@ -147,6 +169,7 @@ function MemoryGame() {
       setMatched([]);
       setGameOver(false);
       setShowLearningPhase(true);
+      setGuessColors({});
 
       let selectedWordsData =
         difficulty === "easy"
@@ -241,33 +264,42 @@ function MemoryGame() {
               : <p className="timer-text">Time Left: {timer}s</p>}
 
             <div className="grid">
-              {cards.map((card, index) => {
-                let cardClass = "card";
-                if (checked) {
-                  if (matched.includes(index)) {
-                    cardClass += " matched";
-                  } else if (guessedIndices.includes(index)) {
-                    cardClass += " incorrect";
-                  }
-                } else {
-                  if (guessedIndices.includes(index)) {
-                    cardClass += " guessed";
-                  }
-                  if (selected.includes(index)) {
-                    cardClass += " selected";
-                  }
+            {cards.map((card, idx) => {
+              const isSelected = selected.includes(idx);
+              const isGuessed  = guesses.flat().includes(idx);
+              const isChecked  = checked;
+
+              let classes = ["card"];
+              let style   = {};
+
+              if (!isChecked) {
+                if (isSelected) classes.push("selected");
+            
+                if (guessColors[idx]) {
+                  style.backgroundColor = guessColors[idx];
+                  style.color           = "#000";
+                } else if (isGuessed) {
+                  classes.push("guessed");
                 }
-                return (
-                  <button
-                    key={index}
-                    className={cardClass}
-                    onClick={() => handleSelect(index)}
-                    disabled={gameOver || guessedIndices.includes(index)}
-                  >
-                    {card.text}
-                  </button>
-                );
-              })}
+              } else {
+                if (guessColors[idx]) {
+                  style.backgroundColor = guessColors[idx];
+                  style.color           = "#fff";
+                }
+              }
+
+              return (
+                <button
+                  key={idx}
+                  className={classes.join(" ")}
+                  style={style}
+                  onClick={() => handleSelect(idx)}
+                  disabled={gameOver || isGuessed}
+                >
+                  {card.text}
+                </button>
+              );
+            })}
             </div>
             <div>
               {!checked && (
@@ -280,7 +312,8 @@ function MemoryGame() {
                 </button>
               )}
               {checked && (
-                <p>
+                <div className="results-container">
+                  <h2 className="results-text">
                   You got{" "}
                   {
                     guesses.filter((guess) => {
@@ -294,7 +327,8 @@ function MemoryGame() {
                     }).length
                   }{" "}
                   out of {(cards.length / 2)} correct!
-                </p>
+                </h2>
+                </div>
               )}
               {checked && currentRound < totalRounds && (
                 <button
