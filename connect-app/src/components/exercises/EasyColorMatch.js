@@ -108,7 +108,7 @@ export default function EasyColorMatch() {
   const avgRT    = correctCnt > 0 ? (sumRT / correctCnt) / 1000 : 0;   // sec
 
   // send results to database function
-  /* useEffect(() => {
+  useEffect(() => {
     if (timeLeft === 0 && correctCnt > 0) {
       const sendResults = async () => {
         try {
@@ -125,7 +125,7 @@ export default function EasyColorMatch() {
   
       sendResults();
     }
-  }, [timeLeft]); */ 
+  }, [timeLeft]);
   
   return (
     <div className="easy-memory-container">

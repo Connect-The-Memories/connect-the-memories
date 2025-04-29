@@ -39,6 +39,7 @@ function selectTargetWords(caption) {
   rawWords.forEach((originalWord) => {
     // Remove all punctuation except letters and numbers
     const cleaned = originalWord.replace(/[^\p{L}\p{N}]+/gu, '').toLowerCase();
+    if (/\d/.test(cleaned)) return; // Skip if it contains numbers
     if (cleaned.length >= 3 && !STOPWORDS.has(cleaned)) {
       filteredWords.push({
         lower: cleaned,
@@ -399,6 +400,7 @@ const WordSearch = () => {
         </div>
       ) : (allFound && showReveal) ? (
         /* 3) Show the reveal (photo + caption) if user found all words and clicked "Reveal" */
+        <div className="inner-box">
         <div className="reveal-phase">
           <h3>Here's your memory!</h3>
           {puzzleData?.src && (
@@ -406,6 +408,7 @@ const WordSearch = () => {
           )}
           <p className="caption">{puzzleData?.caption}</p>
         </div>
+        </div> 
       ) : (
         /* 4) Main Puzzle UI */
         <div className="game-ui">

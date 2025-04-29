@@ -338,6 +338,15 @@ function MemoryGame() {
                   Next Round
                 </button>
               )}
+
+                {checked && currentRound === totalRounds && (
+                  <button
+                    className="check-answers-button"
+                    onClick={() => setGameOver(true)}
+                  >
+                    Final Score
+                  </button>
+                )}
             </div>
           </div>
         )}

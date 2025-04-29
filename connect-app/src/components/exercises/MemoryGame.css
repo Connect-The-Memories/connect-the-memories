@@ -1,8 +1,8 @@
 .inner-box h1.game-title {
-    font-size: 60px;    /* up from 24px */
+    font-size: 52px;    /* up from 24px */
     font-weight: 800;   /* extra-bold */
     line-height: 1.2;   /* a bit tighter if you want */
-    margin-top: -5px;
+    margin-top: -2px;
   }
   
   /* Make any Select‐Difficulty header bigger & bolder */

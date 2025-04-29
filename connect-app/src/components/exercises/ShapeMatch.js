@@ -181,7 +181,7 @@ function ShapeMatch() {
   const avgReactionTime = correctCount > 0 ? (sumReactionTime / correctCount) / 1000 : 0;
   
   // send results to database
-  /* useEffect(() => {
+  useEffect(() => {
     const sendExerciseResults = async () => {
       try {
         await logExerciseAttempt({
@@ -198,7 +198,7 @@ function ShapeMatch() {
     if (gameOver && correctCount > 0) {
       sendExerciseResults();
     }
-  }, [gameOver]); */ 
+  }, [gameOver]); 
 
   return (
     <div className="memory-container">

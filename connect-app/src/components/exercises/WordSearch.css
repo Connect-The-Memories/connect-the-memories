@@ -34,12 +34,12 @@ html, body {
 .target-words li {
   font-size: 30px;
   padding: 8px 12px;
-  border: 2px solid #3498db;
+  border: 2px solid black;
   border-radius: 4px;
-  width: 180px;            
+  width: 195px;    
+  background-color: #ddd;        
 }
 
-  
   .target-words li.found {
     text-decoration: line-through;
     background-color: #d1e7dd;
@@ -159,8 +159,9 @@ html, body {
     margin-top: 20px;
   }
   
-  .reveal-phase {
-    margin-top: 20px;
+  .reveal-phase h3{
+    margin: 0;
+    font-size: 30px;
   }
   
   .reveal-image {
@@ -172,7 +173,7 @@ html, body {
   }
   
   .caption {
-    font-size: 25px;
+    font-size: 28px;
     margin-top: 10px;
   }
 
