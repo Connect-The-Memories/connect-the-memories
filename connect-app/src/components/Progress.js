@@ -25,37 +25,37 @@ export default function Progress() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (!token) {
-  //     setError("You are not logged in.");
-  //     setTimeout(() => navigate("/"), 100);
-  //     return;
-  //   }
+    if (!token) {
+      setError("You are not logged in.");
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
 
-  //   async function fetchData() {
-  //     try {
-  //       const res = await getExerciseAttempts();
-  //       console.log('✅ Attempts response:', res);
-  //       const raw = res.data.exercise_data || [];
-  //       const data = raw.map(item => ({
-  //         ...item,
-  //         timestamp: new Date(item.timestamp)
-  //       }));
-  //       data.sort((a, b) => b.timestamp - a.timestamp);
-  //       setAttempts(data);
-  //     } catch (err) {
-  //       console.error('Error fetching attempts:', err.response || err);
-  //       setError('Failed to load progress data');
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [token]);
+    async function fetchData() {
+      try {
+        const res = await getExerciseAttempts();
+        console.log('✅ Attempts response:', res);
+        const raw = res.data.exercise_data || [];
+        const data = raw.map(item => ({
+          ...item,
+          timestamp: new Date(item.timestamp)
+        }));
+        data.sort((a, b) => b.timestamp - a.timestamp);
+        setAttempts(data);
+      } catch (err) {
+        console.error('Error fetching attempts:', err.response || err);
+        setError('Failed to load progress data');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [token]);
 
-  // if (loading) return <p>Loading progress...</p>;
-  // if (error) return <p>{error}</p>;
+  if (loading) return <p>Loading progress...</p>;
+  if (error) return <p>{error}</p>;
 
   const chartData = attempts.map(a => ({
     date: a.timestamp.toLocaleDateString(),
@@ -64,78 +64,78 @@ export default function Progress() {
   }));
 
   // Mock data to use locally (array of 14 days)
-  const data = [
-    {
-      date: "2025-04-10",
-      normalized_accuracy: 0.23,
-      normalized_rt: 0.7349693311852756
-    },
-    {
-      date: "2025-04-11",
-      normalized_accuracy: 0.6,
-      normalized_rt: 0.3590438763409098
-    },
-    {
-      date: "2025-04-12",
-      normalized_accuracy: 1,
-      normalized_rt: 0.2305938453098948
-    },
-    {
-      date: "2025-04-13",
-      normalized_accuracy: 0.23,
-      normalized_rt: 0.7349693311852756
-    },
-    {
-      date: "2025-04-14",
-      normalized_accuracy: 0.6,
-      normalized_rt: 0.3590438763409098
-    },
-    {
-      date: "2025-04-15",
-      normalized_accuracy: 1,
-      normalized_rt: 0.2305938453098948
-    },
-    {
-      date: "2025-04-16",
-      normalized_accuracy: 0.23,
-      normalized_rt: 0.7349693311852756
-    },
-    {
-      date: "2025-04-17",
-      normalized_accuracy: 0.6,
-      normalized_rt: 0.3590438763409098
-    },
-    {
-      date: "2025-04-18",
-      normalized_accuracy: 1,
-      normalized_rt: 0.2305938453098948
-    },
-    {
-      date: "2025-04-19",
-      normalized_accuracy: 0.23,
-      normalized_rt: 0.7349693311852756
-    },
-    {
-      date: "2025-04-20",
-      normalized_accuracy: 0.6,
-      normalized_rt: 0.3590438763409098
-    },
-    {
-      date: "2025-04-21",
-      normalized_accuracy: 1,
-      normalized_rt: 0.2305938453098948
-    },
-    {
-      date: "2025-04-22",
-      normalized_accuracy: 0.6,
-      normalized_rt: 0.3590438763409098
-    },
-    {
-      date: "2025-04-23",
-      normalized_accuracy: 1,
-      normalized_rt: 0.2305938453098948
-    }
-  ]
+  // const data = [
+  //   {
+  //     date: "2025-04-10",
+  //     normalized_accuracy: 0.23,
+  //     normalized_rt: 0.7349693311852756
+  //   },
+  //   {
+  //     date: "2025-04-11",
+  //     normalized_accuracy: 0.6,
+  //     normalized_rt: 0.3590438763409098
+  //   },
+  //   {
+  //     date: "2025-04-12",
+  //     normalized_accuracy: 1,
+  //     normalized_rt: 0.2305938453098948
+  //   },
+  //   {
+  //     date: "2025-04-13",
+  //     normalized_accuracy: 0.23,
+  //     normalized_rt: 0.7349693311852756
+  //   },
+  //   {
+  //     date: "2025-04-14",
+  //     normalized_accuracy: 0.6,
+  //     normalized_rt: 0.3590438763409098
+  //   },
+  //   {
+  //     date: "2025-04-15",
+  //     normalized_accuracy: 1,
+  //     normalized_rt: 0.2305938453098948
+  //   },
+  //   {
+  //     date: "2025-04-16",
+  //     normalized_accuracy: 0.23,
+  //     normalized_rt: 0.7349693311852756
+  //   },
+  //   {
+  //     date: "2025-04-17",
+  //     normalized_accuracy: 0.6,
+  //     normalized_rt: 0.3590438763409098
+  //   },
+  //   {
+  //     date: "2025-04-18",
+  //     normalized_accuracy: 1,
+  //     normalized_rt: 0.2305938453098948
+  //   },
+  //   {
+  //     date: "2025-04-19",
+  //     normalized_accuracy: 0.23,
+  //     normalized_rt: 0.7349693311852756
+  //   },
+  //   {
+  //     date: "2025-04-20",
+  //     normalized_accuracy: 0.6,
+  //     normalized_rt: 0.3590438763409098
+  //   },
+  //   {
+  //     date: "2025-04-21",
+  //     normalized_accuracy: 1,
+  //     normalized_rt: 0.2305938453098948
+  //   },
+  //   {
+  //     date: "2025-04-22",
+  //     normalized_accuracy: 0.6,
+  //     normalized_rt: 0.3590438763409098
+  //   },
+  //   {
+  //     date: "2025-04-23",
+  //     normalized_accuracy: 1,
+  //     normalized_rt: 0.2305938453098948
+  //   }
+  // ]
 
   return (
     <div className="hp-container">
@@ -153,7 +153,7 @@ export default function Progress() {
           <p>Accuracy</p>
           <ResponsiveContainer width="100%" height="80%">
             <AreaChart
-              data={data}//{attempts}
+              data={attempts}
               margin={{
                 top: 5,
                 right: 30,
@@ -183,7 +183,7 @@ export default function Progress() {
           <p>Reaction Time</p>
           <ResponsiveContainer width="100%" height="80%" >
             <AreaChart
-              data={data}//{attempts}
+              data={attempts}
               margin={{
                 top: 5,
                 right: 30,
