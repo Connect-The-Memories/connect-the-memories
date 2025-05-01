@@ -5,8 +5,6 @@ import './Progress.css';
 import { getExerciseAttempts } from '../api/database';
 import { useAuth } from '../context/AuthContext';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,12 +12,11 @@ import {
   Legend,
   ResponsiveContainer,
   Area,
-  AreaChart,
-  ReferenceLine
+  AreaChart
 } from 'recharts';
 
 export default function Progress() {
-  const { user, logout, token } = useAuth();
+  const { token } = useAuth();
   const navigate = useNavigate();
   const [attempts, setAttempts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,73 +60,73 @@ export default function Progress() {
   // const attempts = [
   //   {
   //     date: "2025-04-10",
-  //     avg_accuracy: 0.23,
-  //     avg_reaction_time: 0.7349693311852756
+  //     avg_accuracy: 34.3634532325098,
+  //     avg_reaction_time: 1.349693311852756
   //   },
   //   {
   //     date: "2025-04-11",
-  //     avg_accuracy: 0.6,
-  //     avg_reaction_time: 0.3590438763409098
+  //     avg_accuracy: 59.309544390583,
+  //     avg_reaction_time: 1.3590438763409098
   //   },
   //   {
   //     date: "2025-04-12",
-  //     avg_accuracy: 1,
-  //     avg_reaction_time: 0.2305938453098948
+  //     avg_accuracy: 23.4309584304923,
+  //     avg_reaction_time: 1.2305938453098948
   //   },
   //   {
   //     date: "2025-04-13",
-  //     avg_accuracy: 0.23,
-  //     avg_reaction_time: 0.7349693311852756
+  //     avg_accuracy: 54.4039583405983,
+  //     avg_reaction_time: 0.320958340698
   //   },
   //   {
   //     date: "2025-04-14",
-  //     avg_accuracy: 0.6,
-  //     avg_reaction_time: 0.3590438763409098
+  //     avg_accuracy: 67.3405983405938,
+  //     avg_reaction_time: 0.823856473482
   //   },
   //   {
   //     date: "2025-04-15",
-  //     avg_accuracy: 1,
-  //     avg_reaction_time: 0.2305938453098948
+  //     avg_accuracy: 75.420958205,
+  //     avg_reaction_time: 0.930958209384
   //   },
   //   {
   //     date: "2025-04-16",
-  //     avg_accuracy: 0.23,
-  //     avg_reaction_time: 0.7349693311852756
+  //     avg_accuracy: 82.2390582460,
+  //     avg_reaction_time: 0.98948520985
   //   },
   //   {
   //     date: "2025-04-17",
-  //     avg_accuracy: 0.6,
-  //     avg_reaction_time: 0.3590438763409098
+  //     avg_accuracy: 65.0495834068403,
+  //     avg_reaction_time: 0.394683409098
   //   },
   //   {
   //     date: "2025-04-18",
-  //     avg_accuracy: 1,
-  //     avg_reaction_time: 0.2305938453098948
+  //     avg_accuracy: 91.425842096820,
+  //     avg_reaction_time: 0.3249058213059138
   //   },
   //   {
   //     date: "2025-04-19",
-  //     avg_accuracy: 0.23,
-  //     avg_reaction_time: 0.7349693311852756
+  //     avg_accuracy: 55.3409683409603,
+  //     avg_reaction_time: 1.3095842098409
   //   },
   //   {
   //     date: "2025-04-20",
-  //     avg_accuracy: 0.6,
-  //     avg_reaction_time: 0.3590438763409098
+  //     avg_accuracy: 83.32059482502,
+  //     avg_reaction_time: 0.102948520598
   //   },
   //   {
   //     date: "2025-04-21",
-  //     avg_accuracy: 1,
-  //     avg_reaction_time: 0.2305938453098948
+  //     avg_accuracy: 95.02946840390,
+  //     avg_reaction_time: 0.90430968350698
   //   },
   //   {
   //     date: "2025-04-22",
-  //     avg_accuracy: 0.6,
-  //     avg_reaction_time: 0.3590438763409098
+  //     avg_accuracy: 93.9402582409582,
+  //     avg_reaction_time: 0.4096203958098
   //   },
   //   {
   //     date: "2025-04-23",
-  //     avg_accuracy: 1,
-  //     avg_reaction_time: 0.2305938453098948
+  //     avg_accuracy: 96.439068240968,
+  //     avg_reaction_time: 0.3295829406809
   //   }
   // ];
 
@@ -156,7 +153,7 @@ export default function Progress() {
 
       <div className="inner-box">
         <div className="chart">
-          <p>Accuracy</p>
+          <p>Average Accuracy</p>
           <ResponsiveContainer width="100%" height="80%">
             <AreaChart
               data={chartData}
