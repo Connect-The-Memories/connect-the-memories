@@ -259,8 +259,9 @@ function ShapeMatch() {
               <p className="message">{message}</p>
             </div>
           ) : (
-            <div className="game-over-screen">
-              <h2 className="timer-text">Time's Up!</h2>
+            <div className="inner-boxy-box-box">
+            <div className="game-over">
+              <h2 className="game-over-title">Game Over!</h2>
               <h3>Your Final Score: {score.toFixed(2)}</h3>
               <h3>You made {guessCount} guesses in 45 seconds.</h3>
               <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
@@ -268,6 +269,7 @@ function ShapeMatch() {
               <button className="restart-button" onClick={handleRestart}>
                 Play Again
               </button>
+            </div>
             </div>
           )}
         </div>

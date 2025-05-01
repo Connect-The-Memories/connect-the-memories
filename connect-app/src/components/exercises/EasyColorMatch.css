@@ -17,7 +17,7 @@
   }
   
   /* bigger timer & score */
-  .easy-color-match h3 { font-size: 32px; margin: 10px 0; }
+  .easy-color-match h3 { font-size: 32px; margin: 10px 0; color: var(--message-text-color);}
   
   /* stimuli row */
   .stimuli {

@@ -108,14 +108,16 @@
 
 .uploaded-by {
     font-size: 16px;
-    color: gray;
+    color: black;
     margin: 5px 0px;
+    font-weight: bold;
 }
 
 .message-date {
     font-size: 16px;
-    color: gray;
+    color: black;
     margin: 5px 0px;
+    font-weight: bold;
 }
 
 .message-container {

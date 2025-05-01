@@ -204,14 +204,14 @@ function ColorMatch() {
           </p>
           <ul>
             <li className="instructions-subtext">
-              <strong>Left:</strong> A color word displayed in a random color (e.g., "BLUE" in red text).
+              Left: A color word displayed in a random color (e.g., "BLUE" in red text).
             </li>
             <li className="instructions-subtext">
-              <strong>Right:</strong> A color word in neutral text (e.g., "red").
+              Right: A color word in neutral text (e.g., "red").
             </li>
           </ul>
           <p className="instructions-subtext">
-            If the <strong>color</strong> of the left word matches the <strong>word</strong> on the right, click “Match.”
+            If the color of the left word matches the word on the right, click “Match.”
             Otherwise, click “No Match.” Answer quickly for a reaction-time bonus!
           </p>
           <p className="instructions-subtext">
@@ -254,15 +254,17 @@ function ColorMatch() {
               <p className="message">{message}</p>
             </div>
           ) : (
-            <div className="game-over-screen">
-              <h2 className="timer-text">Time's Up!</h2>
-              <h3>Your Final Score: {score.toFixed(2)}</h3>
-              <h3>You made {guessCount} guesses in 45 seconds.</h3>
-              <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
-              <h3>Average Reaction Time: {avgReactionTime.toFixed(2)}s</h3>
-              <button className="restart-button" onClick={handleRestart}>
-                Play Again
-              </button>
+          <div className="inner-boxy-box">
+            <div className="game-over">
+              <h2 className="game-over-title">Game Over!</h2>
+                <h4>Your Final Score: {score.toFixed(2)}</h4>
+                <h4>You made {guessCount} guesses in 45 seconds.</h4>
+                <h4>Accuracy: {accuracy.toFixed(1)}%</h4>
+                <h4>Average Reaction Time: {avgReactionTime.toFixed(2)}s</h4>
+                <button className="restart-button" onClick={handleRestart}>
+                  Play Again
+                </button>
+              </div>
             </div>
           )}
         </div>

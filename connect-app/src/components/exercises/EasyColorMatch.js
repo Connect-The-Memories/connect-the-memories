@@ -141,16 +141,26 @@ export default function EasyColorMatch() {
 
       {/* instructions */}
       {!ready && countdown === null && (
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>You have 45 s to decide if the <strong>left color card</strong> matches the <strong>right color word</strong>.</p>
-          <ul>
-            <li><strong>Left:</strong> a solid‑color card.</li>
-            <li><strong>Right:</strong> a color word in black text.</li>
-          </ul>
-          <p>Click <em>Match</em> (or press “M”) if they’re the same color, otherwise <em>No Match</em> (“N”). Answer quickly for bonus points!</p>
-          <button className="start-button" onClick={() => setCountdown(3)}>I’m Ready!</button>
-        </div>
+        <div className="inner-box">
+        <h2 className="instructions-title">Instructions</h2>
+        <p className="instructions-subtext">
+          Welcome to Color Match (easy)! You have 45 seconds to decide if the left color card matches the right color word.
+        </p>
+        <ul>
+          <li className="instructions-subtext">
+          Left: a solid-color card.
+          </li>
+          <li className="instructions-subtext">
+          Right: a color word in black text.
+          </li>
+        </ul>
+        <p className="instructions-subtext">
+          Click <em>Match</em> (or press “M”) if they’re the same color, otherwise <em>No Match</em> (“N”). Answer quickly for bonus points!
+        </p>
+        <button className="start-button" onClick={() => setCountdown(3)}>
+          I’m Ready!
+        </button>
+      </div>      
       )}
 
       {/* game */}
@@ -177,13 +187,15 @@ export default function EasyColorMatch() {
 
       {/* game‑over */}
       {ready && timeLeft === 0 && (
-  <div className="game-over-screen">
-    <h2 className="timer-text">Time’s Up!</h2>
+  <div className="inner-box">
+  <div className="game-over">
+    <h2 className="game-over-title">Game Over!</h2>
     <h3>Final Score: {score.toFixed(2)}</h3>
     <h3>You made {guessCnt} guesses in 45 seconds.</h3>
     <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
     <h3>Average Reaction Time: {avgRT.toFixed(2)} s</h3>
     <button className="restart-button" onClick={restart}>Play Again</button>
+  </div>
   </div>
 )}
     </div>

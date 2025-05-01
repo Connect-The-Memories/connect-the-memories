@@ -120,7 +120,7 @@ function GalleryPage() {
                 <p><strong>What is the scenery of this memory?:</strong> {selectedPhoto.quick_access.probable_scenes.length > 0 ? selectedPhoto.quick_access.probable_scenes.join(', ') : 'No answer'}</p>
                 <p><strong>Does this memory have people?:</strong> {selectedPhoto.quick_access.has_people ? 'Yes' : 'No'}</p>
                 <p><strong>What is the location of this memory?:</strong> {selectedPhoto.quick_access.location || 'No answer'}</p>
-                <p><strong>Top labels associated with the memory:</strong> {selectedPhoto.quick_access.top_labels.length > 0 ? selectedPhoto.quick_access.top_labels.join(', ') : 'No answer'}</p>
+                <p><strong>Top labels associated with this memory:</strong> {selectedPhoto.quick_access.top_labels.length > 0 ? selectedPhoto.quick_access.top_labels.join(', ') : 'No answer'}</p>
               </div>
             )}
           </div>
