@@ -57,85 +57,91 @@ export default function Progress() {
   if (loading) return <p>Loading progress...</p>;
   if (error) return <p>{error}</p>;
 
-  const chartData = attempts.map(a => ({
-    date: a.timestamp.toLocaleDateString(),
-    accuracy: a.accuracy,
-    time: a.avg_reaction_time
-  }));
+
 
   // Mock data to use locally (array of 14 days)
-  // const data = [
+  // const attempts = [
   //   {
   //     date: "2025-04-10",
-  //     normalized_accuracy: 0.23,
-  //     normalized_rt: 0.7349693311852756
+  //     avg_accuracy: 0.23,
+  //     avg_reaction_time: 0.7349693311852756
   //   },
   //   {
   //     date: "2025-04-11",
-  //     normalized_accuracy: 0.6,
-  //     normalized_rt: 0.3590438763409098
+  //     avg_accuracy: 0.6,
+  //     avg_reaction_time: 0.3590438763409098
   //   },
   //   {
   //     date: "2025-04-12",
-  //     normalized_accuracy: 1,
-  //     normalized_rt: 0.2305938453098948
+  //     avg_accuracy: 1,
+  //     avg_reaction_time: 0.2305938453098948
   //   },
   //   {
   //     date: "2025-04-13",
-  //     normalized_accuracy: 0.23,
-  //     normalized_rt: 0.7349693311852756
+  //     avg_accuracy: 0.23,
+  //     avg_reaction_time: 0.7349693311852756
   //   },
   //   {
   //     date: "2025-04-14",
-  //     normalized_accuracy: 0.6,
-  //     normalized_rt: 0.3590438763409098
+  //     avg_accuracy: 0.6,
+  //     avg_reaction_time: 0.3590438763409098
   //   },
   //   {
   //     date: "2025-04-15",
-  //     normalized_accuracy: 1,
-  //     normalized_rt: 0.2305938453098948
+  //     avg_accuracy: 1,
+  //     avg_reaction_time: 0.2305938453098948
   //   },
   //   {
   //     date: "2025-04-16",
-  //     normalized_accuracy: 0.23,
-  //     normalized_rt: 0.7349693311852756
+  //     avg_accuracy: 0.23,
+  //     avg_reaction_time: 0.7349693311852756
   //   },
   //   {
   //     date: "2025-04-17",
-  //     normalized_accuracy: 0.6,
-  //     normalized_rt: 0.3590438763409098
+  //     avg_accuracy: 0.6,
+  //     avg_reaction_time: 0.3590438763409098
   //   },
   //   {
   //     date: "2025-04-18",
-  //     normalized_accuracy: 1,
-  //     normalized_rt: 0.2305938453098948
+  //     avg_accuracy: 1,
+  //     avg_reaction_time: 0.2305938453098948
   //   },
   //   {
   //     date: "2025-04-19",
-  //     normalized_accuracy: 0.23,
-  //     normalized_rt: 0.7349693311852756
+  //     avg_accuracy: 0.23,
+  //     avg_reaction_time: 0.7349693311852756
   //   },
   //   {
   //     date: "2025-04-20",
-  //     normalized_accuracy: 0.6,
-  //     normalized_rt: 0.3590438763409098
+  //     avg_accuracy: 0.6,
+  //     avg_reaction_time: 0.3590438763409098
   //   },
   //   {
   //     date: "2025-04-21",
-  //     normalized_accuracy: 1,
-  //     normalized_rt: 0.2305938453098948
+  //     avg_accuracy: 1,
+  //     avg_reaction_time: 0.2305938453098948
   //   },
   //   {
   //     date: "2025-04-22",
-  //     normalized_accuracy: 0.6,
-  //     normalized_rt: 0.3590438763409098
+  //     avg_accuracy: 0.6,
+  //     avg_reaction_time: 0.3590438763409098
   //   },
   //   {
   //     date: "2025-04-23",
-  //     normalized_accuracy: 1,
-  //     normalized_rt: 0.2305938453098948
+  //     avg_accuracy: 1,
+  //     avg_reaction_time: 0.2305938453098948
   //   }
-  // ]
+  // ];
+
+  const chartData = attempts.map(a => {
+    const dateObj = new Date(a.date);
+    const formattedDate = `${dateObj.getUTCMonth() + 1}/${dateObj.getUTCDate()}`;
+    return {
+      date: formattedDate,
+      accuracy: a.avg_accuracy,
+      reactionTime: a.avg_reaction_time * 1000, // convert to ms
+    }
+  });
 
   return (
     <div className="hp-container">
@@ -153,7 +159,7 @@ export default function Progress() {
           <p>Accuracy</p>
           <ResponsiveContainer width="100%" height="80%">
             <AreaChart
-              data={attempts}
+              data={chartData}
               margin={{
                 top: 5,
                 right: 30,
@@ -162,28 +168,22 @@ export default function Progress() {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={(dateStr) => {
-                  const date = new Date(dateStr);
-                  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
-                }}
-              />
+              <XAxis dataKey="date" />
               <YAxis tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} domain={[0, 1]} />
               <Tooltip
                 formatter={(value, name) => [`${(value * 100).toFixed(2)}%`, name]}
               />
               <Legend />
-              <Area type="monotone" dataKey="normalized_accuracy" name="Accuracy (%)" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }} />
+              <Area type="monotone" dataKey="accuracy" name="Accuracy (%)" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }} />
             </AreaChart>
           </ResponsiveContainer>
         </div>
 
         <div className="chart">
-          <p>Reaction Time</p>
+          <p>Average Reaction Time</p>
           <ResponsiveContainer width="100%" height="80%" >
             <AreaChart
-              data={attempts}
+              data={chartData}
               margin={{
                 top: 5,
                 right: 30,
@@ -192,17 +192,17 @@ export default function Progress() {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={(dateStr) => {
-                  const date = new Date(dateStr);
-                  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
-                }}
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip formatter={(value, name) => {
+                if (name === "Reaction Time (ms)") {
+                  return [`${Math.round(value)} ms`, name];
+                }
+                return [value, name];
+              }}
               />
-              <YAxis domain={[0, 1]} />
-              <Tooltip />
               <Legend />
-              <Area type="monotone" dataKey="normalized_rt" name="Reaction Time" stroke="#82ca9d" fill="#82ca9d" />
+              <Area type="monotone" dataKey="reactionTime" name="Reaction Time (ms)" stroke="#82ca9d" fill="#82ca9d" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
