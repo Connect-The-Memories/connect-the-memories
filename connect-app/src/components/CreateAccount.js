@@ -198,7 +198,6 @@ function CreateAccount() {
           >
             <option value="main">Main User</option>
             <option value="support">Support User</option>
-            <option value="both"> Both </option>
           </select>
 
           {error && <p className="error-text">{error}</p>}

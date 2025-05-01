@@ -160,11 +160,11 @@ function WritingExercise() {
             There’s no right or wrong—just let your thoughts flow. Whether it’s a detailed story, a feeling, or even a small moment,
             everything you write is meaningful. Take your time, and enjoy the process!
           </p>
-          <p>
-            Click "Next" when you're ready to see the image and complete the exercise!
+          <p className="writing-instructions-text">
+            Click "I'm Ready!" when you're ready to see the image and complete the exercise!
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
-            Next
+            I'm Ready!
           </button>
         </div>
       ) : (
