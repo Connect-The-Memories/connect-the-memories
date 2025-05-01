@@ -169,9 +169,14 @@ export default function Progress() {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
-              <YAxis tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} domain={[0, 1]} />
+              <YAxis tickFormatter={(value) => `${value.toFixed(0)}%`} domain={[0, 100]} />
               <Tooltip
-                formatter={(value, name) => [`${(value * 100).toFixed(2)}%`, name]}
+                formatter={(value, name) => {
+                  if (name === "Accuracy (%)") {
+                    return [`${value.toFixed(2)}%`, name];
+                  }
+                  return [value, name];
+                }}
               />
               <Legend />
               <Area type="monotone" dataKey="accuracy" name="Accuracy (%)" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }} />
