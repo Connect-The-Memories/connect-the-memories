@@ -122,7 +122,7 @@ export default function Journal() {
                 onClick={() => openModal(activeEntry.signed_url)}
               />
             ) : (
-              <p>Media Placeholder</p>
+              <p>No memories here 😢</p>
             )}
           </div>
         </div>

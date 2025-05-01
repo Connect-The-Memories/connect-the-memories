@@ -27,7 +27,7 @@
   flex: 3;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 95%;
   background: #fff;
   border-radius: 12px;
   padding: 1rem;
@@ -37,7 +37,7 @@
 
 .journal-title {
   color: black;
-  font-size: 32px;
+  font-size: 36px;
   text-decoration: underline;
   margin: 10px 0;
 }
@@ -69,11 +69,11 @@
 }
 
 .date-text {
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .entry-text {
-  font-size: 16px;
+  font-size: 22px;
   line-height: 1.5;
   color: #333;
 }
@@ -93,7 +93,7 @@
 }
 
 .journal-card .entry-header {
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   color: #555;
   margin-bottom: 0.5rem;
 }
