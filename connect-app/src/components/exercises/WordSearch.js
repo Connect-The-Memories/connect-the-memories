@@ -413,7 +413,7 @@ const WordSearch = () => {
         /* 4) Main Puzzle UI */
         <div className="game-ui">
           <div className="target-words">
-            <h3>Find These Words:</h3>
+            <div className="find-deez">Find These Words:</div>
             <ul>
               {targetWords.map((word, idx) => {
                 const foundIt = foundWordData.some((fw) => fw.word === word);

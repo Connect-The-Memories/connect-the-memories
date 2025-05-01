@@ -49,6 +49,10 @@ body {
   --primary-button-hover: #ff98aa;
   --secondary-button-hover: #ff961e;
   --tertiary-button-hover: #ffcf67;
+
+  --find-deez-color: black;
+  --timer-text-color: black;
+  --message-text-color: black;
 }
 
 /* Dark Mode color variables */
@@ -67,4 +71,8 @@ body {
   --primary-button-hover: #3d289a;
   --secondary-button-hover: #001343;
   --tertiary-button-hover: #ffcf67;
+
+  --find-deez-color: white;
+  --timer-text-color: white;
+  --message-text-color: white;
 }

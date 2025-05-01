@@ -178,8 +178,12 @@ html, body {
     margin-top: 10px;
   }
 
-  .target-words h3{
+  .find-deez{
     font-size: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--find-deez-color); 
+    margin-top: 20px;
   }
   
   .instructions-subtext strong {

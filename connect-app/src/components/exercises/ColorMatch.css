@@ -141,7 +141,7 @@
     font-size: 40px;
     font-weight: bold;
     min-height: 24px; 
-    color:#fff; 
+    color: var(--message-text-color); 
   }
   
   .game-over-screen {
@@ -164,7 +164,7 @@
     background-color: #2980b9;
   }
 
-  .advanced-color-match h3 { font-size: 32px; }
+  .advanced-color-match h3 { font-size: 32px; color: var(--message-text-color);}
 
   .countdown-screen {
     display: flex;

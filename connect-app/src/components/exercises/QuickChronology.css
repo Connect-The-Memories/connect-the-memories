@@ -68,4 +68,7 @@
     background-color: #2980b9;
   }
   
+  .timer-text {
+    color: var(--timer-text-color);
+  }
   

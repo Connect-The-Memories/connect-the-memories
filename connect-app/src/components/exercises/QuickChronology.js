@@ -213,13 +213,15 @@ function QuickChronology() {
             <p className="message">{message}</p>
           </div>
         ) : (
-          <div className="game-over-screen">
-            <h2 className="timer-text">Time's Up!</h2>
+          <div className="inner-box">
+          <div className="game-over">
+            <h2 className="game-over-title">Game Over!</h2>
             <h3>Your Final Score: {score.toFixed(2)}</h3>
             <h3>Guesses: {guessCount}</h3>
             <h3>Accuracy: {accuracy.toFixed(1)}%</h3>
             <h3>Avg Reaction Time: {avgReactionTime.toFixed(2)}s</h3>
             <button className="restart-button" onClick={handleRestart}>Play Again</button>
+          </div>
           </div>
         )}
       </div>
