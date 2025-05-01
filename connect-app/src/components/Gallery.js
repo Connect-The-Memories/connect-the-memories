@@ -5,36 +5,37 @@ import { useMedia } from "./MediaContext";
 import { useAuth } from "../context/AuthContext";
 import DarkModeToggle from "./DarkModeToggle";
 
-
 // TODO: Eventually implement pagination for messages and img/vid to avoid performance issues
 function GalleryPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("photos");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [showAnalysis, setShowAnalysis] = useState(false);
 
   const { token } = useAuth();
-
   const { photos, messages, fetchMediaData } = useMedia();
 
   useEffect(() => {
-
     if (!token) {
       setTimeout(() => navigate("/"), 100);
       return;
     }
-
     fetchMediaData();
   }, []);
 
-  const openPhotoModal = (photoUrl) => {
-    setSelectedPhoto(photoUrl);
+  const openPhotoModal = (photo) => {
+    setSelectedPhoto(photo);
+    setShowAnalysis(false);
   };
 
   const closePhotoModal = () => {
     setSelectedPhoto(null);
+    setShowAnalysis(false);
   };
 
-  console.log("one photo object:", photos[0]);
+  useEffect(() => {
+    console.table(photos);
+  }, [photos]);
 
   return (
     <div className="gallery-container">
@@ -42,9 +43,7 @@ function GalleryPage() {
         <a href="/primaryhomepage"><div className="title">CogniSphere</div></a>
         <div className="navbar-separator"></div>
         <DarkModeToggle />
-        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>
-          ← Back
-        </button>
+        <button className="logout-button" onClick={() => navigate("/primaryhomepage")}>← Back</button>
       </nav>
 
       <div className="toggle-container">
@@ -72,7 +71,7 @@ function GalleryPage() {
                     src={photo.signed_url}
                     alt={`Uploaded by ${photo.support_user_name}`}
                     className="photo-image"
-                    onClick={() => openPhotoModal(photo.signed_url)}
+                    onClick={() => openPhotoModal(photo)}
                   />
                   <p className="uploaded-by">Uploaded by: {photo.support_user_name}</p>
                 </div>
@@ -101,10 +100,29 @@ function GalleryPage() {
       {selectedPhoto && (
         <div className="modal-overlay" onClick={closePhotoModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <img src={selectedPhoto} alt="Enlarged" className="enlarged-photo" />
+            <img src={selectedPhoto.signed_url} alt="Enlarged" className="enlarged-photo" />
+
             <button className="close-button" onClick={closePhotoModal}>
               Close
             </button>
+
+            <button
+              className="analysis-button"
+              onClick={() => setShowAnalysis((prev) => !prev)}
+              aria-label="Toggle analysis"
+            >
+              ?
+            </button>
+
+            {showAnalysis && selectedPhoto.quick_access && (
+              <div className="analysis-panel">
+                <p><strong>What is going on in this memory?:</strong> {selectedPhoto.quick_access.probable_activities.length > 0 ? selectedPhoto.quick_access.probable_activities.join(', ') : 'No answer'}</p>
+                <p><strong>What is the scenery of this memory?:</strong> {selectedPhoto.quick_access.probable_scenes.length > 0 ? selectedPhoto.quick_access.probable_scenes.join(', ') : 'No answer'}</p>
+                <p><strong>Does this memory have people?:</strong> {selectedPhoto.quick_access.has_people ? 'Yes' : 'No'}</p>
+                <p><strong>What is the location of this memory?:</strong> {selectedPhoto.quick_access.location || 'No answer'}</p>
+                <p><strong>Top labels associated with the memory:</strong> {selectedPhoto.quick_access.top_labels.length > 0 ? selectedPhoto.quick_access.top_labels.join(', ') : 'No answer'}</p>
+              </div>
+            )}
           </div>
         </div>
       )}
