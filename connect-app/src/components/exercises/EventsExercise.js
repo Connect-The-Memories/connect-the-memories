@@ -269,9 +269,16 @@ function EventsExercise() {
             Enjoy a gentle stroll down memory lane while keeping your mind active!
           </p>
           <p className="instructions-subtext">
-            Once you've arranged the photos, press <strong>"Check Answers"</strong> to see if your order is correct.
-            If you wish to try again before checking, use the <strong>"Reset"</strong> button to clear your selections.
+            Once you've arranged the photos, press "Check Answers" to see if your order is correct.
+            If you wish to try again before checking, use the "Reset" button to clear your selections.
             There are three rounds per game. Have Fun!
+          </p>
+          <p className="instructions-subtext">
+          If you wish to try again before checking, use the "Reset" button to clear your selections.
+          There are three rounds per game. Have Fun!
+          </p>
+          <p className="instructions-subtext">
+          There are three rounds per game. Have Fun!
           </p>
           <button className="start-button" onClick={() => setCountdown(3)}>
             I'm Ready!

@@ -144,14 +144,21 @@ export default function SingleDigitBlitz() {
             ← Back
           </button>
         </nav>
-
-        <div className="instructions-screen">
-          <h2>Instructions</h2>
-          <p>Solve as many single‑digit (+, −, ×) problems as you can in 60 seconds.</p>
-          <p>Type the answer and press <strong>Enter</strong> or click <em>Submit</em>.</p>
-          <button className="start-button" onClick={primeRound}>Start</button>
+        <div className="inner-box">
+          <h2 className="instructions-title">Instructions</h2>
+          <p className="instructions-subtext">
+            You will see simple arithmetic problems using single-digit numbers and the symbols + (add), – (subtract), or × (multiply).
+            Try to solve as many of these as you can within 60 seconds.
+          </p>
+          <p className="instructions-subtext">
+            After each problem appears, type your answer into the box below.
+            Then either press the Enter key on your keyboard or click the “Submit” button to move to the next question.
+          </p>
+          <button className="start-button" onClick={primeRound}>
+            I’m Ready!
+          </button>
         </div>
-      </div>
+        </div>
     );
   }
 
@@ -168,6 +175,7 @@ export default function SingleDigitBlitz() {
       </div>
 
       {!finished ? (
+        <div className="inner-box">
         <div className="game-area">
           <h2 className="status-text">Time Left: {timeLeft}s</h2>
 
@@ -189,14 +197,17 @@ export default function SingleDigitBlitz() {
 
           <p className="status-text">Correct: {correct} / {total}</p>
         </div>
+        </div>
       ) : (
-        <div className="instructions-screen">
-          <h2>Round Complete!</h2>
+        <div className="inner-box">
+        <div className="game-over">
+        <h2 className="game-over-title">Game Over!</h2>
           <p>You answered {total} problems.</p>
           <p>Correct answers: {correct}</p>
           <p>Accuracy: {accuracy.toFixed(1)}%</p>
           <p>Average reaction time: {avgRT.toFixed(2)} seconds</p> 
-          <button className="start-button" onClick={primeRound}>Play Again</button>
+          <button className="restart-button" onClick={primeRound}>Play Again</button>
+        </div>
         </div>
       )}
     </div>
