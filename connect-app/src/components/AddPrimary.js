@@ -4,12 +4,16 @@ import "./AddPrimarySupport.css";
 import { validateOTP } from "../api/database";
 import DarkModeToggle from "./DarkModeToggle";
 import { useAuth } from "../context/AuthContext";
+import Alert from "./Alert";
 
 function AddPrimary() {
     const navigate = useNavigate();
     const { token } = useAuth();
 
     const [code, setCode] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertTitle, setAlertTitle] = useState("");
+    const [alertMsg, setAlertMsg] = useState("");
 
     useEffect(() => {
         if (!token) {
@@ -22,8 +26,12 @@ function AddPrimary() {
         try {
             const response = await validateOTP(code);
             const msg = response.data.msg;
+            setAlertTitle("Primary User Added!");
+            setShowAlert(true);
         } catch (error) {
-            // Empty for now
+            setAlertTitle("Could Not Add Primary User.");
+            setAlertMsg(`Error: ${error}`);
+            setShowAlert(true);
         }
     };
 
@@ -54,6 +62,18 @@ function AddPrimary() {
                 />
                 <button onClick={handleConnectUser} className="generate-button">Connect!</button>
             </div>
+            {showAlert && (
+                <div>
+                    <Alert
+                        title={alertTitle}
+                        description={alertMsg}
+                        show={showAlert}
+                        onClose={() => setShowAlert(false)}
+                    >
+                        <button className="cancel-remove-btn" onClick={() => setShowAlert(false)}>Close</button>
+                    </Alert>
+                </div>
+            )}
         </div >
     );
 }
